@@ -9,7 +9,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  background: linear-gradient(160deg, #fff0f5 0%, #fce4ec 40%, #f8e8f0 100%);
+  background: linear-gradient(160deg, #ffe0f0 0%, #f9c6df 35%, #f3d0e8 60%, #ede0f5 100%);
   color: #5c3a4a;
   font-family: 'Nunito', 'Segoe UI', sans-serif;
   font-size: 16px;
@@ -111,14 +111,125 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
 .btn-danger:hover { background: #fcc; border-color: #e74c3c; }
 
 /* Home Page */
-#home-page { padding-top: 60px; }
-#home-page h1 { text-align: center; margin-bottom: 8px; font-size: 2em; }
+#home-page { padding-top: 60px; position: relative; overflow: hidden; }
+#home-page h1 { text-align: center; margin-bottom: 8px; font-size: 2.2em; }
 .home-subtitle { text-align: center; color: #b06088; margin-bottom: 40px; font-style: italic; }
 
-.story-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+/* Floating decorations */
+.decor-bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.5), rgba(255,182,213,0.15));
+  border: 1px solid rgba(255,255,255,0.4);
+  pointer-events: none;
+  z-index: 0;
+  animation: float-bubbles 6s ease-in-out infinite;
+  will-change: transform;
+}
+.decor-sparkle, .decor-flower {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+  animation: sparkle-drift 4s ease-in-out infinite;
+  will-change: transform;
+}
+@keyframes float-bubbles {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-18px) scale(1.06); }
+}
+@keyframes sparkle-drift {
+  0%, 100% { transform: translateX(0) rotate(0deg); opacity: 0.4; }
+  50% { transform: translateX(8px) rotate(10deg); opacity: 0.7; }
+}
+
+/* Glassmorphism header */
+.glass-header {
+  background: rgba(255,255,255,0.35);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.5);
+  border-radius: 32px;
+  padding: 28px 32px 24px;
+  text-align: center;
+  margin-bottom: 32px;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 4px 24px rgba(214,51,132,0.08);
+}
+.glass-header-flowers {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.4em;
+  filter: drop-shadow(0 2px 4px rgba(214,51,132,0.2));
+}
+
+/* Story card tags */
+.story-card-tags { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
+.tag-fandom {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: #fce4ec; color: #d63384;
+  border-radius: 20px; padding: 3px 12px;
+  font-size: 0.78em; font-weight: 600;
+  font-family: 'Quicksand', sans-serif;
+}
+.tag-tone {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: #ede0f5; color: #7b5ea7;
+  border-radius: 20px; padding: 3px 12px;
+  font-size: 0.78em; font-weight: 600;
+  font-family: 'Quicksand', sans-serif;
+}
+
+/* Story card controls wrapper */
+.story-card-controls { display: flex; align-items: center; gap: 10px; }
+
+/* Holographic button */
+@keyframes holographic-shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes holographic-shine {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+.btn-holographic {
+  background: linear-gradient(135deg, #f472b6, #a855f7, #6366f1, #22d3ee, #f472b6);
+  background-size: 300% 300%;
+  animation: holographic-shimmer 4s ease infinite;
+  color: #fff;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border: none;
+  border-radius: 24px;
+  padding: 14px 32px;
+  cursor: pointer;
+  font-size: 1em;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(168,85,247,0.3);
+  transition: transform 0.1s;
+}
+.btn-holographic:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(168,85,247,0.4); }
+.btn-holographic::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: holographic-shine 3s ease-in-out infinite;
+}
+
+.story-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; position: relative; z-index: 1; }
 .story-card {
-  background: #fff;
-  border: 2px solid #f5c6d8;
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.6);
   border-radius: 20px;
   padding: 20px 24px;
   cursor: pointer;
@@ -126,15 +237,17 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 8px rgba(214,51,132,0.08);
+  box-shadow: 0 2px 12px rgba(214,51,132,0.08);
 }
-.story-card:hover { border-color: #f472b6; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(214,51,132,0.15); }
+.story-card:hover { border-color: rgba(244,114,182,0.5); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(214,51,132,0.15); }
 .story-card-info { flex: 1; min-width: 0; }
 .story-card-title {
   font-family: 'Quicksand', sans-serif;
   font-size: 1.1em;
   font-weight: 700;
-  color: #d63384;
+  color: #3a2a2e;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   margin-bottom: 4px;
 }
 .story-card-meta {
@@ -147,34 +260,62 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
   color: #d48aa8;
   margin-top: 6px;
 }
-.story-card-chevron { color: #d48aa8; font-size: 1.4em; margin-left: 16px; }
-.story-card:hover .story-card-chevron { color: #e91e90; }
+.story-card-chevron {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f472b6, #e91e90);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2em;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  flex-shrink: 0;
+}
+.story-card-chevron:hover { transform: scale(1.1); box-shadow: 0 3px 12px rgba(233,30,144,0.3); }
 
-.story-card-actions { display: flex; gap: 4px; margin-left: 12px; }
+.story-card-actions {
+  display: flex; gap: 4px; margin-left: 12px;
+  background: #2d2b3a;
+  border-radius: 20px;
+  padding: 4px 6px;
+}
 .story-card-actions button {
   background: transparent;
   border: none;
-  color: #d48aa8;
+  color: #b8b5c8;
   cursor: pointer;
   font-size: 0.9em;
   padding: 4px 8px;
   border-radius: 12px;
   transition: color 0.2s, background 0.2s;
 }
-.story-card-actions button:hover { color: #e91e90; background: rgba(233,30,144,0.08); }
-.story-card-actions .delete-story:hover { color: #c0392b; background: rgba(192,57,43,0.08); }
+.story-card-actions button:hover { color: #fff; background: rgba(255,255,255,0.1); }
+.story-card-actions .delete-story:hover { color: #f87171; background: rgba(248,113,113,0.15); }
 
+/* Scalloped new story section */
 .new-story-section {
-  border: 2px dashed #f5c6d8;
+  position: relative;
+  z-index: 1;
+  padding: 6px;
+  background: repeating-radial-gradient(circle at 10px 0, transparent 0, transparent 8px, #f0a0c8 8px, #f0a0c8 9px, transparent 9px);
+  background-size: 20px 10px;
+  background-position: 0 0;
+  border-radius: 24px;
+  transition: opacity 0.2s;
+}
+.new-story-section:hover { opacity: 0.95; }
+.new-story-inner {
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border-radius: 20px;
   padding: 32px;
   text-align: center;
-  transition: border-color 0.2s;
-  background: rgba(255,255,255,0.5);
+  border: 2px dashed rgba(240,160,200,0.4);
 }
-.new-story-section:hover { border-color: #f472b6; }
 .new-story-section h3 {
-  font-size: 1em;
+  font-size: 1.1em;
   margin-bottom: 8px;
   color: #b06088;
 }
@@ -188,6 +329,8 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
   text-align: center;
   padding: 48px 20px;
   color: #d48aa8;
+  position: relative;
+  z-index: 1;
 }
 .home-empty p {
   font-style: italic;
@@ -350,6 +493,9 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
   .index-bottom .btn-gold, .index-bottom .btn-secondary { width: 100%; text-align: center; }
   .story-card { padding: 16px; }
   .story-card-actions { margin-left: 8px; }
+  .glass-header { padding: 20px 16px 18px; border-radius: 24px; }
+  .new-story-inner { padding: 24px 16px; }
+  .story-card-controls { gap: 6px; }
 }
 </style>
 </head>
@@ -357,13 +503,36 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
 
 <!-- Home Page -->
 <div id="home-page" class="page">
-  <h1>Fanfic Forge</h1>
-  <p class="home-subtitle">Your fanfiction writing workshop</p>
+  <!-- Floating decorations -->
+  <div class="decor-bubble" style="top:3%;left:6%;width:50px;height:50px;animation-delay:0s"></div>
+  <div class="decor-bubble" style="top:12%;right:8%;width:35px;height:35px;animation-delay:1.5s"></div>
+  <div class="decor-bubble" style="top:35%;left:3%;width:28px;height:28px;animation-delay:3s"></div>
+  <div class="decor-bubble" style="top:50%;right:4%;width:45px;height:45px;animation-delay:2s"></div>
+  <div class="decor-bubble" style="top:70%;left:10%;width:22px;height:22px;animation-delay:4s"></div>
+  <div class="decor-bubble" style="top:80%;right:12%;width:32px;height:32px;animation-delay:1s"></div>
+  <div class="decor-bubble" style="top:25%;right:20%;width:18px;height:18px;animation-delay:3.5s"></div>
+  <div class="decor-bubble" style="top:60%;left:20%;width:24px;height:24px;animation-delay:5s"></div>
+  <div class="decor-sparkle" style="top:18%;left:45%;font-size:0.9em">&#10022;</div>
+  <div class="decor-sparkle" style="top:65%;right:18%;font-size:0.7em;animation-delay:2s">&#10022;</div>
+  <div class="decor-flower" style="top:8%;right:22%;font-size:1.1em;animation-delay:1s">&#127800;</div>
+  <div class="decor-flower" style="top:75%;left:5%;font-size:0.9em;animation-delay:3s">&#127804;</div>
+
+  <!-- Glassmorphism header -->
+  <div class="glass-header">
+    <div class="glass-header-flowers">&#127800; &#127802;</div>
+    <h1>Fanfic Forge</h1>
+    <p class="home-subtitle">Your fanfiction writing workshop</p>
+  </div>
+
   <div id="stories-list" class="story-grid"></div>
+
+  <!-- Scalloped new story section -->
   <div class="new-story-section">
-    <h3>Start a New Story</h3>
-    <p>Set up your title, premise, lore bible, and begin writing</p>
-    <button class="btn-gold" id="btn-new-story">+ New Story</button>
+    <div class="new-story-inner">
+      <h3>&#127800; Start a New Story &#127775;</h3>
+      <p>Set up your title, premise, lore bible, and begin writing</p>
+      <button class="btn-holographic" id="btn-new-story">+ New Story</button>
+    </div>
   </div>
 </div>
 
@@ -762,9 +931,26 @@ function renderHome() {
     title.className = 'story-card-title';
     title.textContent = story.title || 'Untitled Story';
 
-    const meta = document.createElement('div');
-    meta.className = 'story-card-meta';
-    meta.textContent = [story.fandom, story.tone].filter(Boolean).join(' · ') || 'No fandom set';
+    const tags = document.createElement('div');
+    tags.className = 'story-card-tags';
+    if (story.fandom) {
+      const fandomTag = document.createElement('span');
+      fandomTag.className = 'tag-fandom';
+      fandomTag.textContent = '\u{1F338} ' + story.fandom;
+      tags.appendChild(fandomTag);
+    }
+    if (story.tone) {
+      const toneTag = document.createElement('span');
+      toneTag.className = 'tag-tone';
+      toneTag.textContent = '\u2713 ' + story.tone;
+      tags.appendChild(toneTag);
+    }
+    if (!story.fandom && !story.tone) {
+      const emptyTag = document.createElement('span');
+      emptyTag.className = 'tag-fandom';
+      emptyTag.textContent = 'No fandom set';
+      tags.appendChild(emptyTag);
+    }
 
     const chapters = document.createElement('div');
     chapters.className = 'story-card-chapters';
@@ -772,7 +958,7 @@ function renderHome() {
     chapters.textContent = count === 0 ? 'No chapters yet' : count === 1 ? '1 chapter' : `${count} chapters`;
 
     info.appendChild(title);
-    info.appendChild(meta);
+    info.appendChild(tags);
     info.appendChild(chapters);
 
     const actions = document.createElement('div');
@@ -806,17 +992,22 @@ function renderHome() {
     actions.appendChild(editBtn);
     actions.appendChild(deleteBtn);
 
-    const chevron = document.createElement('span');
+    const chevron = document.createElement('button');
     chevron.className = 'story-card-chevron';
     chevron.textContent = '\u203A';
-    chevron.addEventListener('click', () => {
+    chevron.addEventListener('click', (e) => {
+      e.stopPropagation();
       setActiveStory(story.id);
       navigate('index');
     });
 
+    const controls = document.createElement('div');
+    controls.className = 'story-card-controls';
+    controls.appendChild(actions);
+    controls.appendChild(chevron);
+
     card.appendChild(info);
-    card.appendChild(actions);
-    card.appendChild(chevron);
+    card.appendChild(controls);
     list.appendChild(card);
   });
 }
@@ -1145,6 +1336,18 @@ const SAMPLE_FANDOMS = [
   "Howl's Moving Castle", "Studio Ghibli", "Arcane / League of Legends", "Fire Emblem",
   "Final Fantasy", "Persona 5", "Sailor Moon", "Fruits Basket"
 ];
+const FANDOM_TAGS = [
+  ["fantasy","magic","school"],["fantasy","adventure","magic"],["fantasy","adventure","war"],["sci-fi","space","war"],
+  ["fantasy","school","adventure"],["fantasy","adventure","magic"],["fantasy","mythology","adventure"],["sci-fi","dark","war"],
+  ["fantasy","dark","war"],["horror","mystery","modern"],["sci-fi","adventure","modern"],["sci-fi","adventure","modern"],
+  ["horror","mystery","dark"],["sci-fi","adventure","mystery"],["mystery","modern","dark"],["dark","war","fantasy"],
+  ["fantasy","adventure","dark"],["fantasy","dark","adventure"],["horror","modern","comedy"],["fantasy","dark","adventure"],
+  ["sci-fi","space","adventure"],["fantasy","adventure","magic"],["fantasy","comedy","romance"],["historical","comedy","romance"],
+  ["fantasy","adventure","romance"],["mythology","dark","romance"],["modern","romance","comedy"],["horror","mystery","dark"],
+  ["fantasy","adventure","comedy"],["romance","horror","modern"],["historical","romance","comedy"],["historical","romance","comedy"],
+  ["fantasy","romance","magic"],["fantasy","adventure","romance"],["sci-fi","dark","adventure"],["fantasy","war","adventure"],
+  ["fantasy","adventure","magic"],["modern","mystery","magic"],["fantasy","magic","romance"],["modern","romance","comedy"]
+];
 
 const SAMPLE_TONES = [
   "Emotional but grounded", "Dark and atmospheric", "Soft and tender", "Chaotic and fun",
@@ -1155,6 +1358,16 @@ const SAMPLE_TONES = [
   "Sardonic with heart", "Fever-dream surreal", "Achingly romantic", "Found-family warmth",
   "Noir with neon edges", "Sunlit and wistful", "Vengeful and sharp", "Playful enemies-to-lovers",
   "Haunted and grieving", "Rebellious and fiery"
+];
+const TONE_TAGS = [
+  ["romance","modern"],["horror","dark","mystery"],["romance","comedy"],["comedy","adventure"],
+  ["dark","romance","horror"],["romance","historical"],["comedy","modern","mystery"],["romance","dark"],
+  ["comedy","romance","modern"],["horror","dark","mystery"],["dark","war","adventure"],["fantasy","romance","magic"],
+  ["dark","modern","war"],["romance","dark"],["dark","comedy"],["fantasy","romance"],
+  ["dark","mystery","horror"],["romance","dark"],["fantasy","war","adventure"],["romance","modern"],
+  ["dark","comedy","modern"],["horror","fantasy","mystery"],["romance","fantasy"],["romance","comedy","adventure"],
+  ["dark","mystery","sci-fi"],["romance","modern","comedy"],["dark","war","adventure"],["romance","comedy"],
+  ["dark","horror","romance"],["adventure","dark","war"]
 ];
 
 const SAMPLE_PREMISES = [
@@ -1188,6 +1401,16 @@ const SAMPLE_PREMISES = [
   "The king's fool is the only one who knows the kingdom is under a mind-control spell.",
   "A bounty hunter discovers their next target is the child they gave up years ago.",
   "In a world where memories can be traded, someone is buying up every memory of a person who no longer exists."
+];
+const PREMISE_TAGS = [
+  ["mystery","adventure","modern"],["romance","fantasy","magic"],["comedy","romance","dark"],["fantasy","adventure","magic"],
+  ["mystery","romance","magic"],["fantasy","dark","war"],["fantasy","adventure","comedy"],["fantasy","mystery","magic"],
+  ["fantasy","magic","school"],["dark","comedy","modern"],["dark","fantasy","comedy"],["sci-fi","adventure","mystery"],
+  ["romance","war","historical"],["fantasy","romance","comedy"],["fantasy","dark","adventure"],["fantasy","romance","magic"],
+  ["dark","adventure","romance"],["mystery","dark","horror"],["fantasy","comedy","adventure"],["fantasy","romance","magic"],
+  ["romance","dark","fantasy"],["fantasy","adventure","comedy"],["fantasy","comedy","magic"],["romance","comedy","dark"],
+  ["horror","fantasy","mystery"],["fantasy","dark","romance"],["fantasy","dark","comedy"],["fantasy","comedy","mystery"],
+  ["dark","adventure","romance"],["fantasy","mystery","dark"]
 ];
 
 // -- Sample Lore Data --
@@ -1223,6 +1446,16 @@ const SAMPLE_WORLDS = [
   "The Shattered Moons of Velanthos, where gravity-defying cities float among lunar debris. Space opera with feudal politics and psionic noble houses.",
   "Abyssal Station Theta, a deep-sea research facility where eldritch entities whisper through the hull. Sci-fi horror, claustrophobic setting, 2260 AD."
 ];
+const WORLD_TAGS = [
+  ["fantasy","dark","war"],["sci-fi","space","dark"],["sci-fi","dark","horror"],["sci-fi","modern","dark"],
+  ["fantasy","adventure","historical"],["fantasy","adventure","magic"],["horror","historical","dark"],["mystery","dark","horror"],
+  ["fantasy","magic","school"],["fantasy","adventure","historical"],["horror","magic","historical"],["fantasy","adventure","magic"],
+  ["sci-fi","modern","adventure"],["mystery","dark","modern"],["fantasy","comedy","school"],["fantasy","dark","mystery"],
+  ["sci-fi","dark","modern"],["horror","dark","historical"],["fantasy","comedy","modern"],["mystery","horror","comedy"],
+  ["fantasy","adventure","war"],["dark","fantasy","horror"],["dark","fantasy","horror"],["fantasy","war","dark"],
+  ["fantasy","adventure","magic"],["sci-fi","adventure","war"],["fantasy","war","dark"],["fantasy","dark","magic"],
+  ["sci-fi","fantasy","war"],["sci-fi","horror","dark"]
+];
 
 const SAMPLE_CHARACTERS = [
   "Elara Voss, 24, former soldier. Sharp-tongued, fiercely loyal, secretly hears the dead. Kael Ashford, 26, disgraced prince under a false name, calm but full of rage.",
@@ -1255,6 +1488,16 @@ const SAMPLE_CHARACTERS = [
   "Isolde Brandt, 42, brewmaster. Sharp-humored, generous, her mead grants visions to those who drink deeply. Wolfgang Muller, 55, retired knight, dignified and weary, keeps his old sword oiled and sharp.",
   "Rosa Almeida, 31, tattoo artist. Intuitive, bold, her tattoos protect or curse depending on intent. Eduardo Lima, 24, musician, dreamy and talented, plays songs that make the dead weep.",
   "Linnea Dahl, 29, beekeeper. Patient, gentle, her bees deliver messages across impossible distances. Anders Berg, 33, cartographer, detail-obsessed, mapped a territory that shouldn't exist."
+];
+const CHARACTER_TAGS = [
+  ["fantasy","dark","war"],["fantasy","magic","adventure"],["fantasy","dark","historical"],["fantasy","adventure","mystery"],
+  ["fantasy","magic","dark"],["fantasy","mystery","war"],["fantasy","adventure","mythology"],["fantasy","magic","historical"],
+  ["fantasy","dark","magic"],["fantasy","romance","dark"],["fantasy","magic","modern"],["fantasy","dark","mystery"],
+  ["fantasy","adventure","romance"],["fantasy","magic","mystery"],["fantasy","dark","historical"],["fantasy","dark","romance"],
+  ["fantasy","magic","historical"],["fantasy","adventure","dark"],["fantasy","historical","romance"],["fantasy","magic","adventure"],
+  ["fantasy","dark","magic"],["fantasy","adventure","mystery"],["fantasy","magic","historical"],["fantasy","dark","romance"],
+  ["fantasy","adventure","mystery"],["fantasy","dark","historical"],["fantasy","magic","romance"],["fantasy","dark","magic"],
+  ["fantasy","magic","romance"],["fantasy","adventure","magic"]
 ];
 
 const SAMPLE_SHIPS = [
@@ -1289,6 +1532,16 @@ const SAMPLE_SHIPS = [
   "Two monks in a silent order communicate through touch and expression. When he leaves the order, his first word is her name.",
   "The harbor master and the pirate queen. She docks illegally every full moon. He waits with a fine and barely concealed anticipation."
 ];
+const SHIP_TAGS = [
+  ["dark","romance","war"],["romance","comedy","historical"],["romance","modern","adventure"],["romance","adventure","comedy"],
+  ["romance","dark","war"],["romance","dark","adventure"],["romance","fantasy","magic"],["romance","modern","adventure"],
+  ["romance","adventure","dark"],["romance","adventure","modern"],["romance","fantasy","magic"],["romance","mystery","modern"],
+  ["romance","adventure","comedy"],["dark","war","adventure"],["romance","dark","fantasy"],["romance","comedy","modern"],
+  ["dark","romance","adventure"],["romance","dark","adventure"],["romance","adventure","comedy"],["romance","comedy","adventure"],
+  ["romance","comedy","adventure"],["romance","dark","mystery"],["dark","romance","war"],["romance","comedy","fantasy"],
+  ["dark","romance","horror"],["romance","dark","adventure"],["romance","modern","dark"],["romance","comedy","modern"],
+  ["romance","dark","mystery"],["romance","adventure","comedy"]
+];
 
 const SAMPLE_CANON_RULES = [
   "Magic always costs memory. The dead stay dead. The northern border has been sealed for a century.",
@@ -1321,6 +1574,16 @@ const SAMPLE_CANON_RULES = [
   "Love is a diagnosable disease with physical symptoms. A cure exists but removes the ability to feel joy.",
   "Cooking is alchemy. Every meal has magical properties. Chefs are the most powerful and dangerous people alive.",
   "Mathematical equations are spells. Mathematicians are wizards. Division by zero can tear holes in reality itself."
+];
+const CANON_TAGS = [
+  ["fantasy","dark","magic"],["sci-fi","dark","space"],["fantasy","romance","adventure"],["fantasy","dark","war"],
+  ["dark","horror","romance"],["sci-fi","dark","mystery"],["fantasy","dark","horror"],["fantasy","dark","magic"],
+  ["fantasy","dark","war"],["fantasy","magic","dark"],["fantasy","dark","romance"],["romance","horror","mystery"],
+  ["sci-fi","dark","modern"],["fantasy","dark","magic"],["fantasy","dark","mystery"],["fantasy","dark","mystery"],
+  ["fantasy","mystery","dark"],["fantasy","magic","dark"],["fantasy","dark","war"],["fantasy","dark","mystery"],
+  ["fantasy","dark","comedy"],["fantasy","magic","mystery"],["fantasy","dark","mystery"],["fantasy","sci-fi","adventure"],
+  ["dark","mystery","fantasy"],["fantasy","dark","magic"],["fantasy","dark","magic"],["romance","dark","fantasy"],
+  ["fantasy","comedy","magic"],["fantasy","magic","mystery"]
 ];
 
 const SAMPLE_SECRETS = [
@@ -1355,10 +1618,80 @@ const SAMPLE_SECRETS = [
   "The lighthouse keeper signals ships to safety, but once a year she signals one to the rocks. She doesn't remember doing it. Something else uses her hands.",
   "His stutter disappears when he lies. He's the most fluent speaker in court. Nobody has connected the two facts yet."
 ];
+const SECRET_TAGS = [
+  ["romance","mystery","dark"],["dark","romance","adventure"],["dark","mystery","war"],["fantasy","dark","horror"],
+  ["dark","fantasy","magic"],["dark","war","romance"],["fantasy","dark","romance"],["adventure","mystery","dark"],
+  ["dark","romance","magic"],["dark","war","mystery"],["romance","comedy","dark"],["mystery","dark","comedy"],
+  ["dark","romance","mystery"],["mystery","dark","adventure"],["dark","war","mystery"],["dark","horror","magic"],
+  ["dark","mystery","fantasy"],["dark","adventure","mystery"],["dark","mystery","adventure"],["dark","fantasy","horror"],
+  ["romance","dark","mystery"],["dark","mystery","comedy"],["dark","fantasy","horror"],["dark","mystery","adventure"],
+  ["dark","horror","mystery"],["dark","romance","adventure"],["dark","mystery","comedy"],["dark","romance","mystery"],
+  ["dark","horror","mystery"],["dark","mystery","comedy"]
+];
 
 function pickRandom(arr, n) {
   const shuffled = [...arr].sort(() => Math.random() - 0.5);
   return shuffled.slice(0, n);
+}
+
+// Tag-aware picking: scores items by tag overlap, picks from top candidates
+function pickTagged(arr, tagArr, n, preferTags) {
+  if (!preferTags || preferTags.length === 0) return pickRandom(arr, n);
+  const scored = arr.map((item, i) => {
+    const itemTags = tagArr[i] || [];
+    const overlap = itemTags.filter(t => preferTags.includes(t)).length;
+    return { item, overlap, rand: Math.random() };
+  });
+  // Sort by overlap desc, then random
+  scored.sort((a, b) => b.overlap - a.overlap || a.rand - b.rand);
+  return scored.slice(0, n).map(s => s.item);
+}
+
+function getTagsForIndex(tagArr, index) {
+  return (tagArr && tagArr[index]) ? tagArr[index] : [];
+}
+
+function getTagsForValue(arr, tagArr, value) {
+  const idx = arr.indexOf(value);
+  return idx >= 0 ? getTagsForIndex(tagArr, idx) : [];
+}
+
+// Cascade: collect active tags from fandom + tone fields
+function getActiveTags() {
+  if (!activeStory) return [];
+  const tags = [];
+  const fandomTags = getTagsForValue(SAMPLE_FANDOMS, FANDOM_TAGS, activeStory.fandom);
+  const toneTags = getTagsForValue(SAMPLE_TONES, TONE_TAGS, activeStory.tone);
+  return [...new Set([...fandomTags, ...toneTags])];
+}
+
+function cascadeFillTone(tags) {
+  const tone = pickTagged(SAMPLE_TONES, TONE_TAGS, 1, tags)[0];
+  document.getElementById('inp-tone').value = tone;
+  activeStory.tone = tone;
+  return [...new Set([...tags, ...getTagsForValue(SAMPLE_TONES, TONE_TAGS, tone)])];
+}
+
+function cascadeFillPremise(tags) {
+  const premise = pickTagged(SAMPLE_PREMISES, PREMISE_TAGS, 1, tags)[0];
+  document.getElementById('inp-premise').value = premise;
+  activeStory.premise = premise;
+}
+
+function cascadeFillLore(tags, target) {
+  const fields = {
+    characters: pickTagged(SAMPLE_CHARACTERS, CHARACTER_TAGS, 3, tags).join('\n\n'),
+    world: pickTagged(SAMPLE_WORLDS, WORLD_TAGS, 1, tags)[0],
+    ships: pickTagged(SAMPLE_SHIPS, SHIP_TAGS, 2, tags).join('\n\n'),
+    canon: pickTagged(SAMPLE_CANON_RULES, CANON_TAGS, 3, tags).join('\n\n'),
+    secrets: pickTagged(SAMPLE_SECRETS, SECRET_TAGS, 3, tags).join('\n\n')
+  };
+  if (target === 'setup') {
+    setLoreFieldsInSetup(fields);
+  } else {
+    setLoreFieldsInEditor(fields);
+  }
+  activeStory.lore = composeLore(fields);
 }
 
 function generateSampleLore() {
@@ -1371,58 +1704,64 @@ function generateSampleLore() {
   return `# Characters\n${chars.join('\n\n')}\n\n# World / Setting\n${world}\n\n# Ships / Relationships\n${ships.join('\n\n')}\n\n# Canon Rules\n${rules.join('\n\n')}\n\n# Secrets & Subtext\n${secrets.join('\n\n')}`;
 }
 
-// Fandom / Tone / Premise randomize buttons
+// Fandom / Tone / Premise randomize buttons (cascade chain: Fandom → Tone → Premise → Lore)
 document.getElementById('btn-rand-fandom').addEventListener('click', () => {
   if (!activeStory) return;
-  document.getElementById('inp-fandom').value = pickRandom(SAMPLE_FANDOMS, 1)[0];
-  activeStory.fandom = document.getElementById('inp-fandom').value;
+  const fandom = pickRandom(SAMPLE_FANDOMS, 1)[0];
+  document.getElementById('inp-fandom').value = fandom;
+  activeStory.fandom = fandom;
+  let tags = getTagsForValue(SAMPLE_FANDOMS, FANDOM_TAGS, fandom);
+  tags = cascadeFillTone(tags);
+  cascadeFillPremise(tags);
+  cascadeFillLore(tags, 'setup');
   activeStory.updatedAt = Date.now();
   saveState();
-  showToast('Randomized!');
+  showToast('Cascade randomized!');
 });
 
 document.getElementById('btn-rand-tone').addEventListener('click', () => {
   if (!activeStory) return;
-  document.getElementById('inp-tone').value = pickRandom(SAMPLE_TONES, 1)[0];
-  activeStory.tone = document.getElementById('inp-tone').value;
+  const fandomTags = getTagsForValue(SAMPLE_FANDOMS, FANDOM_TAGS, activeStory.fandom);
+  const tone = pickTagged(SAMPLE_TONES, TONE_TAGS, 1, fandomTags)[0];
+  document.getElementById('inp-tone').value = tone;
+  activeStory.tone = tone;
+  const tags = [...new Set([...fandomTags, ...getTagsForValue(SAMPLE_TONES, TONE_TAGS, tone)])];
+  cascadeFillPremise(tags);
+  cascadeFillLore(tags, 'setup');
   activeStory.updatedAt = Date.now();
   saveState();
-  showToast('Randomized!');
+  showToast('Cascade randomized!');
 });
 
 document.getElementById('btn-rand-premise').addEventListener('click', () => {
   if (!activeStory) return;
-  document.getElementById('inp-premise').value = pickRandom(SAMPLE_PREMISES, 1)[0];
-  activeStory.premise = document.getElementById('inp-premise').value;
+  const tags = getActiveTags();
+  const premise = pickTagged(SAMPLE_PREMISES, PREMISE_TAGS, 1, tags)[0];
+  document.getElementById('inp-premise').value = premise;
+  activeStory.premise = premise;
+  cascadeFillLore(tags, 'setup');
   activeStory.updatedAt = Date.now();
   saveState();
-  showToast('Randomized!');
+  showToast('Cascade randomized!');
 });
 
-// Randomize All button handler (setup page)
+// Randomize All button handler (setup page) — uses active tags for coherence
 document.getElementById('btn-fill-sample').addEventListener('click', () => {
   if (!activeStory) return;
-  const fields = {
-    characters: pickRandom(SAMPLE_CHARACTERS, 3).join('\n\n'),
-    world: pickRandom(SAMPLE_WORLDS, 1)[0],
-    ships: pickRandom(SAMPLE_SHIPS, 2).join('\n\n'),
-    canon: pickRandom(SAMPLE_CANON_RULES, 3).join('\n\n'),
-    secrets: pickRandom(SAMPLE_SECRETS, 3).join('\n\n')
-  };
-  setLoreFieldsInSetup(fields);
-  activeStory.lore = composeLore(fields);
+  const tags = getActiveTags();
+  cascadeFillLore(tags, 'setup');
   activeStory.updatedAt = Date.now();
   saveState();
   showToast('All lore randomized!');
 });
 
-// Per-field randomize buttons (setup page)
+// Per-field randomize buttons — tag-aware
 const LORE_SAMPLE_MAP = {
-  characters: () => pickRandom(SAMPLE_CHARACTERS, 3).join('\n\n'),
-  world: () => pickRandom(SAMPLE_WORLDS, 1)[0],
-  ships: () => pickRandom(SAMPLE_SHIPS, 2).join('\n\n'),
-  canon: () => pickRandom(SAMPLE_CANON_RULES, 3).join('\n\n'),
-  secrets: () => pickRandom(SAMPLE_SECRETS, 3).join('\n\n')
+  characters: (tags) => pickTagged(SAMPLE_CHARACTERS, CHARACTER_TAGS, 3, tags).join('\n\n'),
+  world: (tags) => pickTagged(SAMPLE_WORLDS, WORLD_TAGS, 1, tags)[0],
+  ships: (tags) => pickTagged(SAMPLE_SHIPS, SHIP_TAGS, 2, tags).join('\n\n'),
+  canon: (tags) => pickTagged(SAMPLE_CANON_RULES, CANON_TAGS, 3, tags).join('\n\n'),
+  secrets: (tags) => pickTagged(SAMPLE_SECRETS, SECRET_TAGS, 3, tags).join('\n\n')
 };
 
 document.querySelectorAll('[data-lore-field]').forEach(btn => {
@@ -1430,7 +1769,8 @@ document.querySelectorAll('[data-lore-field]').forEach(btn => {
     if (!activeStory) return;
     const field = btn.dataset.loreField;
     const textarea = document.getElementById('inp-lore-' + field);
-    textarea.value = LORE_SAMPLE_MAP[field]();
+    const tags = getActiveTags();
+    textarea.value = LORE_SAMPLE_MAP[field](tags);
     activeStory.lore = composeLore(getLoreFieldsFromSetup());
     activeStory.updatedAt = Date.now();
     saveState();
@@ -1438,30 +1778,24 @@ document.querySelectorAll('[data-lore-field]').forEach(btn => {
   });
 });
 
-// Randomize All button handler (index page)
+// Randomize All button handler (index page) — tag-aware
 document.getElementById('btn-randomize-all-index').addEventListener('click', () => {
   if (!activeStory) return;
-  const fields = {
-    characters: pickRandom(SAMPLE_CHARACTERS, 3).join('\n\n'),
-    world: pickRandom(SAMPLE_WORLDS, 1)[0],
-    ships: pickRandom(SAMPLE_SHIPS, 2).join('\n\n'),
-    canon: pickRandom(SAMPLE_CANON_RULES, 3).join('\n\n'),
-    secrets: pickRandom(SAMPLE_SECRETS, 3).join('\n\n')
-  };
-  setLoreFieldsInEditor(fields);
-  activeStory.lore = composeLore(fields);
+  const tags = getActiveTags();
+  cascadeFillLore(tags, 'editor');
   activeStory.updatedAt = Date.now();
   saveState();
   showToast('All lore randomized!');
 });
 
-// Per-field randomize buttons (index page)
+// Per-field randomize buttons (index page) — tag-aware
 document.querySelectorAll('[data-lore-edit]').forEach(btn => {
   btn.addEventListener('click', () => {
     if (!activeStory) return;
     const field = btn.dataset.loreEdit;
     const textarea = document.getElementById('lore-edit-' + field);
-    textarea.value = LORE_SAMPLE_MAP[field]();
+    const tags = getActiveTags();
+    textarea.value = LORE_SAMPLE_MAP[field](tags);
     activeStory.lore = composeLore(getLoreFieldsFromEditor());
     activeStory.updatedAt = Date.now();
     saveState();
