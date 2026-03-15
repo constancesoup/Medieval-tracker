@@ -1798,19 +1798,15 @@ function generateSampleLore() {
   return `# Your Sims\n${chars.join('\n\n')}\n\n# Lot & Neighborhood\n${world}\n\n# Relationships\n${ships.join('\n\n')}\n\n# Gameplay Rules\n${rules.join('\n\n')}\n\n# Sim Secrets\n${secrets.join('\n\n')}`;
 }
 
-// Fandom / Tone / Premise randomize buttons (cascade chain: Fandom → Tone → Premise → Lore)
+// Fandom / Tone / Premise randomize buttons (non-cascading, each only fills its own field)
 document.getElementById('btn-rand-fandom').addEventListener('click', () => {
   if (!activeStory) return;
   const fandom = pickRandom(SAMPLE_FANDOMS, 1)[0];
   document.getElementById('inp-fandom').value = fandom;
   activeStory.fandom = fandom;
-  let tags = getTagsForValue(SAMPLE_FANDOMS, FANDOM_TAGS, fandom);
-  tags = cascadeFillTone(tags);
-  cascadeFillPremise(tags);
-  cascadeFillLore(tags, 'setup');
   activeStory.updatedAt = Date.now();
   saveState();
-  showToast('Cascade randomized!');
+  showToast('Randomized!');
 });
 
 document.getElementById('btn-rand-tone').addEventListener('click', () => {
@@ -1819,12 +1815,9 @@ document.getElementById('btn-rand-tone').addEventListener('click', () => {
   const tone = pickTagged(SAMPLE_TONES, TONE_TAGS, 1, fandomTags)[0];
   document.getElementById('inp-tone').value = tone;
   activeStory.tone = tone;
-  const tags = [...new Set([...fandomTags, ...getTagsForValue(SAMPLE_TONES, TONE_TAGS, tone)])];
-  cascadeFillPremise(tags);
-  cascadeFillLore(tags, 'setup');
   activeStory.updatedAt = Date.now();
   saveState();
-  showToast('Cascade randomized!');
+  showToast('Randomized!');
 });
 
 document.getElementById('btn-rand-premise').addEventListener('click', () => {
@@ -1833,10 +1826,9 @@ document.getElementById('btn-rand-premise').addEventListener('click', () => {
   const premise = pickTagged(SAMPLE_PREMISES, PREMISE_TAGS, 1, tags)[0];
   document.getElementById('inp-premise').value = premise;
   activeStory.premise = premise;
-  cascadeFillLore(tags, 'setup');
   activeStory.updatedAt = Date.now();
   saveState();
-  showToast('Cascade randomized!');
+  showToast('Randomized!');
 });
 
 // Randomize All button handler (setup page) — uses active tags for coherence
