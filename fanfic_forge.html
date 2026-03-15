@@ -243,6 +243,7 @@ textarea { resize: vertical; }
   </div>
   <div class="field">
     <label for="inp-lore">Lore Bible</label>
+    <button class="btn-secondary" id="btn-fill-sample" type="button" style="float:right;margin-top:-24px;">Fill with Sample</button>
     <textarea id="inp-lore" rows="8"></textarea>
   </div>
   <div id="setup-error" class="validation-error" style="display:none;"></div>
@@ -684,6 +685,196 @@ document.getElementById('btn-next').addEventListener('click', () => {
 // Close modal on overlay click
 document.getElementById('add-chapter-modal').addEventListener('click', (e) => {
   if (e.target === e.currentTarget) e.currentTarget.classList.remove('active');
+});
+
+// -- Sample Lore Data --
+const SAMPLE_WORLDS = [
+  "Post-war continent of Valdris, where magic is fueled by emotional trauma. Three kingdoms in fragile truce. Industrial fantasy with Victorian-era technology.",
+  "Orbital station Kepler-9, last refuge of humanity after Earth's collapse. Corporate factions vie for control of dwindling oxygen reserves. Hard sci-fi, 2340 AD.",
+  "The Drowned Parishes of New Marseille, a flooded coastal city where amphibious mutants trade in pre-flood relics. Biopunk meets Southern Gothic.",
+  "Neo-Kyoto, 2089. Neon-drenched megacity where hackers jack into spirit networks. Cyberpunk fused with Shinto mysticism. Yakuza clans control digital shrines.",
+  "Ironhaven, a steampunk fortress-city built inside a dormant volcano. Clockwork automatons serve the Artificer Parliament. Coal is sacred currency.",
+  "Kingdom of Rhysal beneath the Siltmere Ocean. Merfolk aristocracy, pressure-forged crystal architecture. Ancient leviathans sleep in the abyssal trenches below.",
+  "Dust Bowl Kansas, 1935, but the storms carry ghosts. Folk magic practitioners battle spectral plagues. Historical horror with American frontier mythology.",
+  "Bleakport, a perpetually fog-bound harbor town. Noir detective setting, 1940s aesthetic. Sea creatures infiltrate human society wearing stolen faces.",
+  "The Floating Academies of Cirrus, cloud-cities devoted to arcane scholarship. Renaissance-era culture. Knowledge is literal currency, memories are taxed.",
+  "Isla Cerradora, a cursed tropical island where time loops every seven days. Age of Sail pirates trapped in an eternal cycle of betrayal.",
+  "Tanglevine Bayou, a magical swamp where voodoo practitioners negotiate with sentient alligator spirits. 1920s Louisiana with fae crossover elements.",
+  "Luminara, a city inside a giant bioluminescent jellyfish drifting through deep ocean. Symbiotic technology, pressure-caste society, coral-grown tools.",
+  "Cascadia Free State, 2045. Eco-anarchist commune in the Pacific Northwest after US fracture. Solarpunk aesthetics, mushroom-based biotech, rain worship.",
+  "Port Reverie, a dream-powered metropolis where sleep is industrialized. Art Deco architecture, oneiromancers police the collective unconscious, 1930s noir tone.",
+  "Grimwald Academy, a boarding school for monster children in modern-day Scotland. Urban fantasy, teenage drama, each species has unique magical puberty.",
+  "Nightharbor, a city that only exists between midnight and dawn. Urban fantasy, nocturnal merchants, dreamwalker police force, sunrise means erasure.",
+  "Zenith Arcology, a mile-high self-contained city in post-climate-collapse Earth, 2095. Vertical class stratification, rooftop farms, basement black markets.",
+  "Prohibition-era Chicago but werewolves run the speakeasies. Urban fantasy noir, silver-bullet bootleggers, pack politics mirror gang warfare.",
+  "Ashfall District, a neighborhood in modern Tokyo where yokai run businesses alongside humans. Slice-of-life urban fantasy, spirit-world bureaucracy comedy.",
+  "Brindlewood, a seemingly idyllic English village where elderly women solve murders linked to cosmic horror. Cozy mystery meets eldritch dread.",
+  "Driftwood City, built entirely from shipwrecks in a permanent ocean maelstrom. Pirate democracy, salvage economy, the whirlpool is worshipped.",
+  "The Obsidian Spires of Noxhaven, a gothic city where vampires rule openly. Dark fantasy, blood-tithe economy, human livestock rebellions brewing.",
+  "Perdition Alley, a neon-lit strip of interdimensional nightclubs. Urban fantasy noir, demon bartenders serve mortal patrons, soul-debt economy.",
+  "Ashen Reach, a volcanic archipelago ruled by dragon-bonded warlords. Bronze Age technology. Magic drawn from geothermal vents and obsidian runes.",
+  "The Verdant Labyrinth, an endless sentient forest on a tidally locked planet. Bioluminescent flora, nomadic elven tribes, no metal exists here.",
+  "Frontier town of Gallows Gulch on Mars, 2187. Space western with terraforming disputes, android outlaws, and solar-powered revolvers.",
+  "The Scarlet Khanate, a steppe empire where blood magic fuels mounted warfare. Mongol-inspired culture, 13th-century tech, demon-horse cavalry.",
+  "Hollowreach, a city carved into the roots of a world-tree. Fae courts wage cold wars in fungal tunnels. Celtic-inspired dark fantasy.",
+  "The Shattered Moons of Velanthos, where gravity-defying cities float among lunar debris. Space opera with feudal politics and psionic noble houses.",
+  "Abyssal Station Theta, a deep-sea research facility where eldritch entities whisper through the hull. Sci-fi horror, claustrophobic setting, 2260 AD."
+];
+
+const SAMPLE_CHARACTERS = [
+  "Elara Voss, 24, former soldier. Sharp-tongued, fiercely loyal, secretly hears the dead. Kael Ashford, 26, disgraced prince under a false name, calm but full of rage.",
+  "Yuki Tanaka, 19, shrine maiden. Gentle but stubborn, secretly binds demons at night. Ren Okada, 22, wandering swordsman, cheerful yet haunted by a village he failed to save.",
+  "Amara Osei, 30, herbalist. Warm-hearted, wise beyond her years, secretly poisoned a tyrant king. Kofi Mensah, 35, blacksmith, quiet and strong, hides a branded mark of slavery.",
+  "Sofia Reyes, 28, cartographer. Curious, restless, secretly maps ley lines for a forbidden cult. Diego Vargas, 33, bounty hunter, charming but ruthless, owes a debt to the dead.",
+  "Priya Sharma, 21, temple dancer. Graceful, observant, secretly an assassin for the high priestess. Arjun Mehta, 40, merchant prince, generous yet secretly funds a rebel army.",
+  "Fatima Al-Rashid, 27, astronomer. Quiet, brilliant, secretly deciphers prophecies of the world's end. Omar Hassan, 31, palace guard, dutiful and brave, secretly a spy for the northern clans.",
+  "Ingrid Halvorsen, 38, shipwright. Blunt, dependable, secretly built a vessel to reach the land of gods. Erik Stenberg, 29, fisherman, easygoing, once drowned and returned changed.",
+  "Mei Lin Zhang, 20, silk weaver. Shy, meticulous, secretly embroiders spells into her fabric. Wei Chen, 45, retired general, stern and honorable, hides a massacre he ordered.",
+  "Chioma Adeyemi, 32, bone reader. Fierce, spiritual, secretly communes with an ancient serpent god. Emeka Nwankwo, 28, drum maker, joyful and loud, conceals a terrible stutter when afraid.",
+  "Isabela Cruz, 25, apothecary. Compassionate, sharp-witted, secretly addicted to her own elixirs. Mateo Aguilar, 37, priest, pious and gentle, lost his faith after witnessing a miracle go wrong.",
+  "Lila Nakamura, 23, street artist. Bold, impulsive, secretly paints protective wards on alley walls. Haruki Sato, 34, merchant, pragmatic and weary, secretly bankrolls the city's orphanages.",
+  "Nneka Okafor, 29, midwife. Calm under pressure, secretly a dreamwalker who visits the unborn. Tunde Balogun, 41, judge, fair and feared, secretly pardoned his own brother.",
+  "Camila Santos, 22, lighthouse keeper. Lonely, brave, secretly signals smugglers to save refugees. Rafael Torres, 30, ship captain, reckless but honorable, carries a compass that points to regret.",
+  "Asha Patel, 35, puppeteer. Whimsical, secretive, her puppets move when no one is pulling strings. Ravi Kumar, 27, scribe, meticulous and anxious, accidentally transcribed a forbidden prophecy.",
+  "Saoirse Byrne, 31, innkeeper. Warm, shrewd, secretly runs an underground railroad for escaped slaves. Cillian Murphy, 44, retired soldier, haunted and kind, keeps a locked room no one enters.",
+  "Zara Osman, 26, spice merchant. Ambitious, cunning, secretly a poisoner for hire. Hassan Farah, 38, poet, melancholic and gentle, writes verses that can literally break hearts.",
+  "Anika Johansson, 33, glassblower. Patient, precise, secretly traps spirits inside her creations. Lars Eriksson, 50, woodcutter, gruff and solitary, once spoke to a god and was cursed with truth.",
+  "Mira Volkov, 24, acrobat. Fearless, charming, secretly spying for a foreign crown. Dmitri Petrov, 36, clockmaker, obsessive and brilliant, built a device that slows time but ages the user.",
+  "Leila Nazari, 28, calligrapher. Serene, observant, her written words carry literal power. Darius Rezaei, 32, caravan guard, loyal and scarred, owes a life debt he can never repay.",
+  "Keiko Mori, 40, tea master. Graceful, insightful, reads futures in tea leaves with terrifying accuracy. Takeshi Ono, 19, apprentice, eager and clumsy, accidentally bonded with a dragon spirit.",
+  "Adanna Eze, 34, weaver. Creative, fierce, secretly weaves protective enchantments into funeral shrouds. Obinna Chukwu, 29, wrestler, boisterous and gentle, hides a crippling fear of the dark.",
+  "Elena Vasquez, 27, navigator. Analytical, restless, secretly charts a course to a mythical lost continent. Marco Delgado, 42, tavern owner, gregarious but guarded, witnessed a murder he won't report.",
+  "Freya Lindqvist, 30, rune carver. Stoic, methodical, accidentally carved a rune that killed her mentor. Bjorn Andersson, 25, shepherd, kind and simple, speaks to animals and they answer.",
+  "Nadia Volkov, 22, fire dancer. Passionate, reckless, secretly can't control the flames she summons. Viktor Sokolov, 48, apothecary, cynical and sharp, sells cures to diseases he created.",
+  "Yara Santos, 19, fisher. Quiet, observant, found a pearl that whispers secrets of the deep. Lucas Ferreira, 31, carpenter, steady and dependable, builds coffins that keep the dead truly dead.",
+  "Amina Diallo, 36, griot storyteller. Charismatic, wise, her stories physically manifest for moments. Moussa Traore, 43, ironworker, powerful and thoughtful, forges blades that sing warnings to their wielders.",
+  "Hana Kim, 25, herbalist. Gentle, stubborn, secretly grows plants that cure curses no one else can. Joon Park, 28, scholar, intense and passionate, deciphered an ancient text that drove three others mad.",
+  "Isolde Brandt, 42, brewmaster. Sharp-humored, generous, her mead grants visions to those who drink deeply. Wolfgang Muller, 55, retired knight, dignified and weary, keeps his old sword oiled and sharp.",
+  "Rosa Almeida, 31, tattoo artist. Intuitive, bold, her tattoos protect or curse depending on intent. Eduardo Lima, 24, musician, dreamy and talented, plays songs that make the dead weep.",
+  "Linnea Dahl, 29, beekeeper. Patient, gentle, her bees deliver messages across impossible distances. Anders Berg, 33, cartographer, detail-obsessed, mapped a territory that shouldn't exist."
+];
+
+const SAMPLE_SHIPS = [
+  "Enemies to lovers, slow burn. She blames him for her brother's death. He's trying to atone without revealing the truth. Tension is razor-sharp and neither will break first.",
+  "Fake dating at a royal court. They despise each other privately but must convince an entire kingdom they're in love. The act starts feeling dangerously real.",
+  "Childhood friends reunited after a decade apart. She's a war hero now; he still sees the girl who caught fireflies. Neither knows how to bridge the gap.",
+  "Rivals competing for the same guild leadership. Every sparring match crackles with unspoken attraction. Winning means everything, but losing to her feels like a gift.",
+  "Arranged marriage between enemy kingdoms. He's cold and dutiful; she's furious and plotting escape. Slowly, they become each other's only ally in a hostile court.",
+  "Hurt/comfort after a failed mission. He won't let anyone tend his wounds, but she sits outside his door every night until he opens it.",
+  "Forbidden love between a healer and a cursed knight. Every time she touches him, the curse spreads to her. He begs her to stop. She refuses.",
+  "Second chance romance. They broke up five years ago over a misunderstanding. Now they're assigned to the same outpost and the feelings never actually left.",
+  "Found family bond between a grizzled mercenary and an orphaned teenager. He swore he'd never care about anyone again. She makes that impossible.",
+  "Friends to lovers. They've been inseparable since the academy. Everyone sees it but them. A near-death experience forces the truth into the open.",
+  "Mentor and student. The old mage promised her dying friend she'd train his daughter. The girl is talented, reckless, and reminds her painfully of her own youth.",
+  "Co-workers at an enchanted library. He shelves books; she hunts cursed manuscripts. Their shifts overlap at midnight, and the silence between them speaks volumes.",
+  "Enemies to reluctant allies. The pirate captain captures the naval officer. A kraken attack forces them to fight side by side. Mutual respect is inconvenient.",
+  "Platonic soulmates. Two soldiers who survived the same siege. They don't need romance; they need someone who understands the nightmares without asking questions.",
+  "Forbidden love between a priestess and a demon-blooded wanderer. Her faith says he's an abomination. Her heart says her faith is wrong.",
+  "Fake engagement to fool her disapproving family. He's her best friend and completely in love with her. She's oblivious. Her family is not.",
+  "Reluctant allies: a necromancer and a paladin forced to collaborate against a greater evil. Their moral arguments are legendary. So is their effectiveness together.",
+  "Childhood friends to strangers to lovers. She became a queen; he became a thief. Their worlds shouldn't intersect anymore, but fate keeps intervening.",
+  "Found family. A disgraced knight, a runaway princess, and a mute orphan form an unlikely traveling party. None of them planned to care this much.",
+  "Rivals to lovers at a bardic college. They compete for every solo, every award. The hatred is a mask for something that terrifies them both.",
+  "Band mates in a traveling minstrel troupe. She writes the songs; he performs them. The lyrics are about him, and he's the last to realize it.",
+  "Lab partners studying forbidden alchemy. They share a dangerous secret that could get them both executed. The intimacy of conspiracy becomes something neither expected.",
+  "Hurt/comfort. After the siege, she finds him sitting alone in the rubble, unable to speak. She doesn't ask him to. She just stays.",
+  "Found family. A dragon and the knight sent to slay it. The dragon is lonely. The knight is tired of killing. They make terrible roommates.",
+  "Vampire and vampire hunter team up against a mutual enemy. The tension is existential. The banter is surprisingly warm.",
+  "She always jumped first and he always caught her. Twenty years later, she's falling in a way he can't physically prevent. He tries anyway.",
+  "Two guards on the night watch. Years of shared silence and bad coffee. Love arrives not as a thunderbolt but as a slow sunrise.",
+  "The critic and the chef. She gave his restaurant one star. He sent her a seven-course challenge. The battle is waged in butter and prose.",
+  "Two monks in a silent order communicate through touch and expression. When he leaves the order, his first word is her name.",
+  "The harbor master and the pirate queen. She docks illegally every full moon. He waits with a fine and barely concealed anticipation."
+];
+
+const SAMPLE_CANON_RULES = [
+  "Magic always costs memory. The dead stay dead. The northern border has been sealed for a century.",
+  "Faster-than-light travel requires human consciousness as fuel. AI is outlawed. Cloning is legal but shameful.",
+  "Dragons bond once for life. If the rider dies, the dragon goes mad. No exceptions have ever been recorded.",
+  "The monarchy passes through combat, not blood. Every ruler must defeat the previous one. Abdication means exile.",
+  "Vampires can walk in daylight but lose their powers. Feeding on the willing gives no sustenance. Blood must be taken.",
+  "Time travel exists but only backwards. You cannot return. Every traveler becomes a ghost in their new era.",
+  "The forest is sentient and hostile. It rearranges paths nightly. Only children under ten can navigate it safely.",
+  "Healers absorb the injuries they cure. A healer who mends a broken arm gets a broken arm. Pain transfers completely.",
+  "The gods are dead but their corpses still generate power. Temples are built on divine remains. Faith is engineering.",
+  "Music is literally magical. Certain melodies can kill. All musicians must be licensed by the state.",
+  "Elves age in reverse. They are born ancient and die as infants. Their wisdom fades as they grow younger.",
+  "Ghosts are real but only visible to people in love. Widows and widowers see the dead everywhere.",
+  "Robots have souls but no legal rights. Destroying a robot is not murder. Some humans disagree violently.",
+  "Shapeshifters lose a piece of their original form with each transformation. Eventually they forget what they looked like.",
+  "Prophecies are always accurate but deliberately misleading. Seers are distrusted. The future cannot be avoided only misunderstood.",
+  "Names have power. Speaking someone's true name gives you control. Everyone uses false names. Birth names are secret.",
+  "Emotions are visible as colored auras. Lying is nearly impossible. Psychopaths have no aura and are feared.",
+  "Tattoos are living spells. They move on the skin and can bite. Tattoo artists are the most powerful mages.",
+  "Iron is poisonous to magic users. Mages live in wooden cities. Swords are a statement against sorcery.",
+  "Dreams are shared communal spaces. Privacy in sleep does not exist. Insomniacs are the only truly private people.",
+  "The king is chosen by a sentient sword. The sword has terrible judgment. Every chosen king has been a disaster.",
+  "Books are alive and aware. Burning a book is murder. Libraries are sanctuaries with their own legal jurisdiction.",
+  "Written words are binding contracts. Casual notes carry legal weight. Illiteracy is a form of freedom.",
+  "Technology and magic are inversely proportional. Cities have tech but no magic. Villages have magic but no tech.",
+  "Everyone has a predetermined death date visible only to themselves. Murder is impossible; you die when scheduled.",
+  "Luck is a measurable resource that depletes with use. Lucky people eventually become catastrophically unlucky. Balance always comes.",
+  "Twins share a single soul between them. If one dies, the other gets the whole soul and becomes extraordinarily powerful.",
+  "Love is a diagnosable disease with physical symptoms. A cure exists but removes the ability to feel joy.",
+  "Cooking is alchemy. Every meal has magical properties. Chefs are the most powerful and dangerous people alive.",
+  "Mathematical equations are spells. Mathematicians are wizards. Division by zero can tear holes in reality itself."
+];
+
+const SAMPLE_SECRETS = [
+  "She doesn't know he's the prince. He doesn't know she reads minds. The treaty is built on a shared lie.",
+  "The mentor is actually her biological father. He gave her up to protect her from his enemies. She thinks he abandoned her for power.",
+  "The healer is slowly poisoning the king on orders from the queen. He believes it's medicine. She believes it's mercy.",
+  "The castle was built on a sealed portal. The court wizard keeps it closed. If he dies, everything beneath awakens.",
+  "Her sword is sentient and slowly consuming her personality. She acts bolder because the blade wants blood. No one realizes she's disappearing.",
+  "The peace treaty has a secret clause: the younger prince was traded as a hostage. The kingdom celebrates peace while he rots in a foreign dungeon.",
+  "He can see the future but only in dreams. He dreamed her death three times. Each time he changes something, the death simply moves.",
+  "The ship's navigator is blind. She navigates by sound and the crew's trust. No one outside the ship knows. She's the best in the fleet.",
+  "The village healer's cures work because she trades her own lifespan for each patient. She has two years left and thirty patients waiting.",
+  "The commander's battle strategies come from a captured enemy general he keeps hidden in the basement. The wins aren't his. The guilt is.",
+  "She married him for his library, not his title. He married her for her army, not her heart. They've accidentally fallen in love and neither will admit it.",
+  "The prophet's visions stopped years ago. She's been making educated guesses. Her accuracy rate hasn't changed. She doesn't know what that means.",
+  "The blacksmith's finest sword was forged with his daughter's bone ash. He told everyone it was dragon bone. He'll never make another like it.",
+  "The ambassador speaks twelve languages but pretends to need a translator. The translator knows and plays along. They've been running intelligence together for years.",
+  "The rebellion's leader and the tyrant are the same person. He created the opposition to control it. The revolution is a pressure valve, not a threat.",
+  "Her magic comes from a parasitic entity living in her blood. Healing others spreads it. In fifty years, everyone she's healed will hear its voice.",
+  "The old king didn't die of illness. He walked into the forest and never came back. The court fabricated a funeral. He's still out there.",
+  "The twins switched places ten years ago and never switched back. The warrior sister lives as the scholar. The scholar fights wars she was never trained for.",
+  "The map everyone is fighting over is a fake. The real one is tattooed on the back of a serving girl who doesn't know what she carries.",
+  "The dragon hasn't attacked in decades because it's dead. The knight who slew it never told anyone. He still collects tribute for \"protection.\"",
+  "She writes love letters to him and signs them with another woman's name. He's falling for a person who doesn't exist.",
+  "The cure they discovered has a side effect: it works, but the patient loses all memory of the person who administered it.",
+  "The walls of the city are not stone. They are compressed ash from a civilization that burned. The builders knew. No one else does.",
+  "His loyalty isn't to the crown. It's to the crown's enemy who saved his sister. Every report he files is carefully edited.",
+  "The child everyone protects is not the heir. The real heir was swapped at birth and currently works as a stable hand. The nursemaid took the secret to her grave.",
+  "The bard's most famous song is someone else's. The original composer died in obscurity. The bard found the manuscript and has lived in guilt since.",
+  "She can only use her powers when genuinely afraid. She manufactures her own terror before every battle. The bravery everyone admires is actually controlled panic.",
+  "The rival houses have been secretly intermarrying for generations. The feud is theater to keep the other families from allying against them.",
+  "The lighthouse keeper signals ships to safety, but once a year she signals one to the rocks. She doesn't remember doing it. Something else uses her hands.",
+  "His stutter disappears when he lies. He's the most fluent speaker in court. Nobody has connected the two facts yet."
+];
+
+function pickRandom(arr, n) {
+  const shuffled = [...arr].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, n);
+}
+
+function generateSampleLore() {
+  const world = pickRandom(SAMPLE_WORLDS, 1)[0];
+  const chars = pickRandom(SAMPLE_CHARACTERS, 3);
+  const ships = pickRandom(SAMPLE_SHIPS, 2);
+  const rules = pickRandom(SAMPLE_CANON_RULES, 3);
+  const secrets = pickRandom(SAMPLE_SECRETS, 3);
+
+  return `# Characters\n${chars.join('\n\n')}\n\n# World / Setting\n${world}\n\n# Ships / Relationships\n${ships.join('\n\n')}\n\n# Canon Rules\n${rules.join('\n\n')}\n\n# Secrets & Subtext\n${secrets.join('\n\n')}`;
+}
+
+// Fill Sample button handler
+document.getElementById('btn-fill-sample').addEventListener('click', () => {
+  const loreArea = document.getElementById('inp-lore');
+  loreArea.value = generateSampleLore();
+  state.lore = loreArea.value;
+  saveState();
+  showToast('Sample lore generated!');
 });
 
 // Init
