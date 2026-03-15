@@ -106,6 +106,88 @@ input.sample-text, textarea.sample-text { color: #6a5d4b; font-style: italic; }
 }
 .btn-danger:hover { background: #7d4444; }
 
+/* Home Page */
+#home-page { padding-top: 60px; }
+#home-page h1 { text-align: center; margin-bottom: 8px; font-size: 2em; }
+.home-subtitle { text-align: center; color: #5a5040; margin-bottom: 40px; font-style: italic; }
+
+.story-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+.story-card {
+  background: #13120f;
+  border: 1px solid #2a2520;
+  border-radius: 8px;
+  padding: 20px 24px;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.1s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.story-card:hover { border-color: #c9a84c; transform: translateY(-1px); }
+.story-card-info { flex: 1; min-width: 0; }
+.story-card-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.1em;
+  color: #e8d5b0;
+  margin-bottom: 4px;
+}
+.story-card-meta {
+  font-size: 0.82em;
+  color: #8a7d6b;
+  font-style: italic;
+}
+.story-card-chapters {
+  font-size: 0.8em;
+  color: #5a5040;
+  margin-top: 6px;
+}
+.story-card-chevron { color: #5a5040; font-size: 1.4em; margin-left: 16px; }
+.story-card:hover .story-card-chevron { color: #c9a84c; }
+
+.story-card-actions { display: flex; gap: 4px; margin-left: 12px; }
+.story-card-actions button {
+  background: transparent;
+  border: none;
+  color: #5a5040;
+  cursor: pointer;
+  font-size: 0.9em;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: color 0.2s, background 0.2s;
+}
+.story-card-actions button:hover { color: #c9a84c; background: rgba(201,168,76,0.1); }
+.story-card-actions .delete-story:hover { color: #c9684c; background: rgba(107,58,58,0.3); }
+
+.new-story-section {
+  border: 2px dashed #2a2520;
+  border-radius: 8px;
+  padding: 32px;
+  text-align: center;
+  transition: border-color 0.2s;
+}
+.new-story-section:hover { border-color: #3a3530; }
+.new-story-section h3 {
+  font-size: 1em;
+  margin-bottom: 8px;
+  color: #8a7d6b;
+}
+.new-story-section p {
+  font-size: 0.85em;
+  color: #5a5040;
+  margin-bottom: 16px;
+}
+
+.home-empty {
+  text-align: center;
+  padding: 48px 20px;
+  color: #5a5040;
+}
+.home-empty p {
+  font-style: italic;
+  margin-bottom: 24px;
+  font-size: 1.05em;
+}
+
 /* Setup Page */
 #setup-page h1 { text-align: center; margin-bottom: 8px; font-size: 1.8em; }
 .setup-subtitle { text-align: center; color: #5a5040; margin-bottom: 36px; font-style: italic; }
@@ -217,15 +299,29 @@ input.sample-text, textarea.sample-text { color: #6a5d4b; font-style: italic; }
   .setup-actions .btn-gold { width: 100%; }
   .index-bottom { flex-direction: column; }
   .index-bottom .btn-gold, .index-bottom .btn-secondary { width: 100%; text-align: center; }
+  .story-card { padding: 16px; }
+  .story-card-actions { margin-left: 8px; }
 }
 </style>
 </head>
 <body>
 
+<!-- Home Page -->
+<div id="home-page" class="page">
+  <h1>Fanfic Forge</h1>
+  <p class="home-subtitle">Your fanfiction writing workshop</p>
+  <div id="stories-list" class="story-grid"></div>
+  <div class="new-story-section">
+    <h3>Start a New Story</h3>
+    <p>Set up your title, premise, lore bible, and begin writing</p>
+    <button class="btn-gold" id="btn-new-story">+ New Story</button>
+  </div>
+</div>
+
 <!-- Setup Page -->
 <div id="setup-page" class="page">
   <h1>Fanfic Forge</h1>
-  <p class="setup-subtitle">Your fanfiction writing workshop</p>
+  <p class="setup-subtitle">Story Setup</p>
   <div class="field">
     <label for="inp-title">Story Title *</label>
     <input type="text" id="inp-title" placeholder="Enter your story title">
@@ -249,7 +345,7 @@ input.sample-text, textarea.sample-text { color: #6a5d4b; font-style: italic; }
   </div>
   <div id="setup-error" class="validation-error" style="display:none;"></div>
   <div class="setup-actions">
-    <button class="btn-secondary" id="btn-reset" type="button">Reset / New Story</button>
+    <button class="btn-secondary" id="btn-reset" type="button">&larr; All Stories</button>
     <button class="btn-gold" id="btn-begin" type="button">Begin Writing</button>
   </div>
 </div>
@@ -262,6 +358,7 @@ input.sample-text, textarea.sample-text { color: #6a5d4b; font-style: italic; }
       <span class="fandom" id="index-fandom"></span>
     </div>
     <div class="index-topbar-actions">
+      <button class="btn-ghost" id="btn-home" title="All Stories">&#8962;</button>
       <button class="btn-ghost" id="btn-settings" title="Settings">&#9881;</button>
       <button class="btn-secondary" id="btn-copy-prompt" style="display:none;">Copy Prompt for Claude</button>
       <button class="btn-gold" id="btn-export" style="display:none;">Export HTML</button>
@@ -338,33 +435,79 @@ const LORE_TEMPLATE = `# Characters
 (What do characters know that others don't?)`;
 
 const STORAGE_KEY = 'fanfic_forge_state';
+const STORIES_KEY = 'fanfic_forge_stories';
 
+function newStoryState() {
+  return {
+    id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+    title: '',
+    fandom: '',
+    tone: 'Emotional but grounded',
+    premise: '',
+    lore: LORE_TEMPLATE,
+    chapters: [],
+    createdAt: Date.now(),
+    updatedAt: Date.now()
+  };
+}
+
+let stories = []; // Array of story objects
 let state = {
-  title: '',
-  fandom: '',
-  tone: 'Emotional but grounded',
-  premise: '',
-  lore: LORE_TEMPLATE,
-  chapters: [],
-  currentPage: 'setup',
+  currentPage: 'home',
+  activeStoryId: null,
   currentChapter: 0
 };
+let activeStory = null; // Reference to the current story in stories array
 
 let editing = false;
 let loreVisible = false;
 
 function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  localStorage.setItem(STORIES_KEY, JSON.stringify(stories));
 }
 
 function loadState() {
   try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      state = { ...state, ...parsed };
+    const savedState = localStorage.getItem(STORAGE_KEY);
+    const savedStories = localStorage.getItem(STORIES_KEY);
+
+    if (savedStories) {
+      stories = JSON.parse(savedStories);
+    }
+
+    if (savedState) {
+      const parsed = JSON.parse(savedState);
+      // Migrate from old single-story format
+      if (parsed.title !== undefined && !parsed.activeStoryId) {
+        const migrated = newStoryState();
+        migrated.title = parsed.title || '';
+        migrated.fandom = parsed.fandom || '';
+        migrated.tone = parsed.tone || 'Emotional but grounded';
+        migrated.premise = parsed.premise || '';
+        migrated.lore = parsed.lore || LORE_TEMPLATE;
+        migrated.chapters = parsed.chapters || [];
+        if (migrated.title) {
+          stories.push(migrated);
+          state.activeStoryId = migrated.id;
+          state.currentPage = parsed.currentPage === 'setup' ? 'setup' : parsed.currentPage;
+          state.currentChapter = parsed.currentChapter || 0;
+        }
+      } else {
+        state = { ...state, ...parsed };
+      }
+    }
+
+    // Resolve active story reference
+    if (state.activeStoryId) {
+      activeStory = stories.find(s => s.id === state.activeStoryId) || null;
     }
   } catch (e) { /* ignore parse errors */ }
+}
+
+function setActiveStory(storyId) {
+  state.activeStoryId = storyId;
+  activeStory = stories.find(s => s.id === storyId) || null;
 }
 
 function escapeHTML(text) {
@@ -391,30 +534,120 @@ function navigate(page, chapterIndex) {
 
 // -- Render --
 function render() {
+  document.getElementById('home-page').classList.toggle('active', state.currentPage === 'home');
   document.getElementById('setup-page').classList.toggle('active', state.currentPage === 'setup');
   document.getElementById('index-page').classList.toggle('active', state.currentPage === 'index');
   document.getElementById('chapter-page').classList.toggle('active', state.currentPage === 'chapter');
 
-  if (state.currentPage === 'setup') renderSetup();
+  if (state.currentPage === 'home') renderHome();
+  else if (state.currentPage === 'setup') renderSetup();
   else if (state.currentPage === 'index') renderIndex();
   else if (state.currentPage === 'chapter') renderChapter();
 }
 
+function renderHome() {
+  const list = document.getElementById('stories-list');
+  list.innerHTML = '';
+
+  if (stories.length === 0) {
+    list.innerHTML = '<div class="home-empty"><p>No stories yet. Create your first one below.</p></div>';
+    return;
+  }
+
+  // Sort by most recently updated
+  const sorted = [...stories].sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+
+  sorted.forEach(story => {
+    const card = document.createElement('div');
+    card.className = 'story-card';
+
+    const info = document.createElement('div');
+    info.className = 'story-card-info';
+    info.addEventListener('click', () => {
+      setActiveStory(story.id);
+      navigate('index');
+    });
+
+    const title = document.createElement('div');
+    title.className = 'story-card-title';
+    title.textContent = story.title || 'Untitled Story';
+
+    const meta = document.createElement('div');
+    meta.className = 'story-card-meta';
+    meta.textContent = [story.fandom, story.tone].filter(Boolean).join(' · ') || 'No fandom set';
+
+    const chapters = document.createElement('div');
+    chapters.className = 'story-card-chapters';
+    const count = story.chapters ? story.chapters.length : 0;
+    chapters.textContent = count === 0 ? 'No chapters yet' : count === 1 ? '1 chapter' : `${count} chapters`;
+
+    info.appendChild(title);
+    info.appendChild(meta);
+    info.appendChild(chapters);
+
+    const actions = document.createElement('div');
+    actions.className = 'story-card-actions';
+
+    const editBtn = document.createElement('button');
+    editBtn.title = 'Edit story settings';
+    editBtn.textContent = '\u2699';
+    editBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setActiveStory(story.id);
+      navigate('setup');
+    });
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.className = 'delete-story';
+    deleteBtn.title = 'Delete story';
+    deleteBtn.textContent = '\u2715';
+    deleteBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!confirm(`Delete "${story.title || 'Untitled Story'}"? This can't be undone.`)) return;
+      stories = stories.filter(s => s.id !== story.id);
+      if (state.activeStoryId === story.id) {
+        state.activeStoryId = null;
+        activeStory = null;
+      }
+      saveState();
+      renderHome();
+    });
+
+    actions.appendChild(editBtn);
+    actions.appendChild(deleteBtn);
+
+    const chevron = document.createElement('span');
+    chevron.className = 'story-card-chevron';
+    chevron.textContent = '\u203A';
+    chevron.addEventListener('click', () => {
+      setActiveStory(story.id);
+      navigate('index');
+    });
+
+    card.appendChild(info);
+    card.appendChild(actions);
+    card.appendChild(chevron);
+    list.appendChild(card);
+  });
+}
+
 function renderSetup() {
-  document.getElementById('inp-title').value = state.title;
-  document.getElementById('inp-fandom').value = state.fandom;
-  document.getElementById('inp-tone').value = state.tone;
-  document.getElementById('inp-premise').value = state.premise;
-  document.getElementById('inp-lore').value = state.lore;
+  if (!activeStory) return;
+  document.getElementById('inp-title').value = activeStory.title;
+  document.getElementById('inp-fandom').value = activeStory.fandom;
+  document.getElementById('inp-tone').value = activeStory.tone;
+  document.getElementById('inp-premise').value = activeStory.premise;
+  document.getElementById('inp-lore').value = activeStory.lore;
   document.getElementById('setup-error').style.display = 'none';
 }
 
 function renderIndex() {
-  document.getElementById('index-title').textContent = state.title;
+  if (!activeStory) { navigate('home'); return; }
+  document.getElementById('index-title').textContent = activeStory.title;
   const fandomEl = document.getElementById('index-fandom');
-  fandomEl.textContent = [state.fandom, state.tone].filter(Boolean).join(' · ');
+  fandomEl.textContent = [activeStory.fandom, activeStory.tone].filter(Boolean).join(' · ');
 
-  const hasChapters = state.chapters.length > 0;
+  const hasChapters = activeStory.chapters.length > 0;
   document.getElementById('btn-export').style.display = hasChapters ? '' : 'none';
   document.getElementById('btn-copy-prompt').style.display = '';
 
@@ -426,7 +659,7 @@ function renderIndex() {
     return;
   }
 
-  state.chapters.forEach((text, i) => {
+  activeStory.chapters.forEach((text, i) => {
     const card = document.createElement('div');
     card.className = 'chapter-card';
 
@@ -443,7 +676,7 @@ function renderIndex() {
     upBtn.addEventListener('click', (e) => { e.stopPropagation(); moveChapter(i, -1); });
     const downBtn = document.createElement('button');
     downBtn.textContent = '↓';
-    downBtn.disabled = i === state.chapters.length - 1;
+    downBtn.disabled = i === activeStory.chapters.length - 1;
     downBtn.addEventListener('click', (e) => { e.stopPropagation(); moveChapter(i, 1); });
     arrows.appendChild(upBtn);
     arrows.appendChild(downBtn);
@@ -463,14 +696,15 @@ function renderIndex() {
   const loreSection = document.getElementById('lore-editor-section');
   loreSection.style.display = loreVisible ? '' : 'none';
   if (loreVisible) {
-    document.getElementById('lore-edit-area').value = state.lore;
+    document.getElementById('lore-edit-area').value = activeStory.lore;
   }
 }
 
 function renderChapter() {
+  if (!activeStory) { navigate('home'); return; }
   const idx = state.currentChapter;
-  const total = state.chapters.length;
-  const text = state.chapters[idx] || '';
+  const total = activeStory.chapters.length;
+  const text = activeStory.chapters[idx] || '';
 
   document.getElementById('chapter-of-label').textContent = `Chapter ${idx + 1} of ${total}`;
   document.getElementById('chapter-heading-text').textContent = `Chapter ${idx + 1}`;
@@ -490,27 +724,30 @@ function renderChapter() {
 }
 
 function moveChapter(index, direction) {
+  if (!activeStory) return;
   const target = index + direction;
-  if (target < 0 || target >= state.chapters.length) return;
-  [state.chapters[index], state.chapters[target]] = [state.chapters[target], state.chapters[index]];
+  if (target < 0 || target >= activeStory.chapters.length) return;
+  [activeStory.chapters[index], activeStory.chapters[target]] = [activeStory.chapters[target], activeStory.chapters[index]];
+  activeStory.updatedAt = Date.now();
   saveState();
   renderIndex();
 }
 
 function exportHTML() {
-  const chaptersHTML = state.chapters.map((text, i) => {
+  if (!activeStory) return;
+  const chaptersHTML = activeStory.chapters.map((text, i) => {
     const divider = i > 0 ? '<div style="text-align:center;color:#5a5040;margin:48px 0;font-size:1.2em;letter-spacing:8px;">&#10022; &#10022; &#10022;</div>' : '';
     return `${divider}<h2 style="text-align:center;font-family:'Cinzel',serif;font-size:0.85em;text-transform:uppercase;letter-spacing:3px;color:#e8d5b0;margin:40px 0 24px;">Chapter ${i + 1}</h2><div style="white-space:pre-wrap;font-size:0.98em;line-height:1.9;color:#c8bca3;">${escapeHTML(text)}</div>`;
   }).join('');
 
-  const subtitle = [state.fandom, state.tone].filter(Boolean).join(' · ');
-  const html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>${escapeHTML(state.title)}</title><link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"><style>body{background:#1a1a1a;color:#d4c5a9;font-family:'Lora','Georgia',serif;max-width:700px;margin:0 auto;padding:48px 24px;}</style></head><body><h1 style="text-align:center;font-family:'Cinzel',serif;font-size:2em;color:#e8d5b0;margin-bottom:8px;">${escapeHTML(state.title)}</h1>${subtitle ? `<p style="text-align:center;font-style:italic;color:#8a7d6b;margin-bottom:48px;">${escapeHTML(subtitle)}</p>` : ''}${chaptersHTML}<div style="text-align:center;color:#5a5040;margin-top:64px;font-size:0.82em;font-style:italic;">Written with Fanfic Forge</div></body></html>`;
+  const subtitle = [activeStory.fandom, activeStory.tone].filter(Boolean).join(' · ');
+  const html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>${escapeHTML(activeStory.title)}</title><link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"><style>body{background:#1a1a1a;color:#d4c5a9;font-family:'Lora','Georgia',serif;max-width:700px;margin:0 auto;padding:48px 24px;}</style></head><body><h1 style="text-align:center;font-family:'Cinzel',serif;font-size:2em;color:#e8d5b0;margin-bottom:8px;">${escapeHTML(activeStory.title)}</h1>${subtitle ? `<p style="text-align:center;font-style:italic;color:#8a7d6b;margin-bottom:48px;">${escapeHTML(subtitle)}</p>` : ''}${chaptersHTML}<div style="text-align:center;color:#5a5040;margin-top:64px;font-size:0.82em;font-style:italic;">Written with Fanfic Forge</div></body></html>`;
 
   const blob = new Blob([html], { type: 'text/html' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `${state.title.replace(/[^a-z0-9]/gi, '_').toLowerCase() || 'story'}.html`;
+  a.download = `${activeStory.title.replace(/[^a-z0-9]/gi, '_').toLowerCase() || 'story'}.html`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -518,16 +755,17 @@ function exportHTML() {
 }
 
 function copyPrompt() {
-  const nextChapter = state.chapters.length + 1;
-  let prompt = `Write Chapter ${nextChapter} of my story.\n\nSTORY: "${state.title}"\n`;
-  if (state.fandom) prompt += `FANDOM: ${state.fandom}\n`;
-  if (state.tone) prompt += `TONE: ${state.tone}\n`;
-  prompt += `PREMISE: ${state.premise}\n`;
-  if (state.lore.trim()) prompt += `\nLORE BIBLE:\n${state.lore}\n`;
+  if (!activeStory) return;
+  const nextChapter = activeStory.chapters.length + 1;
+  let prompt = `Write Chapter ${nextChapter} of my story.\n\nSTORY: "${activeStory.title}"\n`;
+  if (activeStory.fandom) prompt += `FANDOM: ${activeStory.fandom}\n`;
+  if (activeStory.tone) prompt += `TONE: ${activeStory.tone}\n`;
+  prompt += `PREMISE: ${activeStory.premise}\n`;
+  if (activeStory.lore.trim()) prompt += `\nLORE BIBLE:\n${activeStory.lore}\n`;
 
-  if (state.chapters.length > 0) {
+  if (activeStory.chapters.length > 0) {
     prompt += '\nPREVIOUS CHAPTERS:\n';
-    state.chapters.forEach((text, i) => {
+    activeStory.chapters.forEach((text, i) => {
       prompt += `--- Chapter ${i + 1} ---\n${text}\n`;
     });
     prompt += `\nContinue naturally from where the last chapter ended. Maintain voice consistency. Build on established threads. End on a turn. Write 800-1500 words.\n`;
@@ -564,48 +802,44 @@ function fallbackCopy(text) {
 
 // Setup
 document.getElementById('btn-begin').addEventListener('click', () => {
-  state.title = document.getElementById('inp-title').value.trim();
-  state.fandom = document.getElementById('inp-fandom').value.trim();
-  state.tone = document.getElementById('inp-tone').value.trim();
-  state.premise = document.getElementById('inp-premise').value.trim();
-  state.lore = document.getElementById('inp-lore').value;
+  if (!activeStory) return;
+  activeStory.title = document.getElementById('inp-title').value.trim();
+  activeStory.fandom = document.getElementById('inp-fandom').value.trim();
+  activeStory.tone = document.getElementById('inp-tone').value.trim();
+  activeStory.premise = document.getElementById('inp-premise').value.trim();
+  activeStory.lore = document.getElementById('inp-lore').value;
 
-  if (!state.title || !state.premise) {
+  if (!activeStory.title || !activeStory.premise) {
     const errEl = document.getElementById('setup-error');
     errEl.textContent = 'Story Title and Premise are required.';
     errEl.style.display = '';
     return;
   }
+  activeStory.updatedAt = Date.now();
   navigate('index');
 });
 
 document.getElementById('btn-reset').addEventListener('click', () => {
-  if (confirm('Start a new story? This will erase all current data.')) {
-    localStorage.removeItem(STORAGE_KEY);
-    state = {
-      title: '', fandom: '', tone: 'Emotional but grounded', premise: '',
-      lore: LORE_TEMPLATE, chapters: [], currentPage: 'setup', currentChapter: 0
-    };
-    editing = false;
-    loreVisible = false;
-    render();
-  }
+  state.activeStoryId = null;
+  activeStory = null;
+  navigate('home');
 });
 
 // Setup auto-save on input blur
 ['inp-title', 'inp-fandom', 'inp-tone', 'inp-premise', 'inp-lore'].forEach(id => {
   document.getElementById(id).addEventListener('change', () => {
-    state.title = document.getElementById('inp-title').value.trim();
-    state.fandom = document.getElementById('inp-fandom').value.trim();
-    state.tone = document.getElementById('inp-tone').value.trim();
-    state.premise = document.getElementById('inp-premise').value.trim();
-    state.lore = document.getElementById('inp-lore').value;
+    if (!activeStory) return;
+    activeStory.title = document.getElementById('inp-title').value.trim();
+    activeStory.fandom = document.getElementById('inp-fandom').value.trim();
+    activeStory.tone = document.getElementById('inp-tone').value.trim();
+    activeStory.premise = document.getElementById('inp-premise').value.trim();
+    activeStory.lore = document.getElementById('inp-lore').value;
+    activeStory.updatedAt = Date.now();
     saveState();
   });
 });
 
 // Index
-document.getElementById('btn-settings').addEventListener('click', () => navigate('setup'));
 document.getElementById('btn-export').addEventListener('click', exportHTML);
 document.getElementById('btn-copy-prompt').addEventListener('click', copyPrompt);
 
@@ -619,9 +853,11 @@ document.getElementById('btn-cancel-add').addEventListener('click', () => {
 });
 
 document.getElementById('btn-save-add').addEventListener('click', () => {
+  if (!activeStory) return;
   const text = document.getElementById('new-chapter-text').value.trim();
   if (!text) return;
-  state.chapters.push(text);
+  activeStory.chapters.push(text);
+  activeStory.updatedAt = Date.now();
   saveState();
   document.getElementById('add-chapter-modal').classList.remove('active');
   renderIndex();
@@ -633,7 +869,9 @@ document.getElementById('btn-lore-toggle').addEventListener('click', () => {
 });
 
 document.getElementById('lore-edit-area').addEventListener('change', () => {
-  state.lore = document.getElementById('lore-edit-area').value;
+  if (!activeStory) return;
+  activeStory.lore = document.getElementById('lore-edit-area').value;
+  activeStory.updatedAt = Date.now();
   saveState();
 });
 
@@ -646,9 +884,11 @@ document.getElementById('btn-edit-chapter').addEventListener('click', () => {
 });
 
 document.getElementById('btn-save-edit').addEventListener('click', () => {
+  if (!activeStory) return;
   const text = document.getElementById('chapter-edit-textarea').value.trim();
   if (text) {
-    state.chapters[state.currentChapter] = text;
+    activeStory.chapters[state.currentChapter] = text;
+    activeStory.updatedAt = Date.now();
     saveState();
   }
   editing = false;
@@ -661,17 +901,18 @@ document.getElementById('btn-cancel-edit').addEventListener('click', () => {
 });
 
 document.getElementById('btn-delete-chapter').addEventListener('click', () => {
+  if (!activeStory) return;
   const idx = state.currentChapter;
   if (!confirm(`Delete Chapter ${idx + 1}? This can't be undone.`)) return;
-  state.chapters.splice(idx, 1);
-  if (state.chapters.length === 0) {
+  activeStory.chapters.splice(idx, 1);
+  activeStory.updatedAt = Date.now();
+  if (activeStory.chapters.length === 0) {
     navigate('index');
   } else {
-    state.currentChapter = Math.min(idx, state.chapters.length - 1);
+    state.currentChapter = Math.min(idx, activeStory.chapters.length - 1);
     saveState();
     renderChapter();
-    // Update the label
-    document.getElementById('chapter-of-label').textContent = `Chapter ${state.currentChapter + 1} of ${state.chapters.length}`;
+    document.getElementById('chapter-of-label').textContent = `Chapter ${state.currentChapter + 1} of ${activeStory.chapters.length}`;
   }
 });
 
@@ -680,7 +921,7 @@ document.getElementById('btn-prev').addEventListener('click', () => {
 });
 
 document.getElementById('btn-next').addEventListener('click', () => {
-  if (state.currentChapter < state.chapters.length - 1) navigate('chapter', state.currentChapter + 1);
+  if (activeStory && state.currentChapter < activeStory.chapters.length - 1) navigate('chapter', state.currentChapter + 1);
 });
 
 // Close modal on overlay click
@@ -871,12 +1112,33 @@ function generateSampleLore() {
 
 // Fill Sample button handler
 document.getElementById('btn-fill-sample').addEventListener('click', () => {
+  if (!activeStory) return;
   const loreArea = document.getElementById('inp-lore');
   loreArea.value = generateSampleLore();
   loreArea.classList.remove('sample-text');
-  state.lore = loreArea.value;
+  activeStory.lore = loreArea.value;
+  activeStory.updatedAt = Date.now();
   saveState();
   showToast('Sample lore generated!');
+});
+
+// Home page - New Story
+document.getElementById('btn-new-story').addEventListener('click', () => {
+  const story = newStoryState();
+  stories.push(story);
+  setActiveStory(story.id);
+  navigate('setup');
+});
+
+// Index page - navigation
+document.getElementById('btn-home').addEventListener('click', () => {
+  state.activeStoryId = null;
+  activeStory = null;
+  navigate('home');
+});
+
+document.getElementById('btn-settings').addEventListener('click', () => {
+  if (activeStory) navigate('setup');
 });
 
 // Init
