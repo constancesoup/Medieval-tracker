@@ -376,15 +376,24 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
     <input type="text" id="inp-title" placeholder="Enter your story title">
   </div>
   <div class="field">
-    <label for="inp-fandom">Fandom / Universe</label>
+    <div class="lore-field-header">
+      <label for="inp-fandom">Fandom / Universe</label>
+      <button class="btn-randomize" type="button" id="btn-rand-fandom">Randomize</button>
+    </div>
     <input type="text" id="inp-fandom" placeholder="e.g. Harry Potter, ATLA, Original">
   </div>
   <div class="field">
-    <label for="inp-tone">Tone / Vibe</label>
+    <div class="lore-field-header">
+      <label for="inp-tone">Tone / Vibe</label>
+      <button class="btn-randomize" type="button" id="btn-rand-tone">Randomize</button>
+    </div>
     <input type="text" id="inp-tone" placeholder="Emotional but grounded">
   </div>
   <div class="field">
-    <label for="inp-premise">Premise *</label>
+    <div class="lore-field-header">
+      <label for="inp-premise">Premise *</label>
+      <button class="btn-randomize" type="button" id="btn-rand-premise">Randomize</button>
+    </div>
     <textarea id="inp-premise" rows="4" placeholder="What's this story about?"></textarea>
   </div>
   <div class="field">
@@ -1123,6 +1132,64 @@ document.getElementById('add-chapter-modal').addEventListener('click', (e) => {
   if (e.target === e.currentTarget) e.currentTarget.classList.remove('active');
 });
 
+// -- Sample Fandom / Tone / Premise Data --
+const SAMPLE_FANDOMS = [
+  "Harry Potter", "Avatar: The Last Airbender", "Lord of the Rings", "Star Wars",
+  "My Hero Academia", "Naruto", "Percy Jackson", "Hunger Games",
+  "Game of Thrones", "Stranger Things", "Marvel Cinematic Universe", "DC Comics",
+  "Supernatural", "Doctor Who", "Sherlock", "Attack on Titan",
+  "Fullmetal Alchemist", "The Witcher", "Buffy the Vampire Slayer", "Dragon Age",
+  "Mass Effect", "Genshin Impact", "Good Omens", "Our Flag Means Death",
+  "Original Universe", "Hades (game)", "Stardew Valley", "The Magnus Archives",
+  "Critical Role / D&D", "Twilight", "Bridgerton", "Pride and Prejudice",
+  "Howl's Moving Castle", "Studio Ghibli", "Arcane / League of Legends", "Fire Emblem",
+  "Final Fantasy", "Persona 5", "Sailor Moon", "Fruits Basket"
+];
+
+const SAMPLE_TONES = [
+  "Emotional but grounded", "Dark and atmospheric", "Soft and tender", "Chaotic and fun",
+  "Gothic romance", "Bittersweet and nostalgic", "Sharp-tongued and witty", "Slow burn tension",
+  "Cozy and warm", "Eerie and unsettling", "Dramatic and high-stakes", "Whimsical and dreamy",
+  "Gritty and raw", "Melancholy with hope", "Darkly comedic", "Lush and lyrical",
+  "Tense and paranoid", "Gentle hurt/comfort", "Epic and sweeping", "Intimate and quiet",
+  "Sardonic with heart", "Fever-dream surreal", "Achingly romantic", "Found-family warmth",
+  "Noir with neon edges", "Sunlit and wistful", "Vengeful and sharp", "Playful enemies-to-lovers",
+  "Haunted and grieving", "Rebellious and fiery"
+];
+
+const SAMPLE_PREMISES = [
+  "Two rival spies discover they've been assigned to protect the same target — each other.",
+  "A healer who absorbs every wound she mends falls for a soldier who keeps getting hurt on purpose just to see her.",
+  "After dying, a ghost discovers the afterlife is a bureaucratic nightmare and their assigned caseworker is their ex.",
+  "A cursed knight must collect seven impossible items before the next eclipse or lose their humanity forever.",
+  "Two strangers keep waking up in each other's bodies — but they live in different centuries.",
+  "A disgraced noble returns home after ten years to find their childhood enemy now rules the kingdom.",
+  "The chosen one refuses the quest. Their overlooked sidekick picks it up instead.",
+  "A librarian discovers that every book they've ever loved is actually a memoir from a parallel universe.",
+  "Rivals at a prestigious magic academy are forced to share a dorm room when a spell goes wrong.",
+  "A retired assassin opens a bakery. Their first customer recognizes them.",
+  "The villain wins, and now they have to figure out how to actually run a kingdom.",
+  "A time traveler keeps trying to prevent a war but accidentally causes it every time.",
+  "Two people on opposite sides of a siege begin exchanging letters through a crack in the wall.",
+  "A dragon and a knight fall in love, but only one of them is aware they're not both human.",
+  "The last surviving member of a prophecy must convince a stranger that the world is ending.",
+  "A musician's songs literally come true, and they just wrote a love song about the wrong person.",
+  "Sworn enemies are shipwrecked together on an island with one rescue flare and no trust.",
+  "A detective realizes the serial killer they're hunting has been leaving clues only they can understand.",
+  "A princess trades places with her handmaiden, but the handmaiden is better at being queen.",
+  "After a magical catastrophe, everyone forgets who they loved — except one person who remembers everything.",
+  "An immortal who has given up on life meets a mortal who makes them want to start again.",
+  "A group of strangers in a tavern discover they've all been summoned by the same dead wizard.",
+  "A witch who can only cast spells through cooking enters a royal baking competition to save her village.",
+  "The villain's henchman falls for the hero's sidekick. Both sides disapprove.",
+  "A ghost ship appears in the harbor every full moon. This time, someone on board is still alive.",
+  "Two childhood friends promised to meet at a landmark in ten years. Only one of them is still human.",
+  "A necromancer accidentally raises their own future corpse, who has opinions about their life choices.",
+  "The king's fool is the only one who knows the kingdom is under a mind-control spell.",
+  "A bounty hunter discovers their next target is the child they gave up years ago.",
+  "In a world where memories can be traded, someone is buying up every memory of a person who no longer exists."
+];
+
 // -- Sample Lore Data --
 const SAMPLE_WORLDS = [
   "Post-war continent of Valdris, where magic is fueled by emotional trauma. Three kingdoms in fragile truce. Industrial fantasy with Victorian-era technology.",
@@ -1303,6 +1370,34 @@ function generateSampleLore() {
 
   return `# Characters\n${chars.join('\n\n')}\n\n# World / Setting\n${world}\n\n# Ships / Relationships\n${ships.join('\n\n')}\n\n# Canon Rules\n${rules.join('\n\n')}\n\n# Secrets & Subtext\n${secrets.join('\n\n')}`;
 }
+
+// Fandom / Tone / Premise randomize buttons
+document.getElementById('btn-rand-fandom').addEventListener('click', () => {
+  if (!activeStory) return;
+  document.getElementById('inp-fandom').value = pickRandom(SAMPLE_FANDOMS, 1)[0];
+  activeStory.fandom = document.getElementById('inp-fandom').value;
+  activeStory.updatedAt = Date.now();
+  saveState();
+  showToast('Randomized!');
+});
+
+document.getElementById('btn-rand-tone').addEventListener('click', () => {
+  if (!activeStory) return;
+  document.getElementById('inp-tone').value = pickRandom(SAMPLE_TONES, 1)[0];
+  activeStory.tone = document.getElementById('inp-tone').value;
+  activeStory.updatedAt = Date.now();
+  saveState();
+  showToast('Randomized!');
+});
+
+document.getElementById('btn-rand-premise').addEventListener('click', () => {
+  if (!activeStory) return;
+  document.getElementById('inp-premise').value = pickRandom(SAMPLE_PREMISES, 1)[0];
+  activeStory.premise = document.getElementById('inp-premise').value;
+  activeStory.updatedAt = Date.now();
+  saveState();
+  showToast('Randomized!');
+});
 
 // Randomize All button handler (setup page)
 document.getElementById('btn-fill-sample').addEventListener('click', () => {
