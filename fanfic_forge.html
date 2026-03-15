@@ -215,6 +215,35 @@ input.sample-text, textarea.sample-text { color: #8abba0; font-style: italic; }
   font-family: 'Quicksand', sans-serif;
 }
 
+/* Pack selector */
+.pack-selector { margin-top: 8px; }
+.pack-group-label {
+  font-size: 0.82em; font-weight: 700; color: #5a8a6a;
+  margin: 10px 0 6px; display: flex; align-items: center; gap: 8px;
+  font-family: 'Quicksand', sans-serif;
+}
+.pack-group-label button {
+  font-size: 0.85em; padding: 2px 10px; border-radius: 12px;
+  border: 1px solid #2DB84B; background: transparent; color: #2DB84B;
+  cursor: pointer; font-family: 'Quicksand', sans-serif; font-weight: 600;
+}
+.pack-group-label button:hover { background: #d4f5e0; }
+.pack-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.pack-chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 5px 14px; border-radius: 20px;
+  font-size: 0.78em; font-weight: 600;
+  font-family: 'Quicksand', sans-serif;
+  cursor: pointer; user-select: none;
+  border: 1.5px solid #c0d8c8; background: #f5faf7; color: #6a9a7a;
+  transition: all 0.15s ease;
+}
+.pack-chip.selected {
+  background: #2DB84B; color: #fff; border-color: #2DB84B;
+  box-shadow: 0 2px 8px rgba(45,184,75,0.25);
+}
+.pack-chip:hover { border-color: #2DB84B; }
+
 /* Story card controls wrapper */
 .story-card-controls { display: flex; align-items: center; gap: 10px; }
 
@@ -640,6 +669,10 @@ input.sample-text, textarea.sample-text { color: #8abba0; font-style: italic; }
     <input type="text" id="inp-fandom" placeholder="e.g. Sims 4, Sims 4 + Seasons, Sims 3">
   </div>
   <div class="field">
+    <label>Packs</label>
+    <div class="pack-selector" id="pack-selector"></div>
+  </div>
+  <div class="field">
     <div class="lore-field-header">
       <label for="inp-tone">Tone / Vibe</label>
       <button class="btn-randomize" type="button" id="btn-rand-tone">Randomize</button>
@@ -889,6 +922,7 @@ function newStoryState() {
     id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
     title: '',
     fandom: '',
+    packs: [],
     tone: 'Drama-filled legacy play',
     premise: '',
     lore: LORE_TEMPLATE,
@@ -930,6 +964,7 @@ function loadState() {
         const migrated = newStoryState();
         migrated.title = parsed.title || '';
         migrated.fandom = parsed.fandom || '';
+        migrated.packs = parsed.packs || [];
         migrated.tone = parsed.tone || 'Emotional but grounded';
         migrated.premise = parsed.premise || '';
         migrated.lore = parsed.lore || LORE_TEMPLATE;
@@ -1107,6 +1142,7 @@ function renderSetup() {
   document.getElementById('inp-tone').value = activeStory.tone;
   document.getElementById('inp-premise').value = activeStory.premise;
   setLoreFieldsInSetup(parseLore(activeStory.lore));
+  renderPackSelector();
   document.getElementById('setup-error').style.display = 'none';
 }
 
@@ -1114,7 +1150,8 @@ function renderIndex() {
   if (!activeStory) { navigate('home'); return; }
   document.getElementById('index-title').textContent = activeStory.title;
   const fandomEl = document.getElementById('index-fandom');
-  fandomEl.textContent = [activeStory.fandom, activeStory.tone].filter(Boolean).join(' · ');
+  const packSummary = (activeStory.packs && activeStory.packs.length > 0) ? `+ ${activeStory.packs.length} packs` : '';
+  fandomEl.textContent = [activeStory.fandom, packSummary, activeStory.tone].filter(Boolean).join(' · ');
 
   const hasChapters = activeStory.chapters.length > 0;
   document.getElementById('btn-export').style.display = hasChapters ? '' : 'none';
@@ -1228,6 +1265,7 @@ function copyPrompt() {
   const nextChapter = activeStory.chapters.length + 1;
   let prompt = `Write Chapter ${nextChapter} of my story.\n\nSTORY: "${activeStory.title}"\n`;
   if (activeStory.fandom) prompt += `GAME: ${activeStory.fandom}\n`;
+  if (activeStory.packs && activeStory.packs.length > 0) prompt += `PACKS: ${activeStory.packs.join(', ')}\n`;
   if (activeStory.tone) prompt += `TONE: ${activeStory.tone}\n`;
   prompt += `PREMISE: ${activeStory.premise}\n`;
   if (activeStory.lore.trim()) prompt += `\nSIM BIBLE:\n${activeStory.lore}\n`;
@@ -1441,6 +1479,41 @@ const FANDOM_TAGS = [
   ["adventure","mystery","drama"],["legacy","family","drama"],["city","social","romance"],
   ["simple","family","drama"],["legacy","drama","romance"],["modern","drama","romance"],
   ["medieval","fantasy","dark"],["paranormal","dark","mystery"],["tiny","modern","romance"]
+];
+
+// -- Sims 4 Packs (Expansion Packs + relevant Game Packs) --
+const SIMS_PACKS = [
+  // Expansion Packs (EP)
+  { name: "Get to Work",        type: "EP", tags: ["career","modern","drama"] },
+  { name: "Get Together",       type: "EP", tags: ["clubs","social","drama"] },
+  { name: "City Living",        type: "EP", tags: ["city","career","modern"] },
+  { name: "Cats & Dogs",        type: "EP", tags: ["pets","family","romance"] },
+  { name: "Seasons",            type: "EP", tags: ["seasons","romance","family"] },
+  { name: "Get Famous",         type: "EP", tags: ["fame","career","drama"] },
+  { name: "Island Living",      type: "EP", tags: ["island","summer","romance"] },
+  { name: "Discover University", type: "EP", tags: ["school","social","drama"] },
+  { name: "Eco Lifestyle",      type: "EP", tags: ["eco","modern","social"] },
+  { name: "Snowy Escape",       type: "EP", tags: ["winter","nature","romance"] },
+  { name: "Cottage Living",     type: "EP", tags: ["cottage","nature","romance"] },
+  { name: "High School Years",  type: "EP", tags: ["school","social","drama"] },
+  { name: "Growing Together",   type: "EP", tags: ["family","drama","modern"] },
+  { name: "Horse Ranch",        type: "EP", tags: ["ranch","nature","adventure"] },
+  { name: "For Rent",           type: "EP", tags: ["rental","social","drama"] },
+  { name: "Lovestruck",         type: "EP", tags: ["romance","social","modern"] },
+  { name: "Life & Death",       type: "EP", tags: ["dark","family","drama"] },
+  // Game Packs (GP)
+  { name: "Vampires",           type: "GP", tags: ["vampire","dark","romance"] },
+  { name: "Parenthood",         type: "GP", tags: ["family","drama","modern"] },
+  { name: "Realm of Magic",     type: "GP", tags: ["magic","fantasy","drama"] },
+  { name: "StrangerVille",      type: "GP", tags: ["mystery","dark","adventure"] },
+  { name: "Jungle Adventure",   type: "GP", tags: ["adventure","mystery","nature"] },
+  { name: "Outdoor Retreat",    type: "GP", tags: ["nature","adventure","romance"] },
+  { name: "Spa Day",            type: "GP", tags: ["relaxed","modern","romance"] },
+  { name: "Dine Out",           type: "GP", tags: ["food","social","romance"] },
+  { name: "Werewolves",         type: "GP", tags: ["werewolf","dark","drama"] },
+  { name: "Dream Home Decorator", type: "GP", tags: ["modern","family","romance"] },
+  { name: "Star Wars: Batuu",   type: "GP", tags: ["adventure","fantasy","drama"] },
+  { name: "Paranormal",         type: "GP", tags: ["paranormal","dark","mystery"] },
 ];
 
 const SAMPLE_TONES = [
@@ -1753,10 +1826,13 @@ function getTagsForValue(arr, tagArr, value) {
 // Cascade: collect active tags from fandom + tone fields
 function getActiveTags() {
   if (!activeStory) return [];
-  const tags = [];
   const fandomTags = getTagsForValue(SAMPLE_FANDOMS, FANDOM_TAGS, activeStory.fandom);
   const toneTags = getTagsForValue(SAMPLE_TONES, TONE_TAGS, activeStory.tone);
-  return [...new Set([...fandomTags, ...toneTags])];
+  const packTags = (activeStory.packs || []).flatMap(name => {
+    const pack = SIMS_PACKS.find(p => p.name === name);
+    return pack ? pack.tags : [];
+  });
+  return [...new Set([...fandomTags, ...toneTags, ...packTags])];
 }
 
 function cascadeFillTone(tags) {
@@ -1796,6 +1872,56 @@ function generateSampleLore() {
   const secrets = pickRandom(SAMPLE_SECRETS, 3);
 
   return `# Your Sims\n${chars.join('\n\n')}\n\n# Lot & Neighborhood\n${world}\n\n# Relationships\n${ships.join('\n\n')}\n\n# Gameplay Rules\n${rules.join('\n\n')}\n\n# Sim Secrets\n${secrets.join('\n\n')}`;
+}
+
+// -- Pack Selector --
+function renderPackSelector() {
+  const container = document.getElementById('pack-selector');
+  container.innerHTML = '';
+  const selected = (activeStory && activeStory.packs) ? activeStory.packs : [];
+  ['EP', 'GP'].forEach(type => {
+    const packs = SIMS_PACKS.filter(p => p.type === type);
+    const label = document.createElement('div');
+    label.className = 'pack-group-label';
+    const typeLabel = type === 'EP' ? 'Expansion Packs' : 'Game Packs';
+    label.innerHTML = `<span>${typeLabel}</span>`;
+    const selAllBtn = document.createElement('button');
+    const allSelected = packs.every(p => selected.includes(p.name));
+    selAllBtn.textContent = allSelected ? 'Deselect All' : 'Select All';
+    selAllBtn.addEventListener('click', () => {
+      if (!activeStory) return;
+      const names = packs.map(p => p.name);
+      if (allSelected) {
+        activeStory.packs = activeStory.packs.filter(n => !names.includes(n));
+      } else {
+        activeStory.packs = [...new Set([...activeStory.packs, ...names])];
+      }
+      activeStory.updatedAt = Date.now();
+      saveState();
+      renderPackSelector();
+    });
+    label.appendChild(selAllBtn);
+    container.appendChild(label);
+    const chips = document.createElement('div');
+    chips.className = 'pack-chips';
+    packs.forEach(pack => {
+      const chip = document.createElement('span');
+      chip.className = 'pack-chip' + (selected.includes(pack.name) ? ' selected' : '');
+      chip.textContent = pack.name;
+      chip.addEventListener('click', () => {
+        if (!activeStory) return;
+        if (!activeStory.packs) activeStory.packs = [];
+        const idx = activeStory.packs.indexOf(pack.name);
+        if (idx >= 0) activeStory.packs.splice(idx, 1);
+        else activeStory.packs.push(pack.name);
+        activeStory.updatedAt = Date.now();
+        saveState();
+        renderPackSelector();
+      });
+      chips.appendChild(chip);
+    });
+    container.appendChild(chips);
+  });
 }
 
 // Fandom / Tone / Premise randomize buttons (non-cascading, each only fills its own field)
