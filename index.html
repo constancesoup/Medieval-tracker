@@ -240,9 +240,47 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
 .index-bottom { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 10px; }
 
 .lore-editor { margin-top: 20px; padding-top: 20px; border-top: 2px solid #f5c6d8; }
-.lore-editor textarea { min-height: 200px; }
+.lore-editor textarea { min-height: 100px; }
 .lore-toggle { cursor: pointer; color: #b06088; font-size: 0.9em; }
 .lore-toggle:hover { color: #e91e90; }
+
+/* Lore Entry Fields */
+.lore-field { margin-bottom: 16px; }
+.lore-field-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 6px;
+}
+.lore-field-header label { margin-bottom: 0; }
+.btn-randomize {
+  background: linear-gradient(135deg, #f9a8d4, #f472b6);
+  color: #fff;
+  border: none;
+  border-radius: 16px;
+  padding: 4px 14px;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.78em;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 0.2s, transform 0.1s;
+  letter-spacing: 0.5px;
+}
+.btn-randomize:hover { filter: brightness(1.1); transform: translateY(-1px); }
+.lore-fields-group { margin-top: 12px; }
+.btn-randomize-all {
+  background: linear-gradient(135deg, #f472b6, #e91e90);
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.85em;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 0.2s, transform 0.1s;
+  box-shadow: 0 3px 10px rgba(233,30,144,0.2);
+  margin-bottom: 16px;
+}
+.btn-randomize-all:hover { filter: brightness(1.1); transform: translateY(-1px); }
 
 /* Add Chapter Modal */
 .modal-overlay {
@@ -350,9 +388,45 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
     <textarea id="inp-premise" rows="4" placeholder="What's this story about?"></textarea>
   </div>
   <div class="field">
-    <label for="inp-lore">Lore Bible</label>
-    <button class="btn-secondary" id="btn-fill-sample" type="button" style="float:right;margin-top:-24px;">Fill with Sample</button>
-    <textarea id="inp-lore" rows="8"></textarea>
+    <div class="lore-field-header" style="margin-bottom:12px;">
+      <label style="font-size:1em;margin-bottom:0;">Lore Bible</label>
+      <button class="btn-randomize-all" id="btn-fill-sample" type="button">Randomize All</button>
+    </div>
+    <div class="lore-field">
+      <div class="lore-field-header">
+        <label for="inp-lore-characters">Characters</label>
+        <button class="btn-randomize" type="button" data-lore-field="characters">Randomize</button>
+      </div>
+      <textarea id="inp-lore-characters" rows="4" placeholder="Name, age, personality, secrets, relationships"></textarea>
+    </div>
+    <div class="lore-field">
+      <div class="lore-field-header">
+        <label for="inp-lore-world">World / Setting</label>
+        <button class="btn-randomize" type="button" data-lore-field="world">Randomize</button>
+      </div>
+      <textarea id="inp-lore-world" rows="3" placeholder="World, rules, locations, time period"></textarea>
+    </div>
+    <div class="lore-field">
+      <div class="lore-field-header">
+        <label for="inp-lore-ships">Ships / Relationships</label>
+        <button class="btn-randomize" type="button" data-lore-field="ships">Randomize</button>
+      </div>
+      <textarea id="inp-lore-ships" rows="3" placeholder="Who's with who? Dynamic? Tension?"></textarea>
+    </div>
+    <div class="lore-field">
+      <div class="lore-field-header">
+        <label for="inp-lore-canon">Canon Rules</label>
+        <button class="btn-randomize" type="button" data-lore-field="canon">Randomize</button>
+      </div>
+      <textarea id="inp-lore-canon" rows="3" placeholder="What canon must be respected? What are you changing?"></textarea>
+    </div>
+    <div class="lore-field">
+      <div class="lore-field-header">
+        <label for="inp-lore-secrets">Secrets &amp; Subtext</label>
+        <button class="btn-randomize" type="button" data-lore-field="secrets">Randomize</button>
+      </div>
+      <textarea id="inp-lore-secrets" rows="3" placeholder="What do characters know that others don't?"></textarea>
+    </div>
   </div>
   <div id="setup-error" class="validation-error" style="display:none;"></div>
   <div class="setup-actions">
@@ -381,8 +455,45 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
     <button class="btn-secondary" id="btn-lore-toggle">Edit Lore Bible</button>
   </div>
   <div id="lore-editor-section" class="lore-editor" style="display:none;">
-    <label for="lore-edit-area">Lore Bible</label>
-    <textarea id="lore-edit-area" rows="8"></textarea>
+    <div class="lore-field-header" style="margin-bottom:12px;">
+      <label style="font-size:1em;margin-bottom:0;">Lore Bible</label>
+      <button class="btn-randomize-all" id="btn-randomize-all-index" type="button">Randomize All</button>
+    </div>
+    <div class="lore-field">
+      <div class="lore-field-header">
+        <label for="lore-edit-characters">Characters</label>
+        <button class="btn-randomize" type="button" data-lore-edit="characters">Randomize</button>
+      </div>
+      <textarea id="lore-edit-characters" rows="4" placeholder="Name, age, personality, secrets, relationships"></textarea>
+    </div>
+    <div class="lore-field">
+      <div class="lore-field-header">
+        <label for="lore-edit-world">World / Setting</label>
+        <button class="btn-randomize" type="button" data-lore-edit="world">Randomize</button>
+      </div>
+      <textarea id="lore-edit-world" rows="3" placeholder="World, rules, locations, time period"></textarea>
+    </div>
+    <div class="lore-field">
+      <div class="lore-field-header">
+        <label for="lore-edit-ships">Ships / Relationships</label>
+        <button class="btn-randomize" type="button" data-lore-edit="ships">Randomize</button>
+      </div>
+      <textarea id="lore-edit-ships" rows="3" placeholder="Who's with who? Dynamic? Tension?"></textarea>
+    </div>
+    <div class="lore-field">
+      <div class="lore-field-header">
+        <label for="lore-edit-canon">Canon Rules</label>
+        <button class="btn-randomize" type="button" data-lore-edit="canon">Randomize</button>
+      </div>
+      <textarea id="lore-edit-canon" rows="3" placeholder="What canon must be respected? What are you changing?"></textarea>
+    </div>
+    <div class="lore-field">
+      <div class="lore-field-header">
+        <label for="lore-edit-secrets">Secrets &amp; Subtext</label>
+        <button class="btn-randomize" type="button" data-lore-edit="secrets">Randomize</button>
+      </div>
+      <textarea id="lore-edit-secrets" rows="3" placeholder="What do characters know that others don't?"></textarea>
+    </div>
   </div>
 </div>
 
@@ -430,20 +541,79 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
 <div class="toast" id="toast"></div>
 
 <script>
-const LORE_TEMPLATE = `# Characters
-(Name, age, personality, secrets, relationships)
+const LORE_TEMPLATE = '';
 
-# World / Setting
-(World, rules, locations, time period)
+const LORE_SECTIONS = ['characters', 'world', 'ships', 'canon', 'secrets'];
+const LORE_HEADERS = {
+  characters: '# Characters',
+  world: '# World / Setting',
+  ships: '# Ships / Relationships',
+  canon: '# Canon Rules',
+  secrets: '# Secrets & Subtext'
+};
 
-# Ships / Relationships
-(Who's with who? Dynamic? Tension?)
+function parseLore(loreStr) {
+  const result = { characters: '', world: '', ships: '', canon: '', secrets: '' };
+  if (!loreStr || !loreStr.trim()) return result;
+  const sections = loreStr.split(/^# /m).filter(Boolean);
+  sections.forEach(section => {
+    const lines = section.split('\n');
+    const header = lines[0].trim().toLowerCase();
+    const body = lines.slice(1).join('\n').trim();
+    if (header.startsWith('characters')) result.characters = body;
+    else if (header.startsWith('world') || header.startsWith('setting')) result.world = body;
+    else if (header.startsWith('ships') || header.startsWith('relationships')) result.ships = body;
+    else if (header.startsWith('canon')) result.canon = body;
+    else if (header.startsWith('secrets') || header.startsWith('subtext')) result.secrets = body;
+  });
+  return result;
+}
 
-# Canon Rules
-(What canon must be respected? What are you changing?)
+function composeLore(fields) {
+  const parts = [];
+  LORE_SECTIONS.forEach(key => {
+    if (fields[key] && fields[key].trim()) {
+      parts.push(LORE_HEADERS[key] + '\n' + fields[key].trim());
+    }
+  });
+  return parts.join('\n\n');
+}
 
-# Secrets & Subtext
-(What do characters know that others don't?)`;
+function getLoreFieldsFromSetup() {
+  return {
+    characters: document.getElementById('inp-lore-characters').value,
+    world: document.getElementById('inp-lore-world').value,
+    ships: document.getElementById('inp-lore-ships').value,
+    canon: document.getElementById('inp-lore-canon').value,
+    secrets: document.getElementById('inp-lore-secrets').value
+  };
+}
+
+function setLoreFieldsInSetup(fields) {
+  document.getElementById('inp-lore-characters').value = fields.characters || '';
+  document.getElementById('inp-lore-world').value = fields.world || '';
+  document.getElementById('inp-lore-ships').value = fields.ships || '';
+  document.getElementById('inp-lore-canon').value = fields.canon || '';
+  document.getElementById('inp-lore-secrets').value = fields.secrets || '';
+}
+
+function getLoreFieldsFromEditor() {
+  return {
+    characters: document.getElementById('lore-edit-characters').value,
+    world: document.getElementById('lore-edit-world').value,
+    ships: document.getElementById('lore-edit-ships').value,
+    canon: document.getElementById('lore-edit-canon').value,
+    secrets: document.getElementById('lore-edit-secrets').value
+  };
+}
+
+function setLoreFieldsInEditor(fields) {
+  document.getElementById('lore-edit-characters').value = fields.characters || '';
+  document.getElementById('lore-edit-world').value = fields.world || '';
+  document.getElementById('lore-edit-ships').value = fields.ships || '';
+  document.getElementById('lore-edit-canon').value = fields.canon || '';
+  document.getElementById('lore-edit-secrets').value = fields.secrets || '';
+}
 
 const STORAGE_KEY = 'fanfic_forge_state';
 const STORIES_KEY = 'fanfic_forge_stories';
@@ -648,7 +818,7 @@ function renderSetup() {
   document.getElementById('inp-fandom').value = activeStory.fandom;
   document.getElementById('inp-tone').value = activeStory.tone;
   document.getElementById('inp-premise').value = activeStory.premise;
-  document.getElementById('inp-lore').value = activeStory.lore;
+  setLoreFieldsInSetup(parseLore(activeStory.lore));
   document.getElementById('setup-error').style.display = 'none';
 }
 
@@ -707,7 +877,7 @@ function renderIndex() {
   const loreSection = document.getElementById('lore-editor-section');
   loreSection.style.display = loreVisible ? '' : 'none';
   if (loreVisible) {
-    document.getElementById('lore-edit-area').value = activeStory.lore;
+    setLoreFieldsInEditor(parseLore(activeStory.lore));
   }
 }
 
@@ -818,7 +988,7 @@ document.getElementById('btn-begin').addEventListener('click', () => {
   activeStory.fandom = document.getElementById('inp-fandom').value.trim();
   activeStory.tone = document.getElementById('inp-tone').value.trim();
   activeStory.premise = document.getElementById('inp-premise').value.trim();
-  activeStory.lore = document.getElementById('inp-lore').value;
+  activeStory.lore = composeLore(getLoreFieldsFromSetup());
 
   if (!activeStory.title || !activeStory.premise) {
     const errEl = document.getElementById('setup-error');
@@ -837,14 +1007,24 @@ document.getElementById('btn-reset').addEventListener('click', () => {
 });
 
 // Setup auto-save on input blur
-['inp-title', 'inp-fandom', 'inp-tone', 'inp-premise', 'inp-lore'].forEach(id => {
+['inp-title', 'inp-fandom', 'inp-tone', 'inp-premise'].forEach(id => {
   document.getElementById(id).addEventListener('change', () => {
     if (!activeStory) return;
     activeStory.title = document.getElementById('inp-title').value.trim();
     activeStory.fandom = document.getElementById('inp-fandom').value.trim();
     activeStory.tone = document.getElementById('inp-tone').value.trim();
     activeStory.premise = document.getElementById('inp-premise').value.trim();
-    activeStory.lore = document.getElementById('inp-lore').value;
+    activeStory.lore = composeLore(getLoreFieldsFromSetup());
+    activeStory.updatedAt = Date.now();
+    saveState();
+  });
+});
+
+// Setup lore fields auto-save
+['inp-lore-characters', 'inp-lore-world', 'inp-lore-ships', 'inp-lore-canon', 'inp-lore-secrets'].forEach(id => {
+  document.getElementById(id).addEventListener('change', () => {
+    if (!activeStory) return;
+    activeStory.lore = composeLore(getLoreFieldsFromSetup());
     activeStory.updatedAt = Date.now();
     saveState();
   });
@@ -879,11 +1059,14 @@ document.getElementById('btn-lore-toggle').addEventListener('click', () => {
   renderIndex();
 });
 
-document.getElementById('lore-edit-area').addEventListener('change', () => {
-  if (!activeStory) return;
-  activeStory.lore = document.getElementById('lore-edit-area').value;
-  activeStory.updatedAt = Date.now();
-  saveState();
+// Index lore editor fields auto-save
+['lore-edit-characters', 'lore-edit-world', 'lore-edit-ships', 'lore-edit-canon', 'lore-edit-secrets'].forEach(id => {
+  document.getElementById(id).addEventListener('change', () => {
+    if (!activeStory) return;
+    activeStory.lore = composeLore(getLoreFieldsFromEditor());
+    activeStory.updatedAt = Date.now();
+    saveState();
+  });
 });
 
 // Chapter View
@@ -1121,16 +1304,74 @@ function generateSampleLore() {
   return `# Characters\n${chars.join('\n\n')}\n\n# World / Setting\n${world}\n\n# Ships / Relationships\n${ships.join('\n\n')}\n\n# Canon Rules\n${rules.join('\n\n')}\n\n# Secrets & Subtext\n${secrets.join('\n\n')}`;
 }
 
-// Fill Sample button handler
+// Randomize All button handler (setup page)
 document.getElementById('btn-fill-sample').addEventListener('click', () => {
   if (!activeStory) return;
-  const loreArea = document.getElementById('inp-lore');
-  loreArea.value = generateSampleLore();
-  loreArea.classList.remove('sample-text');
-  activeStory.lore = loreArea.value;
+  const fields = {
+    characters: pickRandom(SAMPLE_CHARACTERS, 3).join('\n\n'),
+    world: pickRandom(SAMPLE_WORLDS, 1)[0],
+    ships: pickRandom(SAMPLE_SHIPS, 2).join('\n\n'),
+    canon: pickRandom(SAMPLE_CANON_RULES, 3).join('\n\n'),
+    secrets: pickRandom(SAMPLE_SECRETS, 3).join('\n\n')
+  };
+  setLoreFieldsInSetup(fields);
+  activeStory.lore = composeLore(fields);
   activeStory.updatedAt = Date.now();
   saveState();
-  showToast('Sample lore generated!');
+  showToast('All lore randomized!');
+});
+
+// Per-field randomize buttons (setup page)
+const LORE_SAMPLE_MAP = {
+  characters: () => pickRandom(SAMPLE_CHARACTERS, 3).join('\n\n'),
+  world: () => pickRandom(SAMPLE_WORLDS, 1)[0],
+  ships: () => pickRandom(SAMPLE_SHIPS, 2).join('\n\n'),
+  canon: () => pickRandom(SAMPLE_CANON_RULES, 3).join('\n\n'),
+  secrets: () => pickRandom(SAMPLE_SECRETS, 3).join('\n\n')
+};
+
+document.querySelectorAll('[data-lore-field]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (!activeStory) return;
+    const field = btn.dataset.loreField;
+    const textarea = document.getElementById('inp-lore-' + field);
+    textarea.value = LORE_SAMPLE_MAP[field]();
+    activeStory.lore = composeLore(getLoreFieldsFromSetup());
+    activeStory.updatedAt = Date.now();
+    saveState();
+    showToast('Randomized!');
+  });
+});
+
+// Randomize All button handler (index page)
+document.getElementById('btn-randomize-all-index').addEventListener('click', () => {
+  if (!activeStory) return;
+  const fields = {
+    characters: pickRandom(SAMPLE_CHARACTERS, 3).join('\n\n'),
+    world: pickRandom(SAMPLE_WORLDS, 1)[0],
+    ships: pickRandom(SAMPLE_SHIPS, 2).join('\n\n'),
+    canon: pickRandom(SAMPLE_CANON_RULES, 3).join('\n\n'),
+    secrets: pickRandom(SAMPLE_SECRETS, 3).join('\n\n')
+  };
+  setLoreFieldsInEditor(fields);
+  activeStory.lore = composeLore(fields);
+  activeStory.updatedAt = Date.now();
+  saveState();
+  showToast('All lore randomized!');
+});
+
+// Per-field randomize buttons (index page)
+document.querySelectorAll('[data-lore-edit]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (!activeStory) return;
+    const field = btn.dataset.loreEdit;
+    const textarea = document.getElementById('lore-edit-' + field);
+    textarea.value = LORE_SAMPLE_MAP[field]();
+    activeStory.lore = composeLore(getLoreFieldsFromEditor());
+    activeStory.updatedAt = Date.now();
+    saveState();
+    showToast('Randomized!');
+  });
 });
 
 // Home page - New Story
