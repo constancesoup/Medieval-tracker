@@ -119,28 +119,60 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
 .decor-bubble {
   position: absolute;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.5), rgba(255,182,213,0.15));
-  border: 1px solid rgba(255,255,255,0.4);
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.6), rgba(255,182,213,0.2));
+  border: 1.5px solid rgba(255,255,255,0.5);
   pointer-events: none;
   z-index: 0;
   animation: float-bubbles 6s ease-in-out infinite;
   will-change: transform;
+  box-shadow: 0 2px 8px rgba(255,182,213,0.15), inset 0 -2px 6px rgba(255,255,255,0.3);
+}
+.decor-bubble-slow {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 25%, rgba(255,255,255,0.5), rgba(240,160,200,0.12));
+  border: 1px solid rgba(255,255,255,0.35);
+  pointer-events: none;
+  z-index: 0;
+  animation: float-bubbles-slow 9s ease-in-out infinite;
+  will-change: transform;
+  box-shadow: 0 2px 12px rgba(255,182,213,0.1);
 }
 .decor-sparkle, .decor-flower {
   position: absolute;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.5;
+  opacity: 0.6;
   animation: sparkle-drift 4s ease-in-out infinite;
   will-change: transform;
 }
+.decor-emoji {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.35;
+  animation: emoji-float 7s ease-in-out infinite;
+  will-change: transform;
+  font-size: 1.2em;
+}
 @keyframes float-bubbles {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-18px) scale(1.06); }
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.8; }
+  50% { transform: translateY(-22px) scale(1.08); opacity: 1; }
+}
+@keyframes float-bubbles-slow {
+  0%, 100% { transform: translateY(0) translateX(0) scale(1); opacity: 0.5; }
+  33% { transform: translateY(-14px) translateX(6px) scale(1.04); opacity: 0.7; }
+  66% { transform: translateY(-8px) translateX(-4px) scale(0.97); opacity: 0.6; }
 }
 @keyframes sparkle-drift {
   0%, 100% { transform: translateX(0) rotate(0deg); opacity: 0.4; }
   50% { transform: translateX(8px) rotate(10deg); opacity: 0.7; }
+}
+@keyframes emoji-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+  25% { transform: translateY(-12px) rotate(5deg); opacity: 0.5; }
+  50% { transform: translateY(-20px) rotate(-3deg); opacity: 0.4; }
+  75% { transform: translateY(-8px) rotate(8deg); opacity: 0.5; }
 }
 
 /* Glassmorphism header */
@@ -297,22 +329,48 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
 .new-story-section {
   position: relative;
   z-index: 1;
-  padding: 6px;
-  background: repeating-radial-gradient(circle at 10px 0, transparent 0, transparent 8px, #f0a0c8 8px, #f0a0c8 9px, transparent 9px);
-  background-size: 20px 10px;
-  background-position: 0 0;
-  border-radius: 24px;
-  transition: opacity 0.2s;
+  padding: 18px 18px 22px;
+  background: linear-gradient(135deg, #f8b4d0, #f0a0c8, #e890b8, #f8b4d0);
+  border-radius: 28px;
+  transition: opacity 0.2s, transform 0.2s;
+  box-shadow: 0 6px 24px rgba(214,51,132,0.15);
 }
-.new-story-section:hover { opacity: 0.95; }
-.new-story-inner {
-  background: rgba(255,255,255,0.7);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-radius: 20px;
-  padding: 32px;
+.new-story-section::before {
+  content: '🌸🌺🌸🌺🌸🌺🌸🌺🌸🌺🌸🌺🌸🌺🌸🌺🌸🌺🌸🌺';
+  position: absolute;
+  top: -12px;
+  left: 0;
+  right: 0;
   text-align: center;
-  border: 2px dashed rgba(240,160,200,0.4);
+  font-size: 0.85em;
+  letter-spacing: 2px;
+  line-height: 1;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 2px rgba(214,51,132,0.3));
+}
+.new-story-section::after {
+  content: '🌸🌺🌸🌺🌸🌺🌸🌺🌸🌺🌸🌺🌸🌺🌸🌺🌸🌺🌸🌺';
+  position: absolute;
+  bottom: -12px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 0.85em;
+  letter-spacing: 2px;
+  line-height: 1;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 2px rgba(214,51,132,0.3));
+}
+.new-story-section:hover { opacity: 0.95; transform: scale(1.01); }
+.new-story-inner {
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 18px;
+  padding: 36px;
+  text-align: center;
+  border: 2.5px solid rgba(240,160,200,0.5);
+  box-shadow: inset 0 0 20px rgba(255,182,213,0.2);
 }
 .new-story-section h3 {
   font-size: 1.1em;
@@ -503,19 +561,49 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
 
 <!-- Home Page -->
 <div id="home-page" class="page">
-  <!-- Floating decorations -->
-  <div class="decor-bubble" style="top:3%;left:6%;width:50px;height:50px;animation-delay:0s"></div>
-  <div class="decor-bubble" style="top:12%;right:8%;width:35px;height:35px;animation-delay:1.5s"></div>
-  <div class="decor-bubble" style="top:35%;left:3%;width:28px;height:28px;animation-delay:3s"></div>
-  <div class="decor-bubble" style="top:50%;right:4%;width:45px;height:45px;animation-delay:2s"></div>
-  <div class="decor-bubble" style="top:70%;left:10%;width:22px;height:22px;animation-delay:4s"></div>
-  <div class="decor-bubble" style="top:80%;right:12%;width:32px;height:32px;animation-delay:1s"></div>
-  <div class="decor-bubble" style="top:25%;right:20%;width:18px;height:18px;animation-delay:3.5s"></div>
-  <div class="decor-bubble" style="top:60%;left:20%;width:24px;height:24px;animation-delay:5s"></div>
-  <div class="decor-sparkle" style="top:18%;left:45%;font-size:0.9em">&#10022;</div>
-  <div class="decor-sparkle" style="top:65%;right:18%;font-size:0.7em;animation-delay:2s">&#10022;</div>
-  <div class="decor-flower" style="top:8%;right:22%;font-size:1.1em;animation-delay:1s">&#127800;</div>
-  <div class="decor-flower" style="top:75%;left:5%;font-size:0.9em;animation-delay:3s">&#127804;</div>
+  <!-- Floating bubbles -->
+  <div class="decor-bubble" style="top:2%;left:5%;width:55px;height:55px;animation-delay:0s"></div>
+  <div class="decor-bubble" style="top:8%;right:7%;width:40px;height:40px;animation-delay:1.2s"></div>
+  <div class="decor-bubble" style="top:15%;left:15%;width:30px;height:30px;animation-delay:2.8s"></div>
+  <div class="decor-bubble" style="top:22%;right:3%;width:48px;height:48px;animation-delay:0.5s"></div>
+  <div class="decor-bubble" style="top:30%;left:2%;width:35px;height:35px;animation-delay:3.2s"></div>
+  <div class="decor-bubble" style="top:38%;right:10%;width:28px;height:28px;animation-delay:1.8s"></div>
+  <div class="decor-bubble" style="top:45%;left:8%;width:42px;height:42px;animation-delay:4s"></div>
+  <div class="decor-bubble" style="top:52%;right:5%;width:50px;height:50px;animation-delay:2.2s"></div>
+  <div class="decor-bubble" style="top:60%;left:3%;width:25px;height:25px;animation-delay:3.6s"></div>
+  <div class="decor-bubble" style="top:68%;right:15%;width:38px;height:38px;animation-delay:0.8s"></div>
+  <div class="decor-bubble" style="top:75%;left:12%;width:22px;height:22px;animation-delay:4.5s"></div>
+  <div class="decor-bubble" style="top:82%;right:8%;width:32px;height:32px;animation-delay:1.5s"></div>
+  <div class="decor-bubble" style="top:88%;left:6%;width:45px;height:45px;animation-delay:2.5s"></div>
+  <!-- Slow drifting bubbles (background layer) -->
+  <div class="decor-bubble-slow" style="top:5%;left:25%;width:60px;height:60px;animation-delay:0s"></div>
+  <div class="decor-bubble-slow" style="top:20%;right:25%;width:45px;height:45px;animation-delay:2s"></div>
+  <div class="decor-bubble-slow" style="top:40%;left:30%;width:55px;height:55px;animation-delay:4s"></div>
+  <div class="decor-bubble-slow" style="top:55%;right:20%;width:40px;height:40px;animation-delay:1s"></div>
+  <div class="decor-bubble-slow" style="top:70%;left:22%;width:50px;height:50px;animation-delay:3s"></div>
+  <div class="decor-bubble-slow" style="top:85%;right:28%;width:35px;height:35px;animation-delay:5s"></div>
+  <!-- Sparkles -->
+  <div class="decor-sparkle" style="top:10%;left:40%;font-size:0.9em">✨</div>
+  <div class="decor-sparkle" style="top:28%;right:35%;font-size:0.8em;animation-delay:1.5s">✨</div>
+  <div class="decor-sparkle" style="top:55%;left:42%;font-size:0.7em;animation-delay:3s">✨</div>
+  <div class="decor-sparkle" style="top:72%;right:30%;font-size:0.85em;animation-delay:2s">✨</div>
+  <!-- Floating emoji decorations -->
+  <div class="decor-emoji" style="top:5%;right:18%;animation-delay:0.5s">🌸</div>
+  <div class="decor-emoji" style="top:14%;left:35%;animation-delay:2s">💫</div>
+  <div class="decor-emoji" style="top:20%;right:40%;animation-delay:3.5s;font-size:0.9em">🦋</div>
+  <div class="decor-emoji" style="top:32%;left:45%;animation-delay:1s">🌺</div>
+  <div class="decor-emoji" style="top:42%;right:25%;animation-delay:4s;font-size:1em">💖</div>
+  <div class="decor-emoji" style="top:48%;left:18%;animation-delay:2.5s;font-size:0.85em">📝</div>
+  <div class="decor-emoji" style="top:58%;right:35%;animation-delay:0s">🌙</div>
+  <div class="decor-emoji" style="top:65%;left:38%;animation-delay:3s;font-size:1.1em">⭐</div>
+  <div class="decor-emoji" style="top:73%;right:12%;animation-delay:1.5s">🌸</div>
+  <div class="decor-emoji" style="top:78%;left:28%;animation-delay:5s;font-size:0.9em">🎀</div>
+  <div class="decor-emoji" style="top:85%;right:22%;animation-delay:2s">💕</div>
+  <div class="decor-emoji" style="top:90%;left:40%;animation-delay:4.5s;font-size:0.8em">✍️</div>
+  <div class="decor-flower" style="top:6%;right:30%;font-size:1.2em;animation-delay:1s">🌷</div>
+  <div class="decor-flower" style="top:35%;left:8%;font-size:1em;animation-delay:3s">🌹</div>
+  <div class="decor-flower" style="top:62%;right:6%;font-size:1.1em;animation-delay:0s">🌼</div>
+  <div class="decor-flower" style="top:80%;left:4%;font-size:0.9em;animation-delay:2.5s">🌻</div>
 
   <!-- Glassmorphism header -->
   <div class="glass-header">
