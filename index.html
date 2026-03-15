@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fanfic Forge</title>
+<title>SimFic</title>
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Nunito:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  background: linear-gradient(160deg, #ffe0f0 0%, #f9c6df 35%, #f3d0e8 60%, #ede0f5 100%);
-  color: #5c3a4a;
+  background: linear-gradient(160deg, #d4f5e0 0%, #b8ecd0 35%, #c5e8d8 60%, #d0e8f0 100%);
+  color: #2a4a3a;
   font-family: 'Nunito', 'Segoe UI', sans-serif;
   font-size: 16px;
   line-height: 1.6;
@@ -18,20 +18,20 @@ body {
 }
 
 ::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #fce4ec; }
-::-webkit-scrollbar-thumb { background: #f8a4c8; border-radius: 20px; }
+::-webkit-scrollbar-track { background: #d4f5e0; }
+::-webkit-scrollbar-thumb { background: #4eca7a; border-radius: 20px; }
 
 .page { display: none; max-width: 720px; margin: 0 auto; padding: 40px 20px; }
 .page.active { display: block; }
 
-h1, h2, h3 { font-family: 'Quicksand', sans-serif; color: #d63384; }
+h1, h2, h3 { font-family: 'Quicksand', sans-serif; color: #2DB84B; }
 
 label {
   display: block;
   font-size: 0.82em;
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  color: #b06088;
+  color: #5a8a6a;
   margin-bottom: 6px;
   font-weight: 600;
 }
@@ -39,9 +39,9 @@ label {
 input[type="text"], textarea {
   width: 100%;
   background: #fff;
-  border: 2px solid #f5c6d8;
+  border: 2px solid #a0dbb0;
   border-radius: 16px;
-  color: #5c3a4a;
+  color: #2a4a3a;
   font-family: 'Nunito', 'Segoe UI', sans-serif;
   font-size: 0.95em;
   line-height: 1.6;
@@ -49,14 +49,14 @@ input[type="text"], textarea {
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
-input[type="text"]:focus, textarea:focus { border-color: #e91e90; box-shadow: 0 0 0 3px rgba(233,30,144,0.15); }
+input[type="text"]:focus, textarea:focus { border-color: #28a745; box-shadow: 0 0 0 3px rgba(40,167,69,0.15); }
 textarea { resize: vertical; }
-input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
+input.sample-text, textarea.sample-text { color: #8abba0; font-style: italic; }
 
 .field { margin-bottom: 20px; }
 
 .btn-gold {
-  background: linear-gradient(135deg, #f472b6, #e91e90);
+  background: linear-gradient(135deg, #4eca7a, #28a745);
   color: #fff;
   font-family: 'Quicksand', sans-serif;
   font-weight: 700;
@@ -67,15 +67,15 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
   cursor: pointer;
   font-size: 0.95em;
   transition: filter 0.2s, transform 0.1s;
-  box-shadow: 0 4px 14px rgba(233,30,144,0.25);
+  box-shadow: 0 4px 14px rgba(40,167,69,0.25);
 }
 .btn-gold:hover { filter: brightness(1.1); transform: translateY(-1px); }
 .btn-gold:disabled { opacity: 0.4; cursor: default; filter: none; transform: none; }
 
 .btn-secondary {
   background: #fff;
-  color: #d63384;
-  border: 2px solid #f5c6d8;
+  color: #2DB84B;
+  border: 2px solid #a0dbb0;
   border-radius: 20px;
   padding: 8px 16px;
   cursor: pointer;
@@ -84,18 +84,18 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
   font-weight: 600;
   transition: background 0.2s, border-color 0.2s;
 }
-.btn-secondary:hover { background: #fce4ec; border-color: #f472b6; }
+.btn-secondary:hover { background: #d4f5e0; border-color: #4eca7a; }
 
 .btn-ghost {
   background: transparent;
   border: none;
-  color: #d48aa8;
+  color: #6aaa7a;
   cursor: pointer;
   font-size: 1.1em;
   padding: 4px 8px;
   transition: color 0.2s;
 }
-.btn-ghost:hover { color: #e91e90; }
+.btn-ghost:hover { color: #28a745; }
 
 .btn-danger {
   background: #fde2e2;
@@ -113,30 +113,30 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
 /* Home Page */
 #home-page { padding-top: 60px; position: relative; overflow: hidden; }
 #home-page h1 { text-align: center; margin-bottom: 8px; font-size: 2.2em; }
-.home-subtitle { text-align: center; color: #b06088; margin-bottom: 40px; font-style: italic; }
+.home-subtitle { text-align: center; color: #5a8a6a; margin-bottom: 40px; font-style: italic; }
 
 /* Floating decorations */
 .decor-bubble {
   position: absolute;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.6), rgba(255,182,213,0.2));
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.6), rgba(122,219,160,0.2));
   border: 1.5px solid rgba(255,255,255,0.5);
   pointer-events: none;
   z-index: 0;
   animation: float-bubbles 6s ease-in-out infinite;
   will-change: transform;
-  box-shadow: 0 2px 8px rgba(255,182,213,0.15), inset 0 -2px 6px rgba(255,255,255,0.3);
+  box-shadow: 0 2px 8px rgba(122,219,160,0.15), inset 0 -2px 6px rgba(255,255,255,0.3);
 }
 .decor-bubble-slow {
   position: absolute;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 25%, rgba(255,255,255,0.5), rgba(240,160,200,0.12));
+  background: radial-gradient(circle at 35% 25%, rgba(255,255,255,0.5), rgba(78,202,122,0.12));
   border: 1px solid rgba(255,255,255,0.35);
   pointer-events: none;
   z-index: 0;
   animation: float-bubbles-slow 9s ease-in-out infinite;
   will-change: transform;
-  box-shadow: 0 2px 12px rgba(255,182,213,0.1);
+  box-shadow: 0 2px 12px rgba(122,219,160,0.1);
 }
 .decor-sparkle, .decor-flower {
   position: absolute;
@@ -187,7 +187,7 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
   margin-bottom: 32px;
   position: relative;
   z-index: 1;
-  box-shadow: 0 4px 24px rgba(214,51,132,0.08);
+  box-shadow: 0 4px 24px rgba(45,184,75,0.08);
 }
 .glass-header-flowers {
   position: absolute;
@@ -195,21 +195,21 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
   left: 50%;
   transform: translateX(-50%);
   font-size: 1.4em;
-  filter: drop-shadow(0 2px 4px rgba(214,51,132,0.2));
+  filter: drop-shadow(0 2px 4px rgba(45,184,75,0.2));
 }
 
 /* Story card tags */
 .story-card-tags { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
 .tag-fandom {
   display: inline-flex; align-items: center; gap: 4px;
-  background: #fce4ec; color: #d63384;
+  background: #d4f5e0; color: #2DB84B;
   border-radius: 20px; padding: 3px 12px;
   font-size: 0.78em; font-weight: 600;
   font-family: 'Quicksand', sans-serif;
 }
 .tag-tone {
   display: inline-flex; align-items: center; gap: 4px;
-  background: #ede0f5; color: #7b5ea7;
+  background: #d0e8f0; color: #3a7a9a;
   border-radius: 20px; padding: 3px 12px;
   font-size: 0.78em; font-weight: 600;
   font-family: 'Quicksand', sans-serif;
@@ -229,7 +229,7 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
   100% { left: 200%; }
 }
 .btn-holographic {
-  background: linear-gradient(135deg, #f472b6, #a855f7, #6366f1, #22d3ee, #f472b6);
+  background: linear-gradient(135deg, #2DB84B, #20c997, #17a2b8, #4eca7a, #2DB84B);
   background-size: 300% 300%;
   animation: holographic-shimmer 4s ease infinite;
   color: #fff;
@@ -243,10 +243,10 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
   font-size: 1em;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 18px rgba(168,85,247,0.3);
+  box-shadow: 0 4px 18px rgba(45,184,75,0.3);
   transition: transform 0.1s;
 }
-.btn-holographic:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(168,85,247,0.4); }
+.btn-holographic:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(45,184,75,0.4); }
 .btn-holographic::before {
   content: '';
   position: absolute;
@@ -269,33 +269,33 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 12px rgba(214,51,132,0.08);
+  box-shadow: 0 2px 12px rgba(45,184,75,0.08);
 }
-.story-card:hover { border-color: rgba(244,114,182,0.5); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(214,51,132,0.15); }
+.story-card:hover { border-color: rgba(78,202,122,0.5); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(45,184,75,0.15); }
 .story-card-info { flex: 1; min-width: 0; }
 .story-card-title {
   font-family: 'Quicksand', sans-serif;
   font-size: 1.1em;
   font-weight: 700;
-  color: #3a2a2e;
+  color: #1a3a2a;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 4px;
 }
 .story-card-meta {
   font-size: 0.82em;
-  color: #b06088;
+  color: #5a8a6a;
   font-style: italic;
 }
 .story-card-chapters {
   font-size: 0.8em;
-  color: #d48aa8;
+  color: #6aaa7a;
   margin-top: 6px;
 }
 .story-card-chevron {
   width: 36px; height: 36px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #f472b6, #e91e90);
+  background: linear-gradient(135deg, #4eca7a, #28a745);
   color: #fff;
   display: flex; align-items: center; justify-content: center;
   font-size: 1.2em;
@@ -304,7 +304,7 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
   transition: transform 0.2s, box-shadow 0.2s;
   flex-shrink: 0;
 }
-.story-card-chevron:hover { transform: scale(1.1); box-shadow: 0 3px 12px rgba(233,30,144,0.3); }
+.story-card-chevron:hover { transform: scale(1.1); box-shadow: 0 3px 12px rgba(40,167,69,0.3); }
 
 .story-card-actions {
   display: flex; gap: 4px; margin-left: 12px;
@@ -323,20 +323,20 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
   transition: color 0.2s, background 0.2s;
 }
 .story-card-actions button:hover { color: #fff; background: rgba(255,255,255,0.1); }
-.story-card-actions .delete-story:hover { color: #f87171; background: rgba(248,113,113,0.15); }
+.story-card-actions .delete-story:hover { color: #e74c3c; background: rgba(231,76,60,0.15); }
 
 /* Scalloped new story section */
 .new-story-section {
   position: relative;
   z-index: 1;
   padding: 18px 18px 22px;
-  background: linear-gradient(135deg, #f8b4d0, #f0a0c8, #e890b8, #f8b4d0);
+  background: linear-gradient(135deg, #7adba0, #4eca7a, #3cb86a, #7adba0);
   border-radius: 28px;
   transition: opacity 0.2s, transform 0.2s;
-  box-shadow: 0 6px 24px rgba(214,51,132,0.15);
+  box-shadow: 0 6px 24px rgba(45,184,75,0.15);
 }
 .new-story-section::before {
-  content: '🌸🌺🌸🌺🌸🌺🌸🌺🌸🌺🌸🌺🌸🌺🌸🌺🌸🌺🌸🌺';
+  content: '💎🏠💎🏠💎🏠💎🏠💎🏠💎🏠💎🏠💎🏠💎🏠💎🏠';
   position: absolute;
   top: -12px;
   left: 0;
@@ -346,10 +346,10 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
   letter-spacing: 2px;
   line-height: 1;
   pointer-events: none;
-  filter: drop-shadow(0 1px 2px rgba(214,51,132,0.3));
+  filter: drop-shadow(0 1px 2px rgba(45,184,75,0.3));
 }
 .new-story-section::after {
-  content: '🌸🌺🌸🌺🌸🌺🌸🌺🌸🌺🌸🌺🌸🌺🌸🌺🌸🌺🌸🌺';
+  content: '💎🏠💎🏠💎🏠💎🏠💎🏠💎🏠💎🏠💎🏠💎🏠💎🏠';
   position: absolute;
   bottom: -12px;
   left: 0;
@@ -359,7 +359,7 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
   letter-spacing: 2px;
   line-height: 1;
   pointer-events: none;
-  filter: drop-shadow(0 1px 2px rgba(214,51,132,0.3));
+  filter: drop-shadow(0 1px 2px rgba(45,184,75,0.3));
 }
 .new-story-section:hover { opacity: 0.95; transform: scale(1.01); }
 .new-story-inner {
@@ -369,24 +369,24 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
   border-radius: 18px;
   padding: 36px;
   text-align: center;
-  border: 2.5px solid rgba(240,160,200,0.5);
-  box-shadow: inset 0 0 20px rgba(255,182,213,0.2);
+  border: 2.5px solid rgba(78,202,122,0.5);
+  box-shadow: inset 0 0 20px rgba(122,219,160,0.2);
 }
 .new-story-section h3 {
   font-size: 1.1em;
   margin-bottom: 8px;
-  color: #b06088;
+  color: #5a8a6a;
 }
 .new-story-section p {
   font-size: 0.85em;
-  color: #d48aa8;
+  color: #6aaa7a;
   margin-bottom: 16px;
 }
 
 .home-empty {
   text-align: center;
   padding: 48px 20px;
-  color: #d48aa8;
+  color: #6aaa7a;
   position: relative;
   z-index: 1;
 }
@@ -398,22 +398,22 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
 
 /* Setup Page */
 #setup-page h1 { text-align: center; margin-bottom: 8px; font-size: 1.8em; }
-.setup-subtitle { text-align: center; color: #b06088; margin-bottom: 36px; font-style: italic; }
+.setup-subtitle { text-align: center; color: #5a8a6a; margin-bottom: 36px; font-style: italic; }
 .setup-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; }
-.validation-error { color: #e91e90; font-size: 0.85em; margin-top: 8px; }
+.validation-error { color: #28a745; font-size: 0.85em; margin-top: 8px; }
 
 /* Index Page */
 .index-topbar {
   display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 28px; padding-bottom: 16px; border-bottom: 2px solid #f5c6d8;
+  margin-bottom: 28px; padding-bottom: 16px; border-bottom: 2px solid #a0dbb0;
 }
 .index-topbar-title h2 { font-size: 1.3em; margin-bottom: 2px; }
-.index-topbar-title .fandom { font-size: 0.82em; color: #b06088; font-style: italic; }
+.index-topbar-title .fandom { font-size: 0.82em; color: #5a8a6a; font-style: italic; }
 .index-topbar-actions { display: flex; gap: 8px; align-items: center; }
 
 .chapter-card {
   background: #fff;
-  border: 2px solid #f5c6d8;
+  border: 2px solid #a0dbb0;
   border-radius: 18px;
   padding: 16px 20px;
   margin-bottom: 10px;
@@ -421,29 +421,29 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
   display: flex;
   align-items: center;
   transition: border-color 0.2s, box-shadow 0.2s;
-  box-shadow: 0 2px 8px rgba(214,51,132,0.06);
+  box-shadow: 0 2px 8px rgba(45,184,75,0.06);
 }
-.chapter-card:hover { border-color: #f472b6; box-shadow: 0 4px 14px rgba(214,51,132,0.12); }
+.chapter-card:hover { border-color: #4eca7a; box-shadow: 0 4px 14px rgba(45,184,75,0.12); }
 .chapter-card-content { flex: 1; min-width: 0; }
-.chapter-card-label { font-size: 0.95em; font-weight: 700; color: #e91e90; margin-bottom: 4px; }
-.chapter-card-preview { font-size: 0.85em; color: #b06088; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chapter-card-label { font-size: 0.95em; font-weight: 700; color: #28a745; margin-bottom: 4px; }
+.chapter-card-preview { font-size: 0.85em; color: #5a8a6a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .chapter-card-arrows { display: flex; flex-direction: column; gap: 2px; margin: 0 12px; }
 .chapter-card-arrows button {
-  background: transparent; border: none; color: #d48aa8; cursor: pointer;
+  background: transparent; border: none; color: #6aaa7a; cursor: pointer;
   font-size: 0.9em; padding: 2px 6px; line-height: 1;
 }
-.chapter-card-arrows button:hover { color: #e91e90; }
+.chapter-card-arrows button:hover { color: #28a745; }
 .chapter-card-arrows button:disabled { opacity: 0.2; cursor: default; }
-.chapter-card-chevron { color: #d48aa8; font-size: 1.2em; margin-left: 8px; }
+.chapter-card-chevron { color: #6aaa7a; font-size: 1.2em; margin-left: 8px; }
 
-.empty-state { text-align: center; color: #d48aa8; padding: 48px 20px; font-style: italic; }
+.empty-state { text-align: center; color: #6aaa7a; padding: 48px 20px; font-style: italic; }
 
 .index-bottom { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 10px; }
 
-.lore-editor { margin-top: 20px; padding-top: 20px; border-top: 2px solid #f5c6d8; }
+.lore-editor { margin-top: 20px; padding-top: 20px; border-top: 2px solid #a0dbb0; }
 .lore-editor textarea { min-height: 100px; }
-.lore-toggle { cursor: pointer; color: #b06088; font-size: 0.9em; }
-.lore-toggle:hover { color: #e91e90; }
+.lore-toggle { cursor: pointer; color: #5a8a6a; font-size: 0.9em; }
+.lore-toggle:hover { color: #28a745; }
 
 /* Lore Entry Fields */
 .lore-field { margin-bottom: 16px; }
@@ -453,7 +453,7 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
 }
 .lore-field-header label { margin-bottom: 0; }
 .btn-randomize {
-  background: linear-gradient(135deg, #f9a8d4, #f472b6);
+  background: linear-gradient(135deg, #7adba0, #4eca7a);
   color: #fff;
   border: none;
   border-radius: 16px;
@@ -468,7 +468,7 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
 .btn-randomize:hover { filter: brightness(1.1); transform: translateY(-1px); }
 .lore-fields-group { margin-top: 12px; }
 .btn-randomize-all {
-  background: linear-gradient(135deg, #f472b6, #e91e90);
+  background: linear-gradient(135deg, #4eca7a, #28a745);
   color: #fff;
   border: none;
   border-radius: 20px;
@@ -478,7 +478,7 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
   font-weight: 700;
   cursor: pointer;
   transition: filter 0.2s, transform 0.1s;
-  box-shadow: 0 3px 10px rgba(233,30,144,0.2);
+  box-shadow: 0 3px 10px rgba(40,167,69,0.2);
   margin-bottom: 16px;
 }
 .btn-randomize-all:hover { filter: brightness(1.1); transform: translateY(-1px); }
@@ -486,14 +486,14 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
 /* Add Chapter Modal */
 .modal-overlay {
   display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(214,51,132,0.15); backdrop-filter: blur(4px); z-index: 100; align-items: center; justify-content: center;
+  background: rgba(45,184,75,0.15); backdrop-filter: blur(4px); z-index: 100; align-items: center; justify-content: center;
   padding: 20px;
 }
 .modal-overlay.active { display: flex; }
 .modal {
-  background: #fff; border: 2px solid #f5c6d8; border-radius: 24px;
+  background: #fff; border: 2px solid #a0dbb0; border-radius: 24px;
   padding: 28px; width: 100%; max-width: 640px; max-height: 90vh; overflow-y: auto;
-  box-shadow: 0 8px 32px rgba(214,51,132,0.15);
+  box-shadow: 0 8px 32px rgba(45,184,75,0.15);
 }
 .modal h3 { margin-bottom: 16px; font-size: 1.1em; }
 .modal textarea { min-height: 300px; margin-bottom: 16px; }
@@ -502,19 +502,19 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
 /* Chapter View */
 .chapter-topbar {
   display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 32px; padding-bottom: 16px; border-bottom: 2px solid #f5c6d8;
+  margin-bottom: 32px; padding-bottom: 16px; border-bottom: 2px solid #a0dbb0;
 }
-.chapter-topbar-center { font-size: 0.82em; text-transform: uppercase; letter-spacing: 1.5px; color: #b06088; }
+.chapter-topbar-center { font-size: 0.82em; text-transform: uppercase; letter-spacing: 1.5px; color: #5a8a6a; }
 .chapter-topbar-actions { display: flex; gap: 8px; }
 
 .chapter-heading {
   text-align: center; font-size: 0.85em; text-transform: uppercase;
-  letter-spacing: 3px; color: #d63384; margin-bottom: 32px;
+  letter-spacing: 3px; color: #2DB84B; margin-bottom: 32px;
   font-family: 'Quicksand', sans-serif; font-weight: 700;
 }
 .chapter-body {
   white-space: pre-wrap; font-size: 0.98em; line-height: 1.9;
-  color: #5c3a4a; padding-bottom: 80px;
+  color: #2a4a3a; padding-bottom: 80px;
 }
 
 .chapter-edit textarea { min-height: 400px; margin-bottom: 16px; }
@@ -522,20 +522,20 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
 
 .chapter-bottombar {
   position: fixed; bottom: 0; left: 0; right: 0;
-  background: #fff; border-top: 2px solid #f5c6d8;
+  background: #fff; border-top: 2px solid #a0dbb0;
   display: flex; justify-content: space-between; align-items: center;
   padding: 12px 24px; z-index: 50;
-  box-shadow: 0 -2px 12px rgba(214,51,132,0.08);
+  box-shadow: 0 -2px 12px rgba(45,184,75,0.08);
 }
-.chapter-bottombar .page-counter { font-size: 0.85em; color: #b06088; }
+.chapter-bottombar .page-counter { font-size: 0.85em; color: #5a8a6a; }
 
 /* Toast */
 .toast {
   position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
-  background: linear-gradient(135deg, #f472b6, #e91e90); color: #fff; padding: 10px 24px;
+  background: linear-gradient(135deg, #4eca7a, #28a745); color: #fff; padding: 10px 24px;
   border-radius: 20px; font-size: 0.9em; opacity: 0; font-weight: 600;
   transition: opacity 0.3s; pointer-events: none; z-index: 200;
-  box-shadow: 0 4px 14px rgba(233,30,144,0.3);
+  box-shadow: 0 4px 14px rgba(40,167,69,0.3);
 }
 .toast.visible { opacity: 1; }
 
@@ -588,28 +588,28 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
   <div class="decor-sparkle" style="top:55%;left:42%;font-size:0.7em;animation-delay:3s">✨</div>
   <div class="decor-sparkle" style="top:72%;right:30%;font-size:0.85em;animation-delay:2s">✨</div>
   <!-- Floating emoji decorations -->
-  <div class="decor-emoji" style="top:5%;right:18%;animation-delay:0.5s">🌸</div>
-  <div class="decor-emoji" style="top:14%;left:35%;animation-delay:2s">💫</div>
-  <div class="decor-emoji" style="top:20%;right:40%;animation-delay:3.5s;font-size:0.9em">🦋</div>
-  <div class="decor-emoji" style="top:32%;left:45%;animation-delay:1s">🌺</div>
-  <div class="decor-emoji" style="top:42%;right:25%;animation-delay:4s;font-size:1em">💖</div>
+  <div class="decor-emoji" style="top:5%;right:18%;animation-delay:0.5s">💎</div>
+  <div class="decor-emoji" style="top:14%;left:35%;animation-delay:2s">🏠</div>
+  <div class="decor-emoji" style="top:20%;right:40%;animation-delay:3.5s;font-size:0.9em">👨‍👩‍👧‍👦</div>
+  <div class="decor-emoji" style="top:32%;left:45%;animation-delay:1s">🎮</div>
+  <div class="decor-emoji" style="top:42%;right:25%;animation-delay:4s;font-size:1em">💚</div>
   <div class="decor-emoji" style="top:48%;left:18%;animation-delay:2.5s;font-size:0.85em">📝</div>
-  <div class="decor-emoji" style="top:58%;right:35%;animation-delay:0s">🌙</div>
+  <div class="decor-emoji" style="top:58%;right:35%;animation-delay:0s">🪴</div>
   <div class="decor-emoji" style="top:65%;left:38%;animation-delay:3s;font-size:1.1em">⭐</div>
-  <div class="decor-emoji" style="top:73%;right:12%;animation-delay:1.5s">🌸</div>
-  <div class="decor-emoji" style="top:78%;left:28%;animation-delay:5s;font-size:0.9em">🎀</div>
+  <div class="decor-emoji" style="top:73%;right:12%;animation-delay:1.5s">💎</div>
+  <div class="decor-emoji" style="top:78%;left:28%;animation-delay:5s;font-size:0.9em">🛋️</div>
   <div class="decor-emoji" style="top:85%;right:22%;animation-delay:2s">💕</div>
   <div class="decor-emoji" style="top:90%;left:40%;animation-delay:4.5s;font-size:0.8em">✍️</div>
-  <div class="decor-flower" style="top:6%;right:30%;font-size:1.2em;animation-delay:1s">🌷</div>
-  <div class="decor-flower" style="top:35%;left:8%;font-size:1em;animation-delay:3s">🌹</div>
-  <div class="decor-flower" style="top:62%;right:6%;font-size:1.1em;animation-delay:0s">🌼</div>
-  <div class="decor-flower" style="top:80%;left:4%;font-size:0.9em;animation-delay:2.5s">🌻</div>
+  <div class="decor-flower" style="top:6%;right:30%;font-size:1.2em;animation-delay:1s">🏡</div>
+  <div class="decor-flower" style="top:35%;left:8%;font-size:1em;animation-delay:3s">💎</div>
+  <div class="decor-flower" style="top:62%;right:6%;font-size:1.1em;animation-delay:0s">🎭</div>
+  <div class="decor-flower" style="top:80%;left:4%;font-size:0.9em;animation-delay:2.5s">🌿</div>
 
   <!-- Glassmorphism header -->
   <div class="glass-header">
-    <div class="glass-header-flowers">&#127800; &#127802;</div>
-    <h1>Fanfic Forge</h1>
-    <p class="home-subtitle">Your fanfiction writing workshop</p>
+    <div class="glass-header-flowers">💎 🏠</div>
+    <h1>SimFic</h1>
+    <p class="home-subtitle">Write stories about your Sims 💚</p>
   </div>
 
   <div id="stories-list" class="story-grid"></div>
@@ -617,8 +617,8 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
   <!-- Scalloped new story section -->
   <div class="new-story-section">
     <div class="new-story-inner">
-      <h3>&#127800; Start a New Story &#127775;</h3>
-      <p>Set up your title, premise, lore bible, and begin writing</p>
+      <h3>💎 Start a New Story 🏠</h3>
+      <p>Set up your Sims, their world, and start writing their story</p>
       <button class="btn-holographic" id="btn-new-story">+ New Story</button>
     </div>
   </div>
@@ -626,72 +626,72 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
 
 <!-- Setup Page -->
 <div id="setup-page" class="page">
-  <h1>Fanfic Forge</h1>
-  <p class="setup-subtitle">Story Setup</p>
+  <h1>SimFic</h1>
+  <p class="setup-subtitle">Story Setup 💎</p>
   <div class="field">
     <label for="inp-title">Story Title *</label>
     <input type="text" id="inp-title" placeholder="Enter your story title">
   </div>
   <div class="field">
     <div class="lore-field-header">
-      <label for="inp-fandom">Fandom / Universe</label>
+      <label for="inp-fandom">Game / Save</label>
       <button class="btn-randomize" type="button" id="btn-rand-fandom">Randomize</button>
     </div>
-    <input type="text" id="inp-fandom" placeholder="e.g. Harry Potter, ATLA, Original">
+    <input type="text" id="inp-fandom" placeholder="e.g. Sims 4, Sims 4 + Seasons, Sims 3">
   </div>
   <div class="field">
     <div class="lore-field-header">
       <label for="inp-tone">Tone / Vibe</label>
       <button class="btn-randomize" type="button" id="btn-rand-tone">Randomize</button>
     </div>
-    <input type="text" id="inp-tone" placeholder="Emotional but grounded">
+    <input type="text" id="inp-tone" placeholder="Drama-filled legacy play">
   </div>
   <div class="field">
     <div class="lore-field-header">
       <label for="inp-premise">Premise *</label>
       <button class="btn-randomize" type="button" id="btn-rand-premise">Randomize</button>
     </div>
-    <textarea id="inp-premise" rows="4" placeholder="What's this story about?"></textarea>
+    <textarea id="inp-premise" rows="4" placeholder="What's happening in your Sims' story?"></textarea>
   </div>
   <div class="field">
     <div class="lore-field-header" style="margin-bottom:12px;">
-      <label style="font-size:1em;margin-bottom:0;">Lore Bible</label>
+      <label style="font-size:1em;margin-bottom:0;">Sim Bible 💎</label>
       <button class="btn-randomize-all" id="btn-fill-sample" type="button">Randomize All</button>
     </div>
     <div class="lore-field">
       <div class="lore-field-header">
-        <label for="inp-lore-characters">Characters</label>
+        <label for="inp-lore-characters">Your Sims</label>
         <button class="btn-randomize" type="button" data-lore-field="characters">Randomize</button>
       </div>
-      <textarea id="inp-lore-characters" rows="4" placeholder="Name, age, personality, secrets, relationships"></textarea>
+      <textarea id="inp-lore-characters" rows="4" placeholder="Name, traits, aspiration, career, personality"></textarea>
     </div>
     <div class="lore-field">
       <div class="lore-field-header">
-        <label for="inp-lore-world">World / Setting</label>
+        <label for="inp-lore-world">Lot & Neighborhood</label>
         <button class="btn-randomize" type="button" data-lore-field="world">Randomize</button>
       </div>
-      <textarea id="inp-lore-world" rows="3" placeholder="World, rules, locations, time period"></textarea>
+      <textarea id="inp-lore-world" rows="3" placeholder="Where do they live? What's the neighborhood like?"></textarea>
     </div>
     <div class="lore-field">
       <div class="lore-field-header">
-        <label for="inp-lore-ships">Ships / Relationships</label>
+        <label for="inp-lore-ships">Relationships</label>
         <button class="btn-randomize" type="button" data-lore-field="ships">Randomize</button>
       </div>
-      <textarea id="inp-lore-ships" rows="3" placeholder="Who's with who? Dynamic? Tension?"></textarea>
+      <textarea id="inp-lore-ships" rows="3" placeholder="Who's together? Any love triangles? Family drama?"></textarea>
     </div>
     <div class="lore-field">
       <div class="lore-field-header">
-        <label for="inp-lore-canon">Canon Rules</label>
+        <label for="inp-lore-canon">Gameplay Rules</label>
         <button class="btn-randomize" type="button" data-lore-field="canon">Randomize</button>
       </div>
-      <textarea id="inp-lore-canon" rows="3" placeholder="What canon must be respected? What are you changing?"></textarea>
+      <textarea id="inp-lore-canon" rows="3" placeholder="Any challenge rules? Mods? Restrictions?"></textarea>
     </div>
     <div class="lore-field">
       <div class="lore-field-header">
-        <label for="inp-lore-secrets">Secrets &amp; Subtext</label>
+        <label for="inp-lore-secrets">Sim Secrets</label>
         <button class="btn-randomize" type="button" data-lore-field="secrets">Randomize</button>
       </div>
-      <textarea id="inp-lore-secrets" rows="3" placeholder="What do characters know that others don't?"></textarea>
+      <textarea id="inp-lore-secrets" rows="3" placeholder="Hidden affairs, secret aspirations, buried drama"></textarea>
     </div>
   </div>
   <div id="setup-error" class="validation-error" style="display:none;"></div>
@@ -718,47 +718,47 @@ input.sample-text, textarea.sample-text { color: #c9a0b4; font-style: italic; }
   <div id="chapter-list"></div>
   <div class="index-bottom">
     <button class="btn-gold" id="btn-add-chapter">+ Add Chapter</button>
-    <button class="btn-secondary" id="btn-lore-toggle">Edit Lore Bible</button>
+    <button class="btn-secondary" id="btn-lore-toggle">Edit Sim Bible</button>
   </div>
   <div id="lore-editor-section" class="lore-editor" style="display:none;">
     <div class="lore-field-header" style="margin-bottom:12px;">
-      <label style="font-size:1em;margin-bottom:0;">Lore Bible</label>
+      <label style="font-size:1em;margin-bottom:0;">Sim Bible 💎</label>
       <button class="btn-randomize-all" id="btn-randomize-all-index" type="button">Randomize All</button>
     </div>
     <div class="lore-field">
       <div class="lore-field-header">
-        <label for="lore-edit-characters">Characters</label>
+        <label for="lore-edit-characters">Your Sims</label>
         <button class="btn-randomize" type="button" data-lore-edit="characters">Randomize</button>
       </div>
-      <textarea id="lore-edit-characters" rows="4" placeholder="Name, age, personality, secrets, relationships"></textarea>
+      <textarea id="lore-edit-characters" rows="4" placeholder="Name, traits, aspiration, career, personality"></textarea>
     </div>
     <div class="lore-field">
       <div class="lore-field-header">
-        <label for="lore-edit-world">World / Setting</label>
+        <label for="lore-edit-world">Lot & Neighborhood</label>
         <button class="btn-randomize" type="button" data-lore-edit="world">Randomize</button>
       </div>
-      <textarea id="lore-edit-world" rows="3" placeholder="World, rules, locations, time period"></textarea>
+      <textarea id="lore-edit-world" rows="3" placeholder="Where do they live? What's the neighborhood like?"></textarea>
     </div>
     <div class="lore-field">
       <div class="lore-field-header">
-        <label for="lore-edit-ships">Ships / Relationships</label>
+        <label for="lore-edit-ships">Relationships</label>
         <button class="btn-randomize" type="button" data-lore-edit="ships">Randomize</button>
       </div>
-      <textarea id="lore-edit-ships" rows="3" placeholder="Who's with who? Dynamic? Tension?"></textarea>
+      <textarea id="lore-edit-ships" rows="3" placeholder="Who's together? Any love triangles? Family drama?"></textarea>
     </div>
     <div class="lore-field">
       <div class="lore-field-header">
-        <label for="lore-edit-canon">Canon Rules</label>
+        <label for="lore-edit-canon">Gameplay Rules</label>
         <button class="btn-randomize" type="button" data-lore-edit="canon">Randomize</button>
       </div>
-      <textarea id="lore-edit-canon" rows="3" placeholder="What canon must be respected? What are you changing?"></textarea>
+      <textarea id="lore-edit-canon" rows="3" placeholder="Any challenge rules? Mods? Restrictions?"></textarea>
     </div>
     <div class="lore-field">
       <div class="lore-field-header">
-        <label for="lore-edit-secrets">Secrets &amp; Subtext</label>
+        <label for="lore-edit-secrets">Sim Secrets</label>
         <button class="btn-randomize" type="button" data-lore-edit="secrets">Randomize</button>
       </div>
-      <textarea id="lore-edit-secrets" rows="3" placeholder="What do characters know that others don't?"></textarea>
+      <textarea id="lore-edit-secrets" rows="3" placeholder="Hidden affairs, secret aspirations, buried drama"></textarea>
     </div>
   </div>
 </div>
@@ -811,11 +811,11 @@ const LORE_TEMPLATE = '';
 
 const LORE_SECTIONS = ['characters', 'world', 'ships', 'canon', 'secrets'];
 const LORE_HEADERS = {
-  characters: '# Characters',
-  world: '# World / Setting',
-  ships: '# Ships / Relationships',
-  canon: '# Canon Rules',
-  secrets: '# Secrets & Subtext'
+  characters: '# Your Sims',
+  world: '# Lot & Neighborhood',
+  ships: '# Relationships',
+  canon: '# Gameplay Rules',
+  secrets: '# Sim Secrets'
 };
 
 function parseLore(loreStr) {
@@ -826,11 +826,11 @@ function parseLore(loreStr) {
     const lines = section.split('\n');
     const header = lines[0].trim().toLowerCase();
     const body = lines.slice(1).join('\n').trim();
-    if (header.startsWith('characters')) result.characters = body;
-    else if (header.startsWith('world') || header.startsWith('setting')) result.world = body;
+    if (header.startsWith('characters') || header.startsWith('your sims') || header.startsWith('sims')) result.characters = body;
+    else if (header.startsWith('world') || header.startsWith('setting') || header.startsWith('lot') || header.startsWith('neighborhood')) result.world = body;
     else if (header.startsWith('ships') || header.startsWith('relationships')) result.ships = body;
-    else if (header.startsWith('canon')) result.canon = body;
-    else if (header.startsWith('secrets') || header.startsWith('subtext')) result.secrets = body;
+    else if (header.startsWith('canon') || header.startsWith('gameplay')) result.canon = body;
+    else if (header.startsWith('secrets') || header.startsWith('subtext') || header.startsWith('sim secrets')) result.secrets = body;
   });
   return result;
 }
@@ -881,15 +881,15 @@ function setLoreFieldsInEditor(fields) {
   document.getElementById('lore-edit-secrets').value = fields.secrets || '';
 }
 
-const STORAGE_KEY = 'fanfic_forge_state';
-const STORIES_KEY = 'fanfic_forge_stories';
+const STORAGE_KEY = 'simfic_state';
+const STORIES_KEY = 'simfic_stories';
 
 function newStoryState() {
   return {
     id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
     title: '',
     fandom: '',
-    tone: 'Emotional but grounded',
+    tone: 'Drama-filled legacy play',
     premise: '',
     lore: LORE_TEMPLATE,
     chapters: [],
@@ -1024,7 +1024,7 @@ function renderHome() {
     if (story.fandom) {
       const fandomTag = document.createElement('span');
       fandomTag.className = 'tag-fandom';
-      fandomTag.textContent = '\u{1F338} ' + story.fandom;
+      fandomTag.textContent = '\u{1F48E} ' + story.fandom;
       tags.appendChild(fandomTag);
     }
     if (story.tone) {
@@ -1036,7 +1036,7 @@ function renderHome() {
     if (!story.fandom && !story.tone) {
       const emptyTag = document.createElement('span');
       emptyTag.className = 'tag-fandom';
-      emptyTag.textContent = 'No fandom set';
+      emptyTag.textContent = 'No game set';
       tags.appendChild(emptyTag);
     }
 
@@ -1210,7 +1210,7 @@ function exportHTML() {
   }).join('');
 
   const subtitle = [activeStory.fandom, activeStory.tone].filter(Boolean).join(' · ');
-  const html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>${escapeHTML(activeStory.title)}</title><link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"><style>body{background:#1a1a1a;color:#d4c5a9;font-family:'Lora','Georgia',serif;max-width:700px;margin:0 auto;padding:48px 24px;}</style></head><body><h1 style="text-align:center;font-family:'Cinzel',serif;font-size:2em;color:#e8d5b0;margin-bottom:8px;">${escapeHTML(activeStory.title)}</h1>${subtitle ? `<p style="text-align:center;font-style:italic;color:#8a7d6b;margin-bottom:48px;">${escapeHTML(subtitle)}</p>` : ''}${chaptersHTML}<div style="text-align:center;color:#5a5040;margin-top:64px;font-size:0.82em;font-style:italic;">Written with Fanfic Forge</div></body></html>`;
+  const html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>${escapeHTML(activeStory.title)}</title><link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"><style>body{background:#1a1a1a;color:#d4c5a9;font-family:'Lora','Georgia',serif;max-width:700px;margin:0 auto;padding:48px 24px;}</style></head><body><h1 style="text-align:center;font-family:'Cinzel',serif;font-size:2em;color:#e8d5b0;margin-bottom:8px;">${escapeHTML(activeStory.title)}</h1>${subtitle ? `<p style="text-align:center;font-style:italic;color:#8a7d6b;margin-bottom:48px;">${escapeHTML(subtitle)}</p>` : ''}${chaptersHTML}<div style="text-align:center;color:#5a5040;margin-top:64px;font-size:0.82em;font-style:italic;">Written with SimFic</div></body></html>`;
 
   const blob = new Blob([html], { type: 'text/html' });
   const url = URL.createObjectURL(blob);
@@ -1227,10 +1227,10 @@ function copyPrompt() {
   if (!activeStory) return;
   const nextChapter = activeStory.chapters.length + 1;
   let prompt = `Write Chapter ${nextChapter} of my story.\n\nSTORY: "${activeStory.title}"\n`;
-  if (activeStory.fandom) prompt += `FANDOM: ${activeStory.fandom}\n`;
+  if (activeStory.fandom) prompt += `GAME: ${activeStory.fandom}\n`;
   if (activeStory.tone) prompt += `TONE: ${activeStory.tone}\n`;
   prompt += `PREMISE: ${activeStory.premise}\n`;
-  if (activeStory.lore.trim()) prompt += `\nLORE BIBLE:\n${activeStory.lore}\n`;
+  if (activeStory.lore.trim()) prompt += `\nSIM BIBLE:\n${activeStory.lore}\n`;
 
   if (activeStory.chapters.length > 0) {
     prompt += '\nPREVIOUS CHAPTERS:\n';
@@ -1413,308 +1413,314 @@ document.getElementById('add-chapter-modal').addEventListener('click', (e) => {
 
 // -- Sample Fandom / Tone / Premise Data --
 const SAMPLE_FANDOMS = [
-  "Harry Potter", "Avatar: The Last Airbender", "Lord of the Rings", "Star Wars",
-  "My Hero Academia", "Naruto", "Percy Jackson", "Hunger Games",
-  "Game of Thrones", "Stranger Things", "Marvel Cinematic Universe", "DC Comics",
-  "Supernatural", "Doctor Who", "Sherlock", "Attack on Titan",
-  "Fullmetal Alchemist", "The Witcher", "Buffy the Vampire Slayer", "Dragon Age",
-  "Mass Effect", "Genshin Impact", "Good Omens", "Our Flag Means Death",
-  "Original Universe", "Hades (game)", "Stardew Valley", "The Magnus Archives",
-  "Critical Role / D&D", "Twilight", "Bridgerton", "Pride and Prejudice",
-  "Howl's Moving Castle", "Studio Ghibli", "Arcane / League of Legends", "Fire Emblem",
-  "Final Fantasy", "Persona 5", "Sailor Moon", "Fruits Basket"
+  "The Sims 4", "The Sims 4 + Seasons", "The Sims 4 + Get Together", "The Sims 4 + City Living",
+  "The Sims 4 + Cottage Living", "The Sims 4 + Vampires", "The Sims 4 + Realm of Magic",
+  "The Sims 4 + Get Famous", "The Sims 4 + Cats & Dogs", "The Sims 4 + Parenthood",
+  "The Sims 4 + Eco Lifestyle", "The Sims 4 + Snowy Escape", "The Sims 4 + Island Living",
+  "The Sims 4 + Discover University", "The Sims 4 + StrangerVille", "The Sims 4 + Jungle Adventure",
+  "The Sims 4 + Outdoor Retreat", "The Sims 4 + Spa Day", "The Sims 4 + Dine Out",
+  "The Sims 4 + Werewolves", "The Sims 4 + High School Years", "The Sims 4 + Growing Together",
+  "The Sims 4 + Horse Ranch", "The Sims 4 + For Rent", "The Sims 4 + Lovestruck",
+  "The Sims 4 + Life & Death", "The Sims 3", "The Sims 3 + Supernatural",
+  "The Sims 3 + Generations", "The Sims 3 + Late Night", "The Sims 3 + Ambitions",
+  "The Sims 3 + World Adventures", "The Sims 2", "The Sims 2 + Nightlife",
+  "The Sims 4 Base Game Only", "The Sims 4 + All Packs", "The Sims 4 + CC Heavy",
+  "The Sims Medieval", "The Sims 4 + Paranormal", "The Sims 4 + Tiny Living"
 ];
 const FANDOM_TAGS = [
-  ["fantasy","magic","school"],["fantasy","adventure","magic"],["fantasy","adventure","war"],["sci-fi","space","war"],
-  ["fantasy","school","adventure"],["fantasy","adventure","magic"],["fantasy","mythology","adventure"],["sci-fi","dark","war"],
-  ["fantasy","dark","war"],["horror","mystery","modern"],["sci-fi","adventure","modern"],["sci-fi","adventure","modern"],
-  ["horror","mystery","dark"],["sci-fi","adventure","mystery"],["mystery","modern","dark"],["dark","war","fantasy"],
-  ["fantasy","adventure","dark"],["fantasy","dark","adventure"],["horror","modern","comedy"],["fantasy","dark","adventure"],
-  ["sci-fi","space","adventure"],["fantasy","adventure","magic"],["fantasy","comedy","romance"],["historical","comedy","romance"],
-  ["fantasy","adventure","romance"],["mythology","dark","romance"],["modern","romance","comedy"],["horror","mystery","dark"],
-  ["fantasy","adventure","comedy"],["romance","horror","modern"],["historical","romance","comedy"],["historical","romance","comedy"],
-  ["fantasy","romance","magic"],["fantasy","adventure","romance"],["sci-fi","dark","adventure"],["fantasy","war","adventure"],
-  ["fantasy","adventure","magic"],["modern","mystery","magic"],["fantasy","magic","romance"],["modern","romance","comedy"]
+  ["family","drama","modern"],["seasons","romance","family"],["clubs","social","drama"],["city","career","modern"],
+  ["cottage","nature","romance"],["vampire","dark","romance"],["magic","fantasy","drama"],
+  ["fame","career","drama"],["pets","family","romance"],["family","drama","modern"],
+  ["eco","modern","social"],["winter","nature","romance"],["island","summer","romance"],
+  ["school","social","drama"],["mystery","dark","adventure"],["adventure","mystery","nature"],
+  ["nature","adventure","romance"],["relaxed","modern","romance"],["food","social","romance"],
+  ["werewolf","dark","drama"],["school","social","drama"],["family","drama","modern"],
+  ["ranch","nature","adventure"],["rental","social","drama"],["romance","social","modern"],
+  ["dark","family","drama"],["legacy","family","drama"],["magic","dark","drama"],
+  ["family","legacy","drama"],["city","social","drama"],["career","social","modern"],
+  ["adventure","mystery","drama"],["legacy","family","drama"],["city","social","romance"],
+  ["simple","family","drama"],["legacy","drama","romance"],["modern","drama","romance"],
+  ["medieval","fantasy","dark"],["paranormal","dark","mystery"],["tiny","modern","romance"]
 ];
 
 const SAMPLE_TONES = [
-  "Emotional but grounded", "Dark and atmospheric", "Soft and tender", "Chaotic and fun",
-  "Gothic romance", "Bittersweet and nostalgic", "Sharp-tongued and witty", "Slow burn tension",
-  "Cozy and warm", "Eerie and unsettling", "Dramatic and high-stakes", "Whimsical and dreamy",
-  "Gritty and raw", "Melancholy with hope", "Darkly comedic", "Lush and lyrical",
-  "Tense and paranoid", "Gentle hurt/comfort", "Epic and sweeping", "Intimate and quiet",
-  "Sardonic with heart", "Fever-dream surreal", "Achingly romantic", "Found-family warmth",
-  "Noir with neon edges", "Sunlit and wistful", "Vengeful and sharp", "Playful enemies-to-lovers",
-  "Haunted and grieving", "Rebellious and fiery"
+  "Drama-filled legacy play", "Cozy cottage life", "Chaotic household energy", "Slow burn romance",
+  "Dark and dramatic", "Wholesome family story", "Messy love triangles", "Rags to riches grind",
+  "Supernatural mystery", "Slice of life", "Over-the-top soap opera", "Coming of age",
+  "Bittersweet generational saga", "Lighthearted and funny", "Gothic and moody", "Sun-soaked summer vibes",
+  "Tense rivalry drama", "Gentle found-family warmth", "Epic multi-gen legacy", "Quiet suburban secrets",
+  "Chaotic evil energy", "Dreamy and romantic", "Emotional and raw", "Playful and quirky",
+  "Dark academia vibes", "Cottagecore aesthetic", "Vengeful and petty", "Enemies to lovers",
+  "Haunted and mysterious", "Rebellious teen drama"
 ];
 const TONE_TAGS = [
-  ["romance","modern"],["horror","dark","mystery"],["romance","comedy"],["comedy","adventure"],
-  ["dark","romance","horror"],["romance","historical"],["comedy","modern","mystery"],["romance","dark"],
-  ["comedy","romance","modern"],["horror","dark","mystery"],["dark","war","adventure"],["fantasy","romance","magic"],
-  ["dark","modern","war"],["romance","dark"],["dark","comedy"],["fantasy","romance"],
-  ["dark","mystery","horror"],["romance","dark"],["fantasy","war","adventure"],["romance","modern"],
-  ["dark","comedy","modern"],["horror","fantasy","mystery"],["romance","fantasy"],["romance","comedy","adventure"],
-  ["dark","mystery","sci-fi"],["romance","modern","comedy"],["dark","war","adventure"],["romance","comedy"],
-  ["dark","horror","romance"],["adventure","dark","war"]
+  ["drama","legacy","family"],["cottage","nature","romance"],["family","social","drama"],["romance","drama","social"],
+  ["dark","drama","mystery"],["family","romance","modern"],["romance","social","drama"],["career","modern","drama"],
+  ["dark","mystery","paranormal"],["family","modern","romance"],["drama","romance","social"],["school","social","drama"],
+  ["legacy","family","drama"],["family","social","romance"],["dark","drama","romance"],["summer","romance","social"],
+  ["drama","social","modern"],["family","romance","drama"],["legacy","family","drama"],["modern","family","drama"],
+  ["dark","drama","social"],["romance","modern","social"],["drama","family","romance"],["social","romance","family"],
+  ["dark","school","drama"],["cottage","nature","romance"],["drama","social","modern"],["romance","drama","social"],
+  ["dark","mystery","paranormal"],["school","drama","social"]
 ];
 
 const SAMPLE_PREMISES = [
-  "Two rival spies discover they've been assigned to protect the same target — each other.",
-  "A healer who absorbs every wound she mends falls for a soldier who keeps getting hurt on purpose just to see her.",
-  "After dying, a ghost discovers the afterlife is a bureaucratic nightmare and their assigned caseworker is their ex.",
-  "A cursed knight must collect seven impossible items before the next eclipse or lose their humanity forever.",
-  "Two strangers keep waking up in each other's bodies — but they live in different centuries.",
-  "A disgraced noble returns home after ten years to find their childhood enemy now rules the kingdom.",
-  "The chosen one refuses the quest. Their overlooked sidekick picks it up instead.",
-  "A librarian discovers that every book they've ever loved is actually a memoir from a parallel universe.",
-  "Rivals at a prestigious magic academy are forced to share a dorm room when a spell goes wrong.",
-  "A retired assassin opens a bakery. Their first customer recognizes them.",
-  "The villain wins, and now they have to figure out how to actually run a kingdom.",
-  "A time traveler keeps trying to prevent a war but accidentally causes it every time.",
-  "Two people on opposite sides of a siege begin exchanging letters through a crack in the wall.",
-  "A dragon and a knight fall in love, but only one of them is aware they're not both human.",
-  "The last surviving member of a prophecy must convince a stranger that the world is ending.",
-  "A musician's songs literally come true, and they just wrote a love song about the wrong person.",
-  "Sworn enemies are shipwrecked together on an island with one rescue flare and no trust.",
-  "A detective realizes the serial killer they're hunting has been leaving clues only they can understand.",
-  "A princess trades places with her handmaiden, but the handmaiden is better at being queen.",
-  "After a magical catastrophe, everyone forgets who they loved — except one person who remembers everything.",
-  "An immortal who has given up on life meets a mortal who makes them want to start again.",
-  "A group of strangers in a tavern discover they've all been summoned by the same dead wizard.",
-  "A witch who can only cast spells through cooking enters a royal baking competition to save her village.",
-  "The villain's henchman falls for the hero's sidekick. Both sides disapprove.",
-  "A ghost ship appears in the harbor every full moon. This time, someone on board is still alive.",
-  "Two childhood friends promised to meet at a landmark in ten years. Only one of them is still human.",
-  "A necromancer accidentally raises their own future corpse, who has opinions about their life choices.",
-  "The king's fool is the only one who knows the kingdom is under a mind-control spell.",
-  "A bounty hunter discovers their next target is the child they gave up years ago.",
-  "In a world where memories can be traded, someone is buying up every memory of a person who no longer exists."
+  "A single mom moves her family to Willow Creek for a fresh start, but her teenage daughter is furious about leaving her friends behind.",
+  "Two rival families in Windenburg compete for social dominance through their exclusive clubs, but the heirs of both families are secretly dating.",
+  "A down-on-their-luck Sim starts with nothing but a sleeping bag on an empty lot and dreams of building an empire.",
+  "A vampire elder falls for a mortal neighbor in Forgotten Hollow, but feeding on anyone in their neighborhood would blow their cover.",
+  "Three college roommates at Britechester make a pact: whoever gets the worst grades has to confess their biggest secret.",
+  "A celebrity Sim at the top of their career discovers their manager has been sabotaging their rivals — and one of those rivals is their ex.",
+  "A spellcaster in Glimmerbrook accidentally curses their entire household and has to fix it before the family reunion.",
+  "After inheriting a crumbling estate, a Sim discovers their grandmother's diary revealing generations of family drama and hidden treasure.",
+  "A Sim moves to Sulani to escape their old life, but their past literally washes up on the beach when their ex arrives on vacation.",
+  "Two elderly Sims meet at a community garden and start a late-in-life romance, much to the horror of their adult children.",
+  "A teenage Sim discovers they're a werewolf right before prom and has to hide it from their date and their overprotective parents.",
+  "A Sim family tries the 100 Baby Challenge, but the eldest child is developing feelings for someone the family matriarch disapproves of.",
+  "A paranormal investigator moves into a haunted house thinking it's a career opportunity. The ghost has opinions about the renovation plans.",
+  "Three generations of a legacy family gather for Winterfest, but simmering resentments threaten to ruin the holiday.",
+  "A Sim who's never had a romantic relationship decides to use every social event in town to find love before their adult birthday.",
+  "An aspiring chef opens a restaurant but keeps getting terrible reviews. Their biggest critic turns out to be their new next-door neighbor.",
+  "A horse rancher in Chestnut Ridge takes in a troubled teen from the city. Neither of them expected to change each other's lives.",
+  "A landlord Sim is trying to manage a rental property, but the tenants keep causing chaos and one of them might be stealing rent money.",
+  "A Sim in witness protection gets relocated to a tiny house in Newcrest, but their old life is catching up through suspicious new neighbors.",
+  "After a bad breakup, a Sim adopts every stray pet they find and becomes the eccentric neighborhood cat lady with a heart of gold.",
+  "Two Sims who hate each other get paired together in a university group project. The assignment: plan a fake wedding.",
+  "A retired criminal turned florist runs into their former partner-in-crime at the farmer's market. Old tensions and old feelings resurface.",
+  "A Sim discovers their parent was leading a double life with a whole second family in another neighborhood.",
+  "An eco-lifestyle activist moves to Evergreen Harbor to clean up the neighborhood, clashing with the locals who like things the way they are.",
+  "A teen Sim runs away from their controlling parents and crashes with a group of misfit friends in a run-down apartment in San Myshuno.",
+  "A mermaid trying to live among regular Sims in Sulani falls for someone who's terrified of the ocean.",
+  "A Sim inherits a farm in Henford-on-Bagley from a grandparent they never met, and discovers the village has strong opinions about outsiders.",
+  "Three adult siblings must move back in with their aging parent after all of their lives fall apart at the same time.",
+  "A Sim who can communicate with the dead starts getting messages from a ghost who claims to have been murdered by someone still alive.",
+  "The popular kid and the outcast at Copperdale High are forced to work together on the school play, discovering they have more in common than they thought."
 ];
 const PREMISE_TAGS = [
-  ["mystery","adventure","modern"],["romance","fantasy","magic"],["comedy","romance","dark"],["fantasy","adventure","magic"],
-  ["mystery","romance","magic"],["fantasy","dark","war"],["fantasy","adventure","comedy"],["fantasy","mystery","magic"],
-  ["fantasy","magic","school"],["dark","comedy","modern"],["dark","fantasy","comedy"],["sci-fi","adventure","mystery"],
-  ["romance","war","historical"],["fantasy","romance","comedy"],["fantasy","dark","adventure"],["fantasy","romance","magic"],
-  ["dark","adventure","romance"],["mystery","dark","horror"],["fantasy","comedy","adventure"],["fantasy","romance","magic"],
-  ["romance","dark","fantasy"],["fantasy","adventure","comedy"],["fantasy","comedy","magic"],["romance","comedy","dark"],
-  ["horror","fantasy","mystery"],["fantasy","dark","romance"],["fantasy","dark","comedy"],["fantasy","comedy","mystery"],
-  ["dark","adventure","romance"],["fantasy","mystery","dark"]
+  ["family","drama","modern"],["social","drama","romance"],["career","modern","drama"],["vampire","dark","romance"],
+  ["school","social","drama"],["fame","career","drama"],["magic","family","drama"],["legacy","family","mystery"],
+  ["island","romance","drama"],["romance","family","modern"],["werewolf","dark","drama"],["legacy","family","romance"],
+  ["paranormal","dark","romance"],["family","legacy","drama"],["romance","social","modern"],["food","social","drama"],
+  ["ranch","nature","drama"],["rental","social","drama"],["mystery","dark","modern"],["pets","family","romance"],
+  ["school","romance","social"],["drama","romance","modern"],["family","drama","dark"],["eco","social","drama"],
+  ["drama","social","modern"],["island","romance","drama"],["cottage","nature","drama"],["family","drama","modern"],
+  ["paranormal","dark","mystery"],["school","social","drama"]
 ];
 
 // -- Sample Lore Data --
 const SAMPLE_WORLDS = [
-  "Post-war continent of Valdris, where magic is fueled by emotional trauma. Three kingdoms in fragile truce. Industrial fantasy with Victorian-era technology.",
-  "Orbital station Kepler-9, last refuge of humanity after Earth's collapse. Corporate factions vie for control of dwindling oxygen reserves. Hard sci-fi, 2340 AD.",
-  "The Drowned Parishes of New Marseille, a flooded coastal city where amphibious mutants trade in pre-flood relics. Biopunk meets Southern Gothic.",
-  "Neo-Kyoto, 2089. Neon-drenched megacity where hackers jack into spirit networks. Cyberpunk fused with Shinto mysticism. Yakuza clans control digital shrines.",
-  "Ironhaven, a steampunk fortress-city built inside a dormant volcano. Clockwork automatons serve the Artificer Parliament. Coal is sacred currency.",
-  "Kingdom of Rhysal beneath the Siltmere Ocean. Merfolk aristocracy, pressure-forged crystal architecture. Ancient leviathans sleep in the abyssal trenches below.",
-  "Dust Bowl Kansas, 1935, but the storms carry ghosts. Folk magic practitioners battle spectral plagues. Historical horror with American frontier mythology.",
-  "Bleakport, a perpetually fog-bound harbor town. Noir detective setting, 1940s aesthetic. Sea creatures infiltrate human society wearing stolen faces.",
-  "The Floating Academies of Cirrus, cloud-cities devoted to arcane scholarship. Renaissance-era culture. Knowledge is literal currency, memories are taxed.",
-  "Isla Cerradora, a cursed tropical island where time loops every seven days. Age of Sail pirates trapped in an eternal cycle of betrayal.",
-  "Tanglevine Bayou, a magical swamp where voodoo practitioners negotiate with sentient alligator spirits. 1920s Louisiana with fae crossover elements.",
-  "Luminara, a city inside a giant bioluminescent jellyfish drifting through deep ocean. Symbiotic technology, pressure-caste society, coral-grown tools.",
-  "Cascadia Free State, 2045. Eco-anarchist commune in the Pacific Northwest after US fracture. Solarpunk aesthetics, mushroom-based biotech, rain worship.",
-  "Port Reverie, a dream-powered metropolis where sleep is industrialized. Art Deco architecture, oneiromancers police the collective unconscious, 1930s noir tone.",
-  "Grimwald Academy, a boarding school for monster children in modern-day Scotland. Urban fantasy, teenage drama, each species has unique magical puberty.",
-  "Nightharbor, a city that only exists between midnight and dawn. Urban fantasy, nocturnal merchants, dreamwalker police force, sunrise means erasure.",
-  "Zenith Arcology, a mile-high self-contained city in post-climate-collapse Earth, 2095. Vertical class stratification, rooftop farms, basement black markets.",
-  "Prohibition-era Chicago but werewolves run the speakeasies. Urban fantasy noir, silver-bullet bootleggers, pack politics mirror gang warfare.",
-  "Ashfall District, a neighborhood in modern Tokyo where yokai run businesses alongside humans. Slice-of-life urban fantasy, spirit-world bureaucracy comedy.",
-  "Brindlewood, a seemingly idyllic English village where elderly women solve murders linked to cosmic horror. Cozy mystery meets eldritch dread.",
-  "Driftwood City, built entirely from shipwrecks in a permanent ocean maelstrom. Pirate democracy, salvage economy, the whirlpool is worshipped.",
-  "The Obsidian Spires of Noxhaven, a gothic city where vampires rule openly. Dark fantasy, blood-tithe economy, human livestock rebellions brewing.",
-  "Perdition Alley, a neon-lit strip of interdimensional nightclubs. Urban fantasy noir, demon bartenders serve mortal patrons, soul-debt economy.",
-  "Ashen Reach, a volcanic archipelago ruled by dragon-bonded warlords. Bronze Age technology. Magic drawn from geothermal vents and obsidian runes.",
-  "The Verdant Labyrinth, an endless sentient forest on a tidally locked planet. Bioluminescent flora, nomadic elven tribes, no metal exists here.",
-  "Frontier town of Gallows Gulch on Mars, 2187. Space western with terraforming disputes, android outlaws, and solar-powered revolvers.",
-  "The Scarlet Khanate, a steppe empire where blood magic fuels mounted warfare. Mongol-inspired culture, 13th-century tech, demon-horse cavalry.",
-  "Hollowreach, a city carved into the roots of a world-tree. Fae courts wage cold wars in fungal tunnels. Celtic-inspired dark fantasy.",
-  "The Shattered Moons of Velanthos, where gravity-defying cities float among lunar debris. Space opera with feudal politics and psionic noble houses.",
-  "Abyssal Station Theta, a deep-sea research facility where eldritch entities whisper through the hull. Sci-fi horror, claustrophobic setting, 2260 AD."
+  "Willow Creek, a cozy suburban neighborhood with white picket fences and nosy neighbors. The Oakenstead lot — a renovated Victorian with creaky stairs and a garden shed full of secrets.",
+  "San Myshuno, a bustling city with cramped apartments and rooftop views. Penthouse at the Spice District — sleek modern design, karaoke nights drift up from the festival below.",
+  "Windenburg, an old-world European town with stone bridges and exclusive clubs. The Von Haunt Estate looms on the hill, hosting masked galas and harboring centuries-old ghosts.",
+  "Forgotten Hollow, a perpetually overcast neighborhood where the streetlights flicker. A gothic manor with blacked-out windows — the neighbors only come out after dark.",
+  "Brindleton Bay, a charming coastal town that smells like salt air and dog treats. A weathered lighthouse cottage on the cliff, with a dock and a yard full of strays.",
+  "Sulani, a tropical paradise with crystal water and volcanic peaks. A beachside bungalow on stilts — hammocks on the porch, mermaids in the cove, luaus every weekend.",
+  "Glimmerbrook, a mystical village hidden behind a waterfall portal. A crooked cottage in the magic realm with a cauldron garden and pixie-infested attic.",
+  "Del Sol Valley, a sun-baked celebrity neighborhood where everyone is trying to make it big. A starter bungalow next door to a mansion — the wealth gap is literally the fence line.",
+  "Strangerville, a suspicious desert town with a crater and a military lab. The local diner serves pie and paranoia. Something is growing under the ground.",
+  "Britechester, a prestigious university town with ivy-covered halls and rowdy dormitories. The student commons are ground zero for academic rivalries and midnight study sessions.",
+  "Henford-on-Bagley, a pastoral English village with rolling hills and chicken coops. A thatched-roof farmhouse with a garden that won't stop producing oversized vegetables.",
+  "Mt. Komorebi, a serene Japanese-inspired neighborhood with snow-capped peaks. A traditional ryokan-style home near the hot springs, surrounded by cherry blossoms and hiking trails.",
+  "Evergreen Harbor, an industrial neighborhood in transition. A reclaimed warehouse loft next to the community garden — the air quality is debatable but the neighbors are passionate.",
+  "Tartosa, a romantic Mediterranean coastal town with terracotta roofs and wedding venues. A sun-drenched villa overlooking the sea — perfect for fresh starts and second chances.",
+  "Copperdale, a small town with a high school at its center. A modest family home near the football field — teen drama radiates outward from the school parking lot.",
+  "Moonwood Mill, a foggy lumber town with howling in the distance. A rustic cabin near the wolf pack gathering grounds — the scratches on the door weren't made by bears.",
+  "Newcrest, a blank-slate neighborhood waiting to be built. An empty lot with nothing but potential and a single mailbox standing in a field of possibility.",
+  "Oasis Springs, a desert neighborhood with dusty roads and swimming pools. A mid-century modern home with a cactus garden and a mysterious neighbor who never leaves their house.",
+  "Magnolia Promenade, a retail district where entrepreneurial dreams come true — or crash and burn. A shop space above a café, perfect for a Sim with ambitions.",
+  "Tomarang, a lush tropical town with ancient ruins and street food vendors. A colorful bungalow in the village center where everyone knows everyone's business.",
+  "Chestnut Ridge, an equestrian countryside with sprawling ranches and rodeo grounds. A horse ranch with a creaky barn, rolling pastures, and a farmhand with secrets.",
+  "San Sequoia, a multigenerational neighborhood with tree-lined streets. A craftsman home where grandparents, parents, and kids all live under one increasingly chaotic roof.",
+  "Batuu, a distant outpost on the edge of the galaxy. A resistance base hidden in the marketplace — not exactly a typical neighborhood, but the Force works in mysterious ways.",
+  "Granite Falls, a national park perfect for family vacations and hermit retreats. A rental cabin in the woods with a fire pit, fishing pond, and something moving in the trees.",
+  "Selvadorada, a jungle adventure destination with ancient temples. A base camp near the ruins — machetes, mosquitoes, and the promise of treasure or curses.",
+  "The Magic Realm, a floating dimension accessible through Glimmerbrook's portal. Three magical faction headquarters orbit a central dueling arena — politics here involve fireballs.",
+  "Forgotten Hollow's ancient cemetery, where mausoleums hide underground passages. Above ground it's manicured and eerie; below ground, nobody talks about what happened in 1842.",
+  "Realm of the Dead, where Grim Reapers clock in for shifts. Office politics, soul paperwork, and a break room with terrible coffee — death is just a 9-to-5.",
+  "A houseboat docked in Brindleton Bay harbor. Creaking walls, seagulls stealing breakfast, and a neighbor on the next dock who keeps asking about the strange lights at night.",
+  "The Pinnacles penthouse in San Myshuno — floor-to-ceiling windows, a rooftop garden, and a doorman who knows every secret of every resident in the building."
 ];
 const WORLD_TAGS = [
-  ["fantasy","dark","war"],["sci-fi","space","dark"],["sci-fi","dark","horror"],["sci-fi","modern","dark"],
-  ["fantasy","adventure","historical"],["fantasy","adventure","magic"],["horror","historical","dark"],["mystery","dark","horror"],
-  ["fantasy","magic","school"],["fantasy","adventure","historical"],["horror","magic","historical"],["fantasy","adventure","magic"],
-  ["sci-fi","modern","adventure"],["mystery","dark","modern"],["fantasy","comedy","school"],["fantasy","dark","mystery"],
-  ["sci-fi","dark","modern"],["horror","dark","historical"],["fantasy","comedy","modern"],["mystery","horror","comedy"],
-  ["fantasy","adventure","war"],["dark","fantasy","horror"],["dark","fantasy","horror"],["fantasy","war","dark"],
-  ["fantasy","adventure","magic"],["sci-fi","adventure","war"],["fantasy","war","dark"],["fantasy","dark","magic"],
-  ["sci-fi","fantasy","war"],["sci-fi","horror","dark"]
+  ["family","modern","drama"],["city","social","modern"],["social","drama","romance"],["vampire","dark","drama"],
+  ["pets","nature","romance"],["island","summer","romance"],["magic","fantasy","drama"],["fame","career","drama"],
+  ["mystery","dark","adventure"],["school","social","drama"],["cottage","nature","romance"],["winter","nature","romance"],
+  ["eco","modern","social"],["romance","social","modern"],["school","social","drama"],["werewolf","dark","drama"],
+  ["modern","simple","family"],["modern","drama","mystery"],["career","social","modern"],["social","nature","drama"],
+  ["ranch","nature","adventure"],["family","legacy","drama"],["adventure","mystery","drama"],["nature","adventure","romance"],
+  ["adventure","mystery","nature"],["magic","fantasy","drama"],["dark","mystery","paranormal"],["dark","drama","mystery"],
+  ["nature","romance","drama"],["city","social","drama"]
 ];
 
 const SAMPLE_CHARACTERS = [
-  "Elara Voss, 24, former soldier. Sharp-tongued, fiercely loyal, secretly hears the dead. Kael Ashford, 26, disgraced prince under a false name, calm but full of rage.",
-  "Yuki Tanaka, 19, shrine maiden. Gentle but stubborn, secretly binds demons at night. Ren Okada, 22, wandering swordsman, cheerful yet haunted by a village he failed to save.",
-  "Amara Osei, 30, herbalist. Warm-hearted, wise beyond her years, secretly poisoned a tyrant king. Kofi Mensah, 35, blacksmith, quiet and strong, hides a branded mark of slavery.",
-  "Sofia Reyes, 28, cartographer. Curious, restless, secretly maps ley lines for a forbidden cult. Diego Vargas, 33, bounty hunter, charming but ruthless, owes a debt to the dead.",
-  "Priya Sharma, 21, temple dancer. Graceful, observant, secretly an assassin for the high priestess. Arjun Mehta, 40, merchant prince, generous yet secretly funds a rebel army.",
-  "Fatima Al-Rashid, 27, astronomer. Quiet, brilliant, secretly deciphers prophecies of the world's end. Omar Hassan, 31, palace guard, dutiful and brave, secretly a spy for the northern clans.",
-  "Ingrid Halvorsen, 38, shipwright. Blunt, dependable, secretly built a vessel to reach the land of gods. Erik Stenberg, 29, fisherman, easygoing, once drowned and returned changed.",
-  "Mei Lin Zhang, 20, silk weaver. Shy, meticulous, secretly embroiders spells into her fabric. Wei Chen, 45, retired general, stern and honorable, hides a massacre he ordered.",
-  "Chioma Adeyemi, 32, bone reader. Fierce, spiritual, secretly communes with an ancient serpent god. Emeka Nwankwo, 28, drum maker, joyful and loud, conceals a terrible stutter when afraid.",
-  "Isabela Cruz, 25, apothecary. Compassionate, sharp-witted, secretly addicted to her own elixirs. Mateo Aguilar, 37, priest, pious and gentle, lost his faith after witnessing a miracle go wrong.",
-  "Lila Nakamura, 23, street artist. Bold, impulsive, secretly paints protective wards on alley walls. Haruki Sato, 34, merchant, pragmatic and weary, secretly bankrolls the city's orphanages.",
-  "Nneka Okafor, 29, midwife. Calm under pressure, secretly a dreamwalker who visits the unborn. Tunde Balogun, 41, judge, fair and feared, secretly pardoned his own brother.",
-  "Camila Santos, 22, lighthouse keeper. Lonely, brave, secretly signals smugglers to save refugees. Rafael Torres, 30, ship captain, reckless but honorable, carries a compass that points to regret.",
-  "Asha Patel, 35, puppeteer. Whimsical, secretive, her puppets move when no one is pulling strings. Ravi Kumar, 27, scribe, meticulous and anxious, accidentally transcribed a forbidden prophecy.",
-  "Saoirse Byrne, 31, innkeeper. Warm, shrewd, secretly runs an underground railroad for escaped slaves. Cillian Murphy, 44, retired soldier, haunted and kind, keeps a locked room no one enters.",
-  "Zara Osman, 26, spice merchant. Ambitious, cunning, secretly a poisoner for hire. Hassan Farah, 38, poet, melancholic and gentle, writes verses that can literally break hearts.",
-  "Anika Johansson, 33, glassblower. Patient, precise, secretly traps spirits inside her creations. Lars Eriksson, 50, woodcutter, gruff and solitary, once spoke to a god and was cursed with truth.",
-  "Mira Volkov, 24, acrobat. Fearless, charming, secretly spying for a foreign crown. Dmitri Petrov, 36, clockmaker, obsessive and brilliant, built a device that slows time but ages the user.",
-  "Leila Nazari, 28, calligrapher. Serene, observant, her written words carry literal power. Darius Rezaei, 32, caravan guard, loyal and scarred, owes a life debt he can never repay.",
-  "Keiko Mori, 40, tea master. Graceful, insightful, reads futures in tea leaves with terrifying accuracy. Takeshi Ono, 19, apprentice, eager and clumsy, accidentally bonded with a dragon spirit.",
-  "Adanna Eze, 34, weaver. Creative, fierce, secretly weaves protective enchantments into funeral shrouds. Obinna Chukwu, 29, wrestler, boisterous and gentle, hides a crippling fear of the dark.",
-  "Elena Vasquez, 27, navigator. Analytical, restless, secretly charts a course to a mythical lost continent. Marco Delgado, 42, tavern owner, gregarious but guarded, witnessed a murder he won't report.",
-  "Freya Lindqvist, 30, rune carver. Stoic, methodical, accidentally carved a rune that killed her mentor. Bjorn Andersson, 25, shepherd, kind and simple, speaks to animals and they answer.",
-  "Nadia Volkov, 22, fire dancer. Passionate, reckless, secretly can't control the flames she summons. Viktor Sokolov, 48, apothecary, cynical and sharp, sells cures to diseases he created.",
-  "Yara Santos, 19, fisher. Quiet, observant, found a pearl that whispers secrets of the deep. Lucas Ferreira, 31, carpenter, steady and dependable, builds coffins that keep the dead truly dead.",
-  "Amina Diallo, 36, griot storyteller. Charismatic, wise, her stories physically manifest for moments. Moussa Traore, 43, ironworker, powerful and thoughtful, forges blades that sing warnings to their wielders.",
-  "Hana Kim, 25, herbalist. Gentle, stubborn, secretly grows plants that cure curses no one else can. Joon Park, 28, scholar, intense and passionate, deciphered an ancient text that drove three others mad.",
-  "Isolde Brandt, 42, brewmaster. Sharp-humored, generous, her mead grants visions to those who drink deeply. Wolfgang Muller, 55, retired knight, dignified and weary, keeps his old sword oiled and sharp.",
-  "Rosa Almeida, 31, tattoo artist. Intuitive, bold, her tattoos protect or curse depending on intent. Eduardo Lima, 24, musician, dreamy and talented, plays songs that make the dead weep.",
-  "Linnea Dahl, 29, beekeeper. Patient, gentle, her bees deliver messages across impossible distances. Anders Berg, 33, cartographer, detail-obsessed, mapped a territory that shouldn't exist."
+  "Luna Caliente, Young Adult. Traits: Romantic, Hot-Headed, Creative. Aspiration: Serial Romantic. Works as a mixologist. Falls in love too fast and burns bridges faster. Has three exes in the same neighborhood.",
+  "Marcus Flex, Adult. Traits: Active, Self-Assured, Bro. Aspiration: Bodybuilder. Gym rat who secretly writes poetry in his journal. His protein shake obsession hides deep insecurity about aging.",
+  "Eliza Pancakes, Adult. Traits: Snob, Perfectionist, Music Lover. Aspiration: Fabulously Wealthy. Trapped in a loveless marriage, spends her days redecorating and her nights browsing real estate in Del Sol Valley.",
+  "Cassandra Goth, Young Adult. Traits: Genius, Bookworm, Gloomy. Aspiration: Renaissance Sim. Brilliant but haunted by her mother's disappearance. Studies the occult hoping to find answers she's afraid to receive.",
+  "Johnny Zest, Young Adult. Traits: Goofball, Outgoing, Ambitious. Aspiration: Joke Star. Disowned by the Landgraab family for pursuing comedy. Lives in a trailer and laughs to keep from crying.",
+  "Bella Goth, Adult. Traits: Romantic, Materialistic, Ambitious. Aspiration: Party Animal. The most mysterious woman in town. Her memory has gaps. She wakes up in places she doesn't remember going.",
+  "Don Lothario, Young Adult. Traits: Romantic, Non-Committal, Active. Aspiration: Serial Romantic. Charming disaster. Currently juggling three relationships and one very suspicious neighbor who's keeping notes.",
+  "Mortimer Goth, Elder. Traits: Genius, Bookworm, Loner. Aspiration: Bestselling Author. Devoted to his family but emotionally distant. Writes gothic novels based on his real life. Nobody believes they're fiction.",
+  "Lily Feng, Adult. Traits: Ambitious, Materialistic, Evil. Aspiration: Fabulously Wealthy. Ruthless businesswoman with a smile that never reaches her eyes. Her husband doesn't know about her second phone.",
+  "Travis Scott, Young Adult. Traits: Geek, Loner, Creative. Aspiration: Computer Whiz. Introvert coding genius who has a massive crush on his neighbor but can barely make eye contact.",
+  "Nina Caliente, Young Adult. Traits: Romantic, Active, Outgoing. Aspiration: Serial Romantic. Twin sister who's the life of every party. Secretly jealous of her sister's ability to actually fall in love.",
+  "Alexander Goth, Teen. Traits: Genius, Bookworm. Aspiration: Whiz Kid. Precocious kid who's smarter than most adults in town. Building a robot in the basement. Worried about his mom.",
+  "Katrina Caliente, Elder. Traits: Romantic, Evil, Ambitious. Aspiration: Fabulously Wealthy. Matriarch who married for money twice. Rumored to have caused both husbands' 'accidents.' Dotes on her twin daughters.",
+  "Victor Feng, Adult. Traits: Ambitious, Materialistic, Snob. Aspiration: Fabulously Wealthy. Power couple half. Suspects his wife is having an affair but is too proud to confront it directly.",
+  "Summer Holiday, Young Adult. Traits: Outgoing, Active, Cheerful. Aspiration: Friend of the World. Relentlessly positive neighbor who's hiding a devastating secret about her family's bankruptcy.",
+  "Geoffrey Landgraab, Adult. Traits: Snob, Materialistic, Self-Assured. Aspiration: Fabulously Wealthy. Old money patriarch who disowned his son. Regrets it every day but would never admit it.",
+  "Miko Ojo, Young Adult. Traits: Geek, Active, Bro. Aspiration: Friend of the World. Pro gamer who streams from her tiny apartment. Online she's fearless; offline she's cripplingly shy.",
+  "Vlad Straud, Elder. Traits: Evil, Loner, Mean. Aspiration: Master Vampire. Ancient vampire lord of Forgotten Hollow. Secretly lonely. His diary entries are surprisingly tender and sad.",
+  "Liberty Lee, Young Adult. Traits: Creative, Music Lover, Romantic. Aspiration: Musical Genius. Street musician saving up for a studio. Her songs are about the roommate she's in love with.",
+  "Malcolm Landgraab, Young Adult. Traits: Snob, Evil, Materialistic. Aspiration: Fabulously Wealthy. Rich kid who's never worked a day in his life. Secretly volunteering at the soup kitchen to feel something.",
+  "Agnes Crumplebottom, Elder. Traits: Hot-Headed, Mean, Loner. Aspiration: Gardening. Iconic grumpy widow who hits people with her purse. Lost her husband decades ago and the grief transformed into rage.",
+  "Penny Pizzazz, Young Adult. Traits: Music Lover, Creative, Self-Assured. Aspiration: Musical Genius. Band frontwoman with a stage presence that fills stadiums. Backstage, she has panic attacks before every show.",
+  "Bob Pancakes, Adult. Traits: Lazy, Slob, Foodie. Aspiration: Master Chef. Stuck in a marriage with Eliza, finds solace in cooking elaborate meals she refuses to eat. Dreams of opening a food truck.",
+  "Morgan Fyres, Young Adult. Traits: Hot-Headed, Mean, Creative. Aspiration: Public Enemy. Troubled kid with a criminal record and a heart she won't let anyone see. Sets fires when she's anxious.",
+  "Caleb Vatore, Young Adult. Traits: Good, Loner, Creative. Aspiration: Good Vampire. Vampire who doesn't want to feed on anyone. Paints portraits of the mortals he admires from a distance.",
+  "Judith Ward, Elder. Traits: Self-Assured, Materialistic, Snob. Aspiration: Fabulously Wealthy. Legendary actress whose career is fading. Desperate to stay relevant. Will befriend or destroy you based on reviews.",
+  "Salim Benali, Young Adult. Traits: Creative, Loner, Self-Assured. Aspiration: Bestselling Author. Writer who works from a San Myshuno apartment. His novels sell well but he hasn't left his flat in weeks.",
+  "Lilith Vatore, Young Adult. Traits: Evil, Mean, Active. Aspiration: Master Vampire. Caleb's twin sister who embraces vampire life fully. Throws wild parties in their manor to lure in fresh blood.",
+  "Mila Munch, Young Adult. Traits: Foodie, Cheerful, Family-Oriented. Aspiration: Master Chef. Wholesome foodie who bakes for every neighbor. Her kindness is genuine — which makes everyone suspicious.",
+  "Thorne Bailey, Young Adult. Traits: Gloomy, Music Lover, Creative. Aspiration: Musical Genius. Emo musician who writes songs in a graveyard. Surprisingly sweet once you get past the eyeliner."
 ];
 const CHARACTER_TAGS = [
-  ["fantasy","dark","war"],["fantasy","magic","adventure"],["fantasy","dark","historical"],["fantasy","adventure","mystery"],
-  ["fantasy","magic","dark"],["fantasy","mystery","war"],["fantasy","adventure","mythology"],["fantasy","magic","historical"],
-  ["fantasy","dark","magic"],["fantasy","romance","dark"],["fantasy","magic","modern"],["fantasy","dark","mystery"],
-  ["fantasy","adventure","romance"],["fantasy","magic","mystery"],["fantasy","dark","historical"],["fantasy","dark","romance"],
-  ["fantasy","magic","historical"],["fantasy","adventure","dark"],["fantasy","historical","romance"],["fantasy","magic","adventure"],
-  ["fantasy","dark","magic"],["fantasy","adventure","mystery"],["fantasy","magic","historical"],["fantasy","dark","romance"],
-  ["fantasy","adventure","mystery"],["fantasy","dark","historical"],["fantasy","magic","romance"],["fantasy","dark","magic"],
-  ["fantasy","magic","romance"],["fantasy","adventure","magic"]
+  ["romance","drama","social"],["career","modern","social"],["drama","romance","modern"],["legacy","family","dark"],
+  ["career","social","drama"],["mystery","romance","dark"],["romance","social","drama"],["legacy","family","dark"],
+  ["career","drama","dark"],["romance","modern","social"],["romance","social","drama"],["family","legacy","drama"],
+  ["family","dark","drama"],["career","drama","social"],["social","modern","drama"],["family","drama","social"],
+  ["modern","social","drama"],["vampire","dark","drama"],["romance","social","modern"],["career","social","drama"],
+  ["drama","modern","social"],["fame","career","drama"],["family","drama","romance"],["dark","drama","social"],
+  ["vampire","dark","romance"],["fame","career","drama"],["modern","drama","romance"],["vampire","dark","drama"],
+  ["family","social","romance"],["dark","drama","romance"]
 ];
 
 const SAMPLE_SHIPS = [
-  "Enemies to lovers, slow burn. She blames him for her brother's death. He's trying to atone without revealing the truth. Tension is razor-sharp and neither will break first.",
-  "Fake dating at a royal court. They despise each other privately but must convince an entire kingdom they're in love. The act starts feeling dangerously real.",
-  "Childhood friends reunited after a decade apart. She's a war hero now; he still sees the girl who caught fireflies. Neither knows how to bridge the gap.",
-  "Rivals competing for the same guild leadership. Every sparring match crackles with unspoken attraction. Winning means everything, but losing to her feels like a gift.",
-  "Arranged marriage between enemy kingdoms. He's cold and dutiful; she's furious and plotting escape. Slowly, they become each other's only ally in a hostile court.",
-  "Hurt/comfort after a failed mission. He won't let anyone tend his wounds, but she sits outside his door every night until he opens it.",
-  "Forbidden love between a healer and a cursed knight. Every time she touches him, the curse spreads to her. He begs her to stop. She refuses.",
-  "Second chance romance. They broke up five years ago over a misunderstanding. Now they're assigned to the same outpost and the feelings never actually left.",
-  "Found family bond between a grizzled mercenary and an orphaned teenager. He swore he'd never care about anyone again. She makes that impossible.",
-  "Friends to lovers. They've been inseparable since the academy. Everyone sees it but them. A near-death experience forces the truth into the open.",
-  "Mentor and student. The old mage promised her dying friend she'd train his daughter. The girl is talented, reckless, and reminds her painfully of her own youth.",
-  "Co-workers at an enchanted library. He shelves books; she hunts cursed manuscripts. Their shifts overlap at midnight, and the silence between them speaks volumes.",
-  "Enemies to reluctant allies. The pirate captain captures the naval officer. A kraken attack forces them to fight side by side. Mutual respect is inconvenient.",
-  "Platonic soulmates. Two soldiers who survived the same siege. They don't need romance; they need someone who understands the nightmares without asking questions.",
-  "Forbidden love between a priestess and a demon-blooded wanderer. Her faith says he's an abomination. Her heart says her faith is wrong.",
-  "Fake engagement to fool her disapproving family. He's her best friend and completely in love with her. She's oblivious. Her family is not.",
-  "Reluctant allies: a necromancer and a paladin forced to collaborate against a greater evil. Their moral arguments are legendary. So is their effectiveness together.",
-  "Childhood friends to strangers to lovers. She became a queen; he became a thief. Their worlds shouldn't intersect anymore, but fate keeps intervening.",
-  "Found family. A disgraced knight, a runaway princess, and a mute orphan form an unlikely traveling party. None of them planned to care this much.",
-  "Rivals to lovers at a bardic college. They compete for every solo, every award. The hatred is a mask for something that terrifies them both.",
-  "Band mates in a traveling minstrel troupe. She writes the songs; he performs them. The lyrics are about him, and he's the last to realize it.",
-  "Lab partners studying forbidden alchemy. They share a dangerous secret that could get them both executed. The intimacy of conspiracy becomes something neither expected.",
-  "Hurt/comfort. After the siege, she finds him sitting alone in the rubble, unable to speak. She doesn't ask him to. She just stays.",
-  "Found family. A dragon and the knight sent to slay it. The dragon is lonely. The knight is tired of killing. They make terrible roommates.",
-  "Vampire and vampire hunter team up against a mutual enemy. The tension is existential. The banter is surprisingly warm.",
-  "She always jumped first and he always caught her. Twenty years later, she's falling in a way he can't physically prevent. He tries anyway.",
-  "Two guards on the night watch. Years of shared silence and bad coffee. Love arrives not as a thunderbolt but as a slow sunrise.",
-  "The critic and the chef. She gave his restaurant one star. He sent her a seven-course challenge. The battle is waged in butter and prose.",
-  "Two monks in a silent order communicate through touch and expression. When he leaves the order, his first word is her name.",
-  "The harbor master and the pirate queen. She docks illegally every full moon. He waits with a fine and barely concealed anticipation."
+  "Enemies to lovers. She's a Landgraab; he's a Caliente. Their families despise each other. They keep 'accidentally' running into each other at the gym and the flirting is getting harder to hide.",
+  "Love triangle. She's torn between the stable, boring partner who checks every box and the chaotic disaster Sim who makes her laugh until she snorts. Both showed up at Winterfest dinner.",
+  "Childhood sweethearts who aged up together. They were best friends as kids, dated as teens, but university pulled them apart. Now they're both back in Willow Creek and pretending it doesn't hurt.",
+  "Roommates to lovers. They split rent on a San Myshuno apartment. She leaves notes on the fridge. He cooks dinner on her late nights. The lease renewal conversation became a love confession.",
+  "Forbidden romance between a vampire and a mortal. He's been alive for centuries and she smells like sunlight. Every kiss is a risk. She knows what he is and doesn't care.",
+  "Divorce arc. After twenty years of marriage, they're splitting up. Custody of the dog is more contentious than the house. They argue about everything except the fact they still love each other.",
+  "Secret affair. Both are in relationships. They meet at the café in Windenburg every Tuesday. The guilt is eating them alive but neither can stop showing up.",
+  "Friends to lovers, slow burn. They've been best friends since move-in day. Everyone in their friend group sees it. They're the last to know. One drunk night at a festival changes everything.",
+  "Parent's best friend. She's 25 and he's been her mom's friend for years. He finally noticed she's not a kid anymore when she showed up at the community barbecue. Her mom would lose it.",
+  "Rivals in the same career track. Both gunning for the same promotion. Their competitiveness at work is a thin cover for the tension that crackles when they're alone in the break room.",
+  "Second chance romance. They broke up because she wanted kids and he didn't. Five years later, he shows up at her door with adoption papers and a speech he rehearsed forty times.",
+  "Fake dating. They're pretending to be a couple to make their respective exes jealous at a party. The problem is, the fake hand-holding is starting to feel extremely real.",
+  "Elderly romance. Both widowed. They met at the library. He brings her flowers from his garden every Wednesday. Their adult children think it's 'too soon.' It's been fifteen years.",
+  "Forbidden interspecies romance. She's a mermaid who transforms on land. He's a werewolf who can't control his changes. Full moon dates are complicated but the chemistry is undeniable.",
+  "Single parents who met through their kids' friendship. Playdates became coffee dates. Coffee dates became lingering at the door. Neither wants to mess up what their kids have.",
+  "Online romance gone real. They met through a gaming group. Months of late-night chats. When they finally meet IRL at a festival, she realizes he's her annoying next-door neighbor.",
+  "Teacher and teacher. They share a classroom wall at Copperdale High. Their students ship them. The staff knows. They're the only two who insist they're 'just colleagues.'",
+  "Celebrity and fan. She's a famous actress in Del Sol Valley. He's a barista who genuinely didn't recognize her. His obliviousness is the most attractive thing she's ever encountered.",
+  "Arranged marriage (family pressure). Both sets of parents have been planning this since they were toddlers. They went along with it out of duty. The surprising part is it's actually working.",
+  "Found family. A group of misfit Sims who all live in the same apartment building form a chaotic but fiercely loyal chosen family. Holidays are loud, messy, and full of love.",
+  "Exes who co-parent. They split up years ago but share custody. Every pickup and dropoff is a minefield of old feelings. Their kid is tired of being the emotional buffer.",
+  "Werewolf pack dynamics. The alpha and the newest pack member. She challenged him on her first night. He respects her fire. The pack watches their tension like a soap opera.",
+  "Best friends who kissed once and never talked about it. That was three years ago. They still hang out every day. The elephant in the room has its own bedroom at this point.",
+  "Neighbors with thin walls. She hears him singing in the shower. He hears her arguing with her plants. They've never formally met but they know each other's entire lives.",
+  "Widow and the ghost of her spouse. He haunts their house because he can't let go either. She talks to him every evening. The new love interest can also see ghosts.",
+  "College rivals who end up as co-workers. They competed for every grade at Britechester. Now they share a cubicle and the arguments have evolved from academic to deeply personal.",
+  "She's his boss. They both know it's a terrible idea. HR would have a field day. They keep it professional at work and fall apart in the parking lot after hours.",
+  "Unlikely friendship between a mean elder and a cheerful young adult. She hates everyone; he brings her soup anyway. She'd never admit she waits for his visits.",
+  "Vampire and spellcaster alliance. He needs a daylight charm. She needs vampire lore for her research. The transaction became a partnership became something neither has a name for.",
+  "High school sweethearts who got married young. Now in their thirties, they're realizing they've grown into completely different Sims. Falling in love again is harder than falling in love the first time."
 ];
 const SHIP_TAGS = [
-  ["dark","romance","war"],["romance","comedy","historical"],["romance","modern","adventure"],["romance","adventure","comedy"],
-  ["romance","dark","war"],["romance","dark","adventure"],["romance","fantasy","magic"],["romance","modern","adventure"],
-  ["romance","adventure","dark"],["romance","adventure","modern"],["romance","fantasy","magic"],["romance","mystery","modern"],
-  ["romance","adventure","comedy"],["dark","war","adventure"],["romance","dark","fantasy"],["romance","comedy","modern"],
-  ["dark","romance","adventure"],["romance","dark","adventure"],["romance","adventure","comedy"],["romance","comedy","adventure"],
-  ["romance","comedy","adventure"],["romance","dark","mystery"],["dark","romance","war"],["romance","comedy","fantasy"],
-  ["dark","romance","horror"],["romance","dark","adventure"],["romance","modern","dark"],["romance","comedy","modern"],
-  ["romance","dark","mystery"],["romance","adventure","comedy"]
+  ["drama","romance","social"],["romance","drama","social"],["romance","family","modern"],["romance","modern","social"],
+  ["vampire","dark","romance"],["family","drama","romance"],["romance","drama","dark"],["romance","social","modern"],
+  ["romance","drama","social"],["career","romance","social"],["romance","drama","modern"],["romance","social","drama"],
+  ["romance","family","modern"],["dark","romance","drama"],["family","romance","modern"],["romance","social","modern"],
+  ["school","romance","social"],["fame","romance","drama"],["family","romance","drama"],["social","family","drama"],
+  ["family","drama","romance"],["werewolf","dark","romance"],["romance","social","drama"],["romance","modern","social"],
+  ["paranormal","romance","dark"],["school","romance","drama"],["career","romance","drama"],["social","drama","romance"],
+  ["vampire","magic","dark"],["romance","family","drama"]
 ];
 
 const SAMPLE_CANON_RULES = [
-  "Magic always costs memory. The dead stay dead. The northern border has been sealed for a century.",
-  "Faster-than-light travel requires human consciousness as fuel. AI is outlawed. Cloning is legal but shameful.",
-  "Dragons bond once for life. If the rider dies, the dragon goes mad. No exceptions have ever been recorded.",
-  "The monarchy passes through combat, not blood. Every ruler must defeat the previous one. Abdication means exile.",
-  "Vampires can walk in daylight but lose their powers. Feeding on the willing gives no sustenance. Blood must be taken.",
-  "Time travel exists but only backwards. You cannot return. Every traveler becomes a ghost in their new era.",
-  "The forest is sentient and hostile. It rearranges paths nightly. Only children under ten can navigate it safely.",
-  "Healers absorb the injuries they cure. A healer who mends a broken arm gets a broken arm. Pain transfers completely.",
-  "The gods are dead but their corpses still generate power. Temples are built on divine remains. Faith is engineering.",
-  "Music is literally magical. Certain melodies can kill. All musicians must be licensed by the state.",
-  "Elves age in reverse. They are born ancient and die as infants. Their wisdom fades as they grow younger.",
-  "Ghosts are real but only visible to people in love. Widows and widowers see the dead everywhere.",
-  "Robots have souls but no legal rights. Destroying a robot is not murder. Some humans disagree violently.",
-  "Shapeshifters lose a piece of their original form with each transformation. Eventually they forget what they looked like.",
-  "Prophecies are always accurate but deliberately misleading. Seers are distrusted. The future cannot be avoided only misunderstood.",
-  "Names have power. Speaking someone's true name gives you control. Everyone uses false names. Birth names are secret.",
-  "Emotions are visible as colored auras. Lying is nearly impossible. Psychopaths have no aura and are feared.",
-  "Tattoos are living spells. They move on the skin and can bite. Tattoo artists are the most powerful mages.",
-  "Iron is poisonous to magic users. Mages live in wooden cities. Swords are a statement against sorcery.",
-  "Dreams are shared communal spaces. Privacy in sleep does not exist. Insomniacs are the only truly private people.",
-  "The king is chosen by a sentient sword. The sword has terrible judgment. Every chosen king has been a disaster.",
-  "Books are alive and aware. Burning a book is murder. Libraries are sanctuaries with their own legal jurisdiction.",
-  "Written words are binding contracts. Casual notes carry legal weight. Illiteracy is a form of freedom.",
-  "Technology and magic are inversely proportional. Cities have tech but no magic. Villages have magic but no tech.",
-  "Everyone has a predetermined death date visible only to themselves. Murder is impossible; you die when scheduled.",
-  "Luck is a measurable resource that depletes with use. Lucky people eventually become catastrophically unlucky. Balance always comes.",
-  "Twins share a single soul between them. If one dies, the other gets the whole soul and becomes extraordinarily powerful.",
-  "Love is a diagnosable disease with physical symptoms. A cure exists but removes the ability to feel joy.",
-  "Cooking is alchemy. Every meal has magical properties. Chefs are the most powerful and dangerous people alive.",
-  "Mathematical equations are spells. Mathematicians are wizards. Division by zero can tear holes in reality itself."
+  "Legacy Challenge rules: one founder, ten generations, no money cheats. Each heir must complete their aspiration. Spares can stay but must move out when married.",
+  "Rags to Riches: start on an empty lot with zero simoleons. No job allowed. Must earn money through gardening, painting, fishing, or collecting. Build as you earn.",
+  "No cheats, no mods, no reloading saves. Whatever happens, happens. If a Sim dies, they stay dead. Consequences are permanent.",
+  "MCCC mod active for story progression. Autonomous relationships and pregnancies enabled. The neighborhood evolves on its own — expect surprises.",
+  "Aging set to Long lifespan. All households played rotationally. Each family gets one in-game week before switching. Storylines must weave together.",
+  "No fast-forwarding through emotions. If a Sim is sad, play through the sadness. Moodlets drive story decisions. Gameplay follows feelings.",
+  "Build restrictions: no buying pre-built lots. Everything must be constructed room by room as the family earns money. Starter home stays ugly for a while.",
+  "Occult rules: vampires, spellcasters, and werewolves exist but can't join the same household. Interspecies relationships are allowed but children must choose a side.",
+  "Autonomy on High for all Sims. Player can only direct one Sim at a time. Everyone else does what they want. Accept the chaos.",
+  "Not So Berry Challenge: each generation follows a specific color and career path. Current gen is Mint — must master handiness and live in a green house.",
+  "Telenovela rules: maximum drama at all times. Every Sim must have at least one secret. At least one affair per generation. Betrayal is encouraged.",
+  "Poverty Challenge: no stove, no fridge, no bed for the first three days. Must use community lots for basic needs. Survival mode engaged.",
+  "Realistic gameplay: Sims eat three meals a day, sleep 8 hours, shower daily. No skipping hygiene. Time management is the real boss battle.",
+  "Random trait assignment: all traits rolled using a random generator. No picking optimal combinations. Play the hand you're dealt.",
+  "Decades Challenge: each generation represents a different historical era. Furniture, clothing, and jobs must match the time period. Currently in the 1970s.",
+  "Black Widow Challenge: marry and eliminate spouses to collect their life insurance. Maintain innocence. Never get caught. Morality is optional.",
+  "100 Baby Challenge: one matriarch, as many children as possible. Young Adult children must move out. No nannies. Sleep is a luxury.",
+  "Asylum Challenge: eight Sims, one controllable. The others are on full autonomy with free will cranked up. Try to keep everyone alive. Good luck.",
+  "Disney Princess Challenge: each generation must embody a different Disney princess archetype. Current gen is the rebellious one who rejects her arranged marriage.",
+  "Eco footprint matters: all purchasing decisions consider environmental impact. Green energy only. No wasteful décor. Community voting shapes the neighborhood.",
+  "Hardcore mode: needs decay faster. Bills are doubled. No money trees or get-rich-quick schemes. Every promotion is earned through legitimate skill-building.",
+  "Story-driven play: every gameplay session must advance a narrative. No aimless grinding. If it doesn't serve the plot, it doesn't happen.",
+  "Rotational play with drama sync: events in one household ripple into others. If the Goths throw a party, every family reacts. Shared timeline, shared consequences.",
+  "Alphabet Legacy: each generation's heir name starts with the next letter. Currently on Generation F. Running out of good F names is a real problem.",
+  "Breed Out the Weird: start with the most extreme-looking CAS Sim possible. Marry townies exclusively. Track how many generations until the family looks 'normal.'",
+  "Aspiration completion required before aging up. No birthday cake until the current aspiration milestone is reached. Some teens are stuck as teens for a while.",
+  "Career restriction: each Sim can only hold one job in their lifetime. Quitting means unemployment forever. Choose wisely.",
+  "No gallery, no CC, no mods. Pure vanilla gameplay. Everything built from scratch. Judge the game as it ships.",
+  "Apocalypse Challenge: each career track unlocks a restriction lift. Start with all restrictions active. Gradually rebuild civilization one promotion at a time.",
+  "Soulmate rule: each Sim gets one romantic partner per lifetime. If it ends, they stay single forever. Commitment has weight."
 ];
 const CANON_TAGS = [
-  ["fantasy","dark","magic"],["sci-fi","dark","space"],["fantasy","romance","adventure"],["fantasy","dark","war"],
-  ["dark","horror","romance"],["sci-fi","dark","mystery"],["fantasy","dark","horror"],["fantasy","dark","magic"],
-  ["fantasy","dark","war"],["fantasy","magic","dark"],["fantasy","dark","romance"],["romance","horror","mystery"],
-  ["sci-fi","dark","modern"],["fantasy","dark","magic"],["fantasy","dark","mystery"],["fantasy","dark","mystery"],
-  ["fantasy","mystery","dark"],["fantasy","magic","dark"],["fantasy","dark","war"],["fantasy","dark","mystery"],
-  ["fantasy","dark","comedy"],["fantasy","magic","mystery"],["fantasy","dark","mystery"],["fantasy","sci-fi","adventure"],
-  ["dark","mystery","fantasy"],["fantasy","dark","magic"],["fantasy","dark","magic"],["romance","dark","fantasy"],
-  ["fantasy","comedy","magic"],["fantasy","magic","mystery"]
+  ["legacy","family","drama"],["career","modern","drama"],["drama","dark","modern"],["drama","romance","social"],
+  ["legacy","family","drama"],["drama","family","romance"],["modern","family","drama"],["vampire","dark","drama"],
+  ["social","drama","family"],["legacy","family","drama"],["drama","romance","dark"],["modern","drama","dark"],
+  ["modern","family","drama"],["family","drama","social"],["legacy","family","drama"],["dark","drama","romance"],
+  ["legacy","family","drama"],["drama","social","dark"],["legacy","family","romance"],["eco","modern","social"],
+  ["career","modern","drama"],["drama","family","romance"],["legacy","drama","social"],["legacy","family","drama"],
+  ["legacy","family","drama"],["family","drama","modern"],["career","drama","modern"],["modern","simple","family"],
+  ["dark","drama","career"],["romance","drama","family"]
 ];
 
 const SAMPLE_SECRETS = [
-  "She doesn't know he's the prince. He doesn't know she reads minds. The treaty is built on a shared lie.",
-  "The mentor is actually her biological father. He gave her up to protect her from his enemies. She thinks he abandoned her for power.",
-  "The healer is slowly poisoning the king on orders from the queen. He believes it's medicine. She believes it's mercy.",
-  "The castle was built on a sealed portal. The court wizard keeps it closed. If he dies, everything beneath awakens.",
-  "Her sword is sentient and slowly consuming her personality. She acts bolder because the blade wants blood. No one realizes she's disappearing.",
-  "The peace treaty has a secret clause: the younger prince was traded as a hostage. The kingdom celebrates peace while he rots in a foreign dungeon.",
-  "He can see the future but only in dreams. He dreamed her death three times. Each time he changes something, the death simply moves.",
-  "The ship's navigator is blind. She navigates by sound and the crew's trust. No one outside the ship knows. She's the best in the fleet.",
-  "The village healer's cures work because she trades her own lifespan for each patient. She has two years left and thirty patients waiting.",
-  "The commander's battle strategies come from a captured enemy general he keeps hidden in the basement. The wins aren't his. The guilt is.",
-  "She married him for his library, not his title. He married her for her army, not her heart. They've accidentally fallen in love and neither will admit it.",
-  "The prophet's visions stopped years ago. She's been making educated guesses. Her accuracy rate hasn't changed. She doesn't know what that means.",
-  "The blacksmith's finest sword was forged with his daughter's bone ash. He told everyone it was dragon bone. He'll never make another like it.",
-  "The ambassador speaks twelve languages but pretends to need a translator. The translator knows and plays along. They've been running intelligence together for years.",
-  "The rebellion's leader and the tyrant are the same person. He created the opposition to control it. The revolution is a pressure valve, not a threat.",
-  "Her magic comes from a parasitic entity living in her blood. Healing others spreads it. In fifty years, everyone she's healed will hear its voice.",
-  "The old king didn't die of illness. He walked into the forest and never came back. The court fabricated a funeral. He's still out there.",
-  "The twins switched places ten years ago and never switched back. The warrior sister lives as the scholar. The scholar fights wars she was never trained for.",
-  "The map everyone is fighting over is a fake. The real one is tattooed on the back of a serving girl who doesn't know what she carries.",
-  "The dragon hasn't attacked in decades because it's dead. The knight who slew it never told anyone. He still collects tribute for \"protection.\"",
-  "She writes love letters to him and signs them with another woman's name. He's falling for a person who doesn't exist.",
-  "The cure they discovered has a side effect: it works, but the patient loses all memory of the person who administered it.",
-  "The walls of the city are not stone. They are compressed ash from a civilization that burned. The builders knew. No one else does.",
-  "His loyalty isn't to the crown. It's to the crown's enemy who saved his sister. Every report he files is carefully edited.",
-  "The child everyone protects is not the heir. The real heir was swapped at birth and currently works as a stable hand. The nursemaid took the secret to her grave.",
-  "The bard's most famous song is someone else's. The original composer died in obscurity. The bard found the manuscript and has lived in guilt since.",
-  "She can only use her powers when genuinely afraid. She manufactures her own terror before every battle. The bravery everyone admires is actually controlled panic.",
-  "The rival houses have been secretly intermarrying for generations. The feud is theater to keep the other families from allying against them.",
-  "The lighthouse keeper signals ships to safety, but once a year she signals one to the rocks. She doesn't remember doing it. Something else uses her hands.",
-  "His stutter disappears when he lies. He's the most fluent speaker in court. Nobody has connected the two facts yet."
+  "She doesn't know her husband has a second family in Windenburg. He visits them every weekend under the guise of 'business trips.' The other woman thinks she's the only one.",
+  "The eldest child isn't biologically the father's. The mother had an affair with the mailman years ago. The resemblance to the neighbor has gone conveniently unnoticed.",
+  "The family fortune came from insurance fraud three generations ago. Grandma took the secret to her urn. The money that built the mansion was never earned honestly.",
+  "She's been slowly poisoning her husband's meals. Not enough to kill — just enough to keep him too tired to question where she goes every Thursday night.",
+  "The perfect couple next door are actually miserable. They maintain the facade for their kids. He sleeps in the office. She cries in the bathroom. Nobody on the street suspects.",
+  "The teenager knows their parent was responsible for the neighbor's 'accidental' pool death. They found the evidence in the basement. They haven't decided what to do with it yet.",
+  "The family's beloved dog is actually the reincarnation of Grandpa. Only the youngest child can tell, and nobody believes them when they try to explain.",
+  "The landlord has cameras in every rental unit. He watches the tenants' lives like a reality show. The maintenance visits are excuses to check the equipment.",
+  "She's a vampire pretending to be human. The garlic allergy excuse works at dinner parties. The real danger is her coworker who keeps inviting her to beach days.",
+  "The neighborhood watch president is the one stealing packages from porches. She reports her own crimes at the meetings with theatrical concern.",
+  "His cooking is legendary in the neighborhood, but his secret ingredient is an illegal herb he grows in a hidden greenhouse behind the pool.",
+  "The family therapist they've been seeing is actually making things worse on purpose. More conflict means more sessions. More sessions mean more income.",
+  "The ghost haunting the house isn't a stranger — it's the previous owner who was murdered by the real estate agent. The agent still sells houses on the same street.",
+  "The twin who survived wasn't actually the twin everyone thinks. They switched identities as children and the 'surviving' twin has lived a lie for thirty years.",
+  "She married into the wealthy family for the money. Fell genuinely in love afterward. Now she can't tell him the truth because the love is real but the origin is rotten.",
+  "The nanny has been slowly teaching the children to prefer her over their parents. It's not malicious — she genuinely thinks she's a better parent. She might be right.",
+  "He's been writing anonymous letters to every neighbor exposing their secrets. He knows everything about everyone. The chaos is his entertainment. Nobody suspects the quiet librarian.",
+  "The reason they moved to this neighborhood so suddenly is witness protection. Their old identity is dead. The new neighbors are getting too curious.",
+  "The aspiring musician's songs are actually written by their roommate. The roommate has crippling stage fright. The musician has no talent. Together, they're a hit.",
+  "Grandma's will has a hidden clause: the inheritance only goes to the grandchild who produces an heir first. She told no one. The family competition is 'organic.'",
+  "The Sim who 'found' the lost puppy actually stole it from another household across town. The original owners are still posting flyers. The guilt is becoming unbearable.",
+  "The family's weekly dinner party is a front for a book club that reads increasingly unhinged conspiracy theories. They're starting to believe them.",
+  "She tells everyone her husband died heroically. He actually left her for a townie in Oasis Springs. He's alive and thriving. She just can't face the humiliation.",
+  "The renovation contractor has been hiding love letters in the walls of every house he builds. They're all addressed to the same person — a Sim who died years ago.",
+  "The child's imaginary friend is real. It's a ghost only they can see. The ghost is manipulating the child to take revenge on the family that wronged them in life.",
+  "He embezzled from his own business to pay for his daughter's university tuition. If his business partner finds out, he'll lose everything — including the family he stole for.",
+  "The couple presents as happily married on social media but sleep in separate bedrooms. Their online life is a fiction they maintain for their parents' approval.",
+  "The elder who seems to have dementia is faking it. She remembers everything. Playing confused is the only way she can avoid answering questions about 1987.",
+  "The teenager's online best friend is actually their estranged biological parent, catfishing them to stay in their life without violating the restraining order.",
+  "The family cat has been sneaking into the neighbor's house every night. The neighbor thinks it's their cat. Both families have vet records. The cat lives a glorious double life."
 ];
 const SECRET_TAGS = [
-  ["romance","mystery","dark"],["dark","romance","adventure"],["dark","mystery","war"],["fantasy","dark","horror"],
-  ["dark","fantasy","magic"],["dark","war","romance"],["fantasy","dark","romance"],["adventure","mystery","dark"],
-  ["dark","romance","magic"],["dark","war","mystery"],["romance","comedy","dark"],["mystery","dark","comedy"],
-  ["dark","romance","mystery"],["mystery","dark","adventure"],["dark","war","mystery"],["dark","horror","magic"],
-  ["dark","mystery","fantasy"],["dark","adventure","mystery"],["dark","mystery","adventure"],["dark","fantasy","horror"],
-  ["romance","dark","mystery"],["dark","mystery","comedy"],["dark","fantasy","horror"],["dark","mystery","adventure"],
-  ["dark","horror","mystery"],["dark","romance","adventure"],["dark","mystery","comedy"],["dark","romance","mystery"],
-  ["dark","horror","mystery"],["dark","mystery","comedy"]
+  ["drama","romance","dark"],["family","dark","drama"],["family","drama","dark"],["dark","drama","romance"],
+  ["romance","drama","dark"],["family","dark","drama"],["paranormal","family","drama"],["rental","dark","drama"],
+  ["vampire","dark","social"],["social","drama","dark"],["drama","dark","social"],["family","drama","dark"],
+  ["paranormal","dark","drama"],["family","dark","drama"],["romance","drama","dark"],["family","drama","dark"],
+  ["dark","social","drama"],["mystery","dark","drama"],["career","social","drama"],["family","legacy","drama"],
+  ["social","drama","dark"],["social","family","drama"],["drama","romance","dark"],["romance","dark","drama"],
+  ["paranormal","dark","family"],["career","family","drama"],["romance","social","drama"],["family","drama","dark"],
+  ["family","dark","drama"],["social","drama","family"]
 ];
 
 function pickRandom(arr, n) {
@@ -1789,7 +1795,7 @@ function generateSampleLore() {
   const rules = pickRandom(SAMPLE_CANON_RULES, 3);
   const secrets = pickRandom(SAMPLE_SECRETS, 3);
 
-  return `# Characters\n${chars.join('\n\n')}\n\n# World / Setting\n${world}\n\n# Ships / Relationships\n${ships.join('\n\n')}\n\n# Canon Rules\n${rules.join('\n\n')}\n\n# Secrets & Subtext\n${secrets.join('\n\n')}`;
+  return `# Your Sims\n${chars.join('\n\n')}\n\n# Lot & Neighborhood\n${world}\n\n# Relationships\n${ships.join('\n\n')}\n\n# Gameplay Rules\n${rules.join('\n\n')}\n\n# Sim Secrets\n${secrets.join('\n\n')}`;
 }
 
 // Fandom / Tone / Premise randomize buttons (cascade chain: Fandom → Tone → Premise → Lore)
