@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fanfic Forge</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: linear-gradient(160deg, #0f0e0c 0%, #1a1814 40%, #141210 100%);
+  color: #d4c5a9;
+  font-family: 'Lora', 'Georgia', serif;
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #2a2520; border-radius: 3px; }
+
+.page { display: none; max-width: 720px; margin: 0 auto; padding: 40px 20px; }
+.page.active { display: block; }
+
+h1, h2, h3 { font-family: 'Cinzel', serif; color: #e8d5b0; }
+
+label {
+  display: block;
+  font-size: 0.82em;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #8a7d6b;
+  margin-bottom: 6px;
+}
+
+input[type="text"], textarea {
+  width: 100%;
+  background: #13120f;
+  border: 1px solid #2a2520;
+  border-radius: 4px;
+  color: #d4c5a9;
+  font-family: 'Lora', 'Georgia', serif;
+  font-size: 0.95em;
+  line-height: 1.6;
+  padding: 10px 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+input[type="text"]:focus, textarea:focus { border-color: #c9a84c; }
+textarea { resize: vertical; }
+
+.field { margin-bottom: 20px; }
+
+.btn-gold {
+  background: linear-gradient(135deg, #c9a84c, #a08030);
+  color: #0f0e0c;
+  font-family: 'Lora', 'Georgia', serif;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 28px;
+  cursor: pointer;
+  font-size: 0.95em;
+  transition: filter 0.2s;
+}
+.btn-gold:hover { filter: brightness(1.1); }
+.btn-gold:disabled { opacity: 0.4; cursor: default; filter: none; }
+
+.btn-secondary {
+  background: #2a2520;
+  color: #c8bca3;
+  border: 1px solid #3a3530;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-family: 'Lora', 'Georgia', serif;
+  font-size: 0.9em;
+  transition: background 0.2s;
+}
+.btn-secondary:hover { background: #3a3530; }
+
+.btn-ghost {
+  background: transparent;
+  border: none;
+  color: #5a5040;
+  cursor: pointer;
+  font-size: 1.1em;
+  padding: 4px 8px;
+  transition: color 0.2s;
+}
+.btn-ghost:hover { color: #c9a84c; }
+
+.btn-danger {
+  background: #6b3a3a;
+  color: #d4c5a9;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-family: 'Lora', 'Georgia', serif;
+  font-size: 0.9em;
+}
+.btn-danger:hover { background: #7d4444; }
+
+/* Setup Page */
+#setup-page h1 { text-align: center; margin-bottom: 8px; font-size: 1.8em; }
+.setup-subtitle { text-align: center; color: #5a5040; margin-bottom: 36px; font-style: italic; }
+.setup-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; }
+.validation-error { color: #c9a84c; font-size: 0.85em; margin-top: 8px; }
+
+/* Index Page */
+.index-topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 28px; padding-bottom: 16px; border-bottom: 1px solid #2a2520;
+}
+.index-topbar-title h2 { font-size: 1.3em; margin-bottom: 2px; }
+.index-topbar-title .fandom { font-size: 0.82em; color: #8a7d6b; font-style: italic; }
+.index-topbar-actions { display: flex; gap: 8px; align-items: center; }
+
+.chapter-card {
+  background: #13120f;
+  border: 1px solid #2a2520;
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: border-color 0.2s;
+}
+.chapter-card:hover { border-color: #c9a84c; }
+.chapter-card-content { flex: 1; min-width: 0; }
+.chapter-card-label { font-size: 0.95em; font-weight: 700; color: #c9a84c; margin-bottom: 4px; }
+.chapter-card-preview { font-size: 0.85em; color: #8a7d6b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chapter-card-arrows { display: flex; flex-direction: column; gap: 2px; margin: 0 12px; }
+.chapter-card-arrows button {
+  background: transparent; border: none; color: #5a5040; cursor: pointer;
+  font-size: 0.9em; padding: 2px 6px; line-height: 1;
+}
+.chapter-card-arrows button:hover { color: #c9a84c; }
+.chapter-card-arrows button:disabled { opacity: 0.2; cursor: default; }
+.chapter-card-chevron { color: #5a5040; font-size: 1.2em; margin-left: 8px; }
+
+.empty-state { text-align: center; color: #5a5040; padding: 48px 20px; font-style: italic; }
+
+.index-bottom { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 10px; }
+
+.lore-editor { margin-top: 20px; padding-top: 20px; border-top: 1px solid #2a2520; }
+.lore-editor textarea { min-height: 200px; }
+.lore-toggle { cursor: pointer; color: #8a7d6b; font-size: 0.9em; }
+.lore-toggle:hover { color: #c9a84c; }
+
+/* Add Chapter Modal */
+.modal-overlay {
+  display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.7); z-index: 100; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.modal-overlay.active { display: flex; }
+.modal {
+  background: #1a1814; border: 1px solid #2a2520; border-radius: 8px;
+  padding: 28px; width: 100%; max-width: 640px; max-height: 90vh; overflow-y: auto;
+}
+.modal h3 { margin-bottom: 16px; font-size: 1.1em; }
+.modal textarea { min-height: 300px; margin-bottom: 16px; }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+
+/* Chapter View */
+.chapter-topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid #2a2520;
+}
+.chapter-topbar-center { font-size: 0.82em; text-transform: uppercase; letter-spacing: 1.5px; color: #8a7d6b; }
+.chapter-topbar-actions { display: flex; gap: 8px; }
+
+.chapter-heading {
+  text-align: center; font-size: 0.85em; text-transform: uppercase;
+  letter-spacing: 3px; color: #e8d5b0; margin-bottom: 32px;
+  font-family: 'Cinzel', serif;
+}
+.chapter-body {
+  white-space: pre-wrap; font-size: 0.98em; line-height: 1.9;
+  color: #c8bca3; padding-bottom: 80px;
+}
+
+.chapter-edit textarea { min-height: 400px; margin-bottom: 16px; }
+.chapter-edit-actions { display: flex; gap: 10px; margin-bottom: 32px; }
+
+.chapter-bottombar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: #13120f; border-top: 1px solid #2a2520;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 24px; z-index: 50;
+}
+.chapter-bottombar .page-counter { font-size: 0.85em; color: #8a7d6b; }
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+  background: #2a2520; color: #c9a84c; padding: 10px 24px;
+  border-radius: 6px; font-size: 0.9em; opacity: 0;
+  transition: opacity 0.3s; pointer-events: none; z-index: 200;
+}
+.toast.visible { opacity: 1; }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .page { padding: 24px 14px; }
+  .index-topbar { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .index-topbar-actions { width: 100%; justify-content: flex-start; flex-wrap: wrap; }
+  .chapter-topbar { flex-wrap: wrap; gap: 8px; }
+  .setup-actions { flex-direction: column; gap: 12px; }
+  .setup-actions .btn-gold { width: 100%; }
+  .index-bottom { flex-direction: column; }
+  .index-bottom .btn-gold, .index-bottom .btn-secondary { width: 100%; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- Setup Page -->
+<div id="setup-page" class="page">
+  <h1>Fanfic Forge</h1>
+  <p class="setup-subtitle">Your fanfiction writing workshop</p>
+  <div class="field">
+    <label for="inp-title">Story Title *</label>
+    <input type="text" id="inp-title" placeholder="Enter your story title">
+  </div>
+  <div class="field">
+    <label for="inp-fandom">Fandom / Universe</label>
+    <input type="text" id="inp-fandom" placeholder="e.g. Harry Potter, ATLA, Original">
+  </div>
+  <div class="field">
+    <label for="inp-tone">Tone / Vibe</label>
+    <input type="text" id="inp-tone" placeholder="Emotional but grounded">
+  </div>
+  <div class="field">
+    <label for="inp-premise">Premise *</label>
+    <textarea id="inp-premise" rows="4" placeholder="What's this story about?"></textarea>
+  </div>
+  <div class="field">
+    <label for="inp-lore">Lore Bible</label>
+    <textarea id="inp-lore" rows="8"></textarea>
+  </div>
+  <div id="setup-error" class="validation-error" style="display:none;"></div>
+  <div class="setup-actions">
+    <button class="btn-secondary" id="btn-reset" type="button">Reset / New Story</button>
+    <button class="btn-gold" id="btn-begin" type="button">Begin Writing</button>
+  </div>
+</div>
+
+<!-- Index Page -->
+<div id="index-page" class="page">
+  <div class="index-topbar">
+    <div class="index-topbar-title">
+      <h2 id="index-title"></h2>
+      <span class="fandom" id="index-fandom"></span>
+    </div>
+    <div class="index-topbar-actions">
+      <button class="btn-ghost" id="btn-settings" title="Settings">&#9881;</button>
+      <button class="btn-secondary" id="btn-copy-prompt" style="display:none;">Copy Prompt for Claude</button>
+      <button class="btn-gold" id="btn-export" style="display:none;">Export HTML</button>
+    </div>
+  </div>
+  <div id="chapter-list"></div>
+  <div class="index-bottom">
+    <button class="btn-gold" id="btn-add-chapter">+ Add Chapter</button>
+    <button class="btn-secondary" id="btn-lore-toggle">Edit Lore Bible</button>
+  </div>
+  <div id="lore-editor-section" class="lore-editor" style="display:none;">
+    <label for="lore-edit-area">Lore Bible</label>
+    <textarea id="lore-edit-area" rows="8"></textarea>
+  </div>
+</div>
+
+<!-- Chapter View Page -->
+<div id="chapter-page" class="page">
+  <div class="chapter-topbar">
+    <button class="btn-secondary" id="btn-back-index">&larr; Index</button>
+    <span class="chapter-topbar-center" id="chapter-of-label"></span>
+    <div class="chapter-topbar-actions">
+      <button class="btn-ghost" id="btn-edit-chapter" title="Edit">&#9998;</button>
+      <button class="btn-ghost" id="btn-delete-chapter" title="Delete" style="color:#6b3a3a;">&#10005;</button>
+    </div>
+  </div>
+  <div id="chapter-display">
+    <div class="chapter-heading" id="chapter-heading-text"></div>
+    <div class="chapter-body" id="chapter-body-text"></div>
+  </div>
+  <div id="chapter-edit-area" class="chapter-edit" style="display:none;">
+    <textarea id="chapter-edit-textarea"></textarea>
+    <div class="chapter-edit-actions">
+      <button class="btn-gold" id="btn-save-edit">Save</button>
+      <button class="btn-secondary" id="btn-cancel-edit">Cancel</button>
+    </div>
+  </div>
+  <div class="chapter-bottombar">
+    <button class="btn-secondary" id="btn-prev">&larr; Prev</button>
+    <span class="page-counter" id="page-counter"></span>
+    <button class="btn-secondary" id="btn-next">Next &rarr;</button>
+  </div>
+</div>
+
+<!-- Add Chapter Modal -->
+<div class="modal-overlay" id="add-chapter-modal">
+  <div class="modal">
+    <h3>Add Chapter</h3>
+    <textarea id="new-chapter-text" placeholder="Paste your chapter here..."></textarea>
+    <div class="modal-actions">
+      <button class="btn-secondary" id="btn-cancel-add">Cancel</button>
+      <button class="btn-gold" id="btn-save-add">Save Chapter</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+const LORE_TEMPLATE = `# Characters
+(Name, age, personality, secrets, relationships)
+
+# World / Setting
+(World, rules, locations, time period)
+
+# Ships / Relationships
+(Who's with who? Dynamic? Tension?)
+
+# Canon Rules
+(What canon must be respected? What are you changing?)
+
+# Secrets & Subtext
+(What do characters know that others don't?)`;
+
+const STORAGE_KEY = 'fanfic_forge_state';
+
+let state = {
+  title: '',
+  fandom: '',
+  tone: 'Emotional but grounded',
+  premise: '',
+  lore: LORE_TEMPLATE,
+  chapters: [],
+  currentPage: 'setup',
+  currentChapter: 0
+};
+
+let editing = false;
+let loreVisible = false;
+
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      state = { ...state, ...parsed };
+    }
+  } catch (e) { /* ignore parse errors */ }
+}
+
+function escapeHTML(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.classList.add('visible');
+  setTimeout(() => toast.classList.remove('visible'), 2000);
+}
+
+function navigate(page, chapterIndex) {
+  state.currentPage = page;
+  if (chapterIndex !== undefined) state.currentChapter = chapterIndex;
+  editing = false;
+  saveState();
+  render();
+  window.scrollTo(0, 0);
+}
+
+// -- Render --
+function render() {
+  document.getElementById('setup-page').classList.toggle('active', state.currentPage === 'setup');
+  document.getElementById('index-page').classList.toggle('active', state.currentPage === 'index');
+  document.getElementById('chapter-page').classList.toggle('active', state.currentPage === 'chapter');
+
+  if (state.currentPage === 'setup') renderSetup();
+  else if (state.currentPage === 'index') renderIndex();
+  else if (state.currentPage === 'chapter') renderChapter();
+}
+
+function renderSetup() {
+  document.getElementById('inp-title').value = state.title;
+  document.getElementById('inp-fandom').value = state.fandom;
+  document.getElementById('inp-tone').value = state.tone;
+  document.getElementById('inp-premise').value = state.premise;
+  document.getElementById('inp-lore').value = state.lore;
+  document.getElementById('setup-error').style.display = 'none';
+}
+
+function renderIndex() {
+  document.getElementById('index-title').textContent = state.title;
+  const fandomEl = document.getElementById('index-fandom');
+  fandomEl.textContent = [state.fandom, state.tone].filter(Boolean).join(' · ');
+
+  const hasChapters = state.chapters.length > 0;
+  document.getElementById('btn-export').style.display = hasChapters ? '' : 'none';
+  document.getElementById('btn-copy-prompt').style.display = '';
+
+  const list = document.getElementById('chapter-list');
+  list.innerHTML = '';
+
+  if (!hasChapters) {
+    list.innerHTML = '<div class="empty-state">No chapters yet. Paste your first chapter to get started.</div>';
+    return;
+  }
+
+  state.chapters.forEach((text, i) => {
+    const card = document.createElement('div');
+    card.className = 'chapter-card';
+
+    const content = document.createElement('div');
+    content.className = 'chapter-card-content';
+    content.innerHTML = `<div class="chapter-card-label">Chapter ${i + 1}</div><div class="chapter-card-preview">${escapeHTML(text.substring(0, 120))}</div>`;
+    content.addEventListener('click', () => navigate('chapter', i));
+
+    const arrows = document.createElement('div');
+    arrows.className = 'chapter-card-arrows';
+    const upBtn = document.createElement('button');
+    upBtn.textContent = '↑';
+    upBtn.disabled = i === 0;
+    upBtn.addEventListener('click', (e) => { e.stopPropagation(); moveChapter(i, -1); });
+    const downBtn = document.createElement('button');
+    downBtn.textContent = '↓';
+    downBtn.disabled = i === state.chapters.length - 1;
+    downBtn.addEventListener('click', (e) => { e.stopPropagation(); moveChapter(i, 1); });
+    arrows.appendChild(upBtn);
+    arrows.appendChild(downBtn);
+
+    const chevron = document.createElement('span');
+    chevron.className = 'chapter-card-chevron';
+    chevron.textContent = '›';
+    chevron.addEventListener('click', () => navigate('chapter', i));
+
+    card.appendChild(content);
+    card.appendChild(arrows);
+    card.appendChild(chevron);
+    list.appendChild(card);
+  });
+
+  // Lore editor
+  const loreSection = document.getElementById('lore-editor-section');
+  loreSection.style.display = loreVisible ? '' : 'none';
+  if (loreVisible) {
+    document.getElementById('lore-edit-area').value = state.lore;
+  }
+}
+
+function renderChapter() {
+  const idx = state.currentChapter;
+  const total = state.chapters.length;
+  const text = state.chapters[idx] || '';
+
+  document.getElementById('chapter-of-label').textContent = `Chapter ${idx + 1} of ${total}`;
+  document.getElementById('chapter-heading-text').textContent = `Chapter ${idx + 1}`;
+  document.getElementById('chapter-body-text').textContent = '';
+  const bodyEl = document.getElementById('chapter-body-text');
+  bodyEl.textContent = text;
+
+  document.getElementById('chapter-display').style.display = editing ? 'none' : '';
+  document.getElementById('chapter-edit-area').style.display = editing ? '' : 'none';
+  if (editing) {
+    document.getElementById('chapter-edit-textarea').value = text;
+  }
+
+  document.getElementById('page-counter').textContent = `${idx + 1} / ${total}`;
+  document.getElementById('btn-prev').disabled = idx === 0;
+  document.getElementById('btn-next').disabled = idx === total - 1;
+}
+
+function moveChapter(index, direction) {
+  const target = index + direction;
+  if (target < 0 || target >= state.chapters.length) return;
+  [state.chapters[index], state.chapters[target]] = [state.chapters[target], state.chapters[index]];
+  saveState();
+  renderIndex();
+}
+
+function exportHTML() {
+  const chaptersHTML = state.chapters.map((text, i) => {
+    const divider = i > 0 ? '<div style="text-align:center;color:#5a5040;margin:48px 0;font-size:1.2em;letter-spacing:8px;">&#10022; &#10022; &#10022;</div>' : '';
+    return `${divider}<h2 style="text-align:center;font-family:'Cinzel',serif;font-size:0.85em;text-transform:uppercase;letter-spacing:3px;color:#e8d5b0;margin:40px 0 24px;">Chapter ${i + 1}</h2><div style="white-space:pre-wrap;font-size:0.98em;line-height:1.9;color:#c8bca3;">${escapeHTML(text)}</div>`;
+  }).join('');
+
+  const subtitle = [state.fandom, state.tone].filter(Boolean).join(' · ');
+  const html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>${escapeHTML(state.title)}</title><link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"><style>body{background:#1a1a1a;color:#d4c5a9;font-family:'Lora','Georgia',serif;max-width:700px;margin:0 auto;padding:48px 24px;}</style></head><body><h1 style="text-align:center;font-family:'Cinzel',serif;font-size:2em;color:#e8d5b0;margin-bottom:8px;">${escapeHTML(state.title)}</h1>${subtitle ? `<p style="text-align:center;font-style:italic;color:#8a7d6b;margin-bottom:48px;">${escapeHTML(subtitle)}</p>` : ''}${chaptersHTML}<div style="text-align:center;color:#5a5040;margin-top:64px;font-size:0.82em;font-style:italic;">Written with Fanfic Forge</div></body></html>`;
+
+  const blob = new Blob([html], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${state.title.replace(/[^a-z0-9]/gi, '_').toLowerCase() || 'story'}.html`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function copyPrompt() {
+  const nextChapter = state.chapters.length + 1;
+  let prompt = `Write Chapter ${nextChapter} of my story.\n\nSTORY: "${state.title}"\n`;
+  if (state.fandom) prompt += `FANDOM: ${state.fandom}\n`;
+  if (state.tone) prompt += `TONE: ${state.tone}\n`;
+  prompt += `PREMISE: ${state.premise}\n`;
+  if (state.lore.trim()) prompt += `\nLORE BIBLE:\n${state.lore}\n`;
+
+  if (state.chapters.length > 0) {
+    prompt += '\nPREVIOUS CHAPTERS:\n';
+    state.chapters.forEach((text, i) => {
+      prompt += `--- Chapter ${i + 1} ---\n${text}\n`;
+    });
+    prompt += `\nContinue naturally from where the last chapter ended. Maintain voice consistency. Build on established threads. End on a turn. Write 800-1500 words.\n`;
+  } else {
+    prompt += `\nThis is the opening chapter. Drop in mid-action. Establish voice, characters, and tension. End on a moment that makes me need chapter 2. Write 800-1500 words.\n`;
+  }
+
+  prompt += '\nReturn ONLY the prose. No title, no author notes, no explanation.';
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(prompt).then(() => showToast('Copied!')).catch(() => fallbackCopy(prompt));
+  } else {
+    fallbackCopy(prompt);
+  }
+}
+
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.left = '-9999px';
+  document.body.appendChild(ta);
+  ta.select();
+  try {
+    document.execCommand('copy');
+    showToast('Copied!');
+  } catch (e) {
+    showToast('Failed to copy');
+  }
+  document.body.removeChild(ta);
+}
+
+// -- Event Listeners --
+
+// Setup
+document.getElementById('btn-begin').addEventListener('click', () => {
+  state.title = document.getElementById('inp-title').value.trim();
+  state.fandom = document.getElementById('inp-fandom').value.trim();
+  state.tone = document.getElementById('inp-tone').value.trim();
+  state.premise = document.getElementById('inp-premise').value.trim();
+  state.lore = document.getElementById('inp-lore').value;
+
+  if (!state.title || !state.premise) {
+    const errEl = document.getElementById('setup-error');
+    errEl.textContent = 'Story Title and Premise are required.';
+    errEl.style.display = '';
+    return;
+  }
+  navigate('index');
+});
+
+document.getElementById('btn-reset').addEventListener('click', () => {
+  if (confirm('Start a new story? This will erase all current data.')) {
+    localStorage.removeItem(STORAGE_KEY);
+    state = {
+      title: '', fandom: '', tone: 'Emotional but grounded', premise: '',
+      lore: LORE_TEMPLATE, chapters: [], currentPage: 'setup', currentChapter: 0
+    };
+    editing = false;
+    loreVisible = false;
+    render();
+  }
+});
+
+// Setup auto-save on input blur
+['inp-title', 'inp-fandom', 'inp-tone', 'inp-premise', 'inp-lore'].forEach(id => {
+  document.getElementById(id).addEventListener('change', () => {
+    state.title = document.getElementById('inp-title').value.trim();
+    state.fandom = document.getElementById('inp-fandom').value.trim();
+    state.tone = document.getElementById('inp-tone').value.trim();
+    state.premise = document.getElementById('inp-premise').value.trim();
+    state.lore = document.getElementById('inp-lore').value;
+    saveState();
+  });
+});
+
+// Index
+document.getElementById('btn-settings').addEventListener('click', () => navigate('setup'));
+document.getElementById('btn-export').addEventListener('click', exportHTML);
+document.getElementById('btn-copy-prompt').addEventListener('click', copyPrompt);
+
+document.getElementById('btn-add-chapter').addEventListener('click', () => {
+  document.getElementById('new-chapter-text').value = '';
+  document.getElementById('add-chapter-modal').classList.add('active');
+});
+
+document.getElementById('btn-cancel-add').addEventListener('click', () => {
+  document.getElementById('add-chapter-modal').classList.remove('active');
+});
+
+document.getElementById('btn-save-add').addEventListener('click', () => {
+  const text = document.getElementById('new-chapter-text').value.trim();
+  if (!text) return;
+  state.chapters.push(text);
+  saveState();
+  document.getElementById('add-chapter-modal').classList.remove('active');
+  renderIndex();
+});
+
+document.getElementById('btn-lore-toggle').addEventListener('click', () => {
+  loreVisible = !loreVisible;
+  renderIndex();
+});
+
+document.getElementById('lore-edit-area').addEventListener('change', () => {
+  state.lore = document.getElementById('lore-edit-area').value;
+  saveState();
+});
+
+// Chapter View
+document.getElementById('btn-back-index').addEventListener('click', () => navigate('index'));
+
+document.getElementById('btn-edit-chapter').addEventListener('click', () => {
+  editing = true;
+  renderChapter();
+});
+
+document.getElementById('btn-save-edit').addEventListener('click', () => {
+  const text = document.getElementById('chapter-edit-textarea').value.trim();
+  if (text) {
+    state.chapters[state.currentChapter] = text;
+    saveState();
+  }
+  editing = false;
+  renderChapter();
+});
+
+document.getElementById('btn-cancel-edit').addEventListener('click', () => {
+  editing = false;
+  renderChapter();
+});
+
+document.getElementById('btn-delete-chapter').addEventListener('click', () => {
+  const idx = state.currentChapter;
+  if (!confirm(`Delete Chapter ${idx + 1}? This can't be undone.`)) return;
+  state.chapters.splice(idx, 1);
+  if (state.chapters.length === 0) {
+    navigate('index');
+  } else {
+    state.currentChapter = Math.min(idx, state.chapters.length - 1);
+    saveState();
+    renderChapter();
+    // Update the label
+    document.getElementById('chapter-of-label').textContent = `Chapter ${state.currentChapter + 1} of ${state.chapters.length}`;
+  }
+});
+
+document.getElementById('btn-prev').addEventListener('click', () => {
+  if (state.currentChapter > 0) navigate('chapter', state.currentChapter - 1);
+});
+
+document.getElementById('btn-next').addEventListener('click', () => {
+  if (state.currentChapter < state.chapters.length - 1) navigate('chapter', state.currentChapter + 1);
+});
+
+// Close modal on overlay click
+document.getElementById('add-chapter-modal').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) e.currentTarget.classList.remove('active');
+});
+
+// Init
+loadState();
+render();
+</script>
+</body>
+</html>
